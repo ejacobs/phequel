@@ -1,0 +1,17 @@
+{
+  "name": "ejacobs/querybuilder",
+  "description": "A fluent query builder for PHP",
+  "authors": [
+    {
+      "name": "Evan Jacobs"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Ejacobs\\QueryBuilder\\": "src/"
+    }
+  },
+  "require": {
+    "phpspec/phpspec": "^3.2"
+  }
+}
