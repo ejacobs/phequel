@@ -1,3 +1,4 @@
 vendor
 sandbox.php
 composer.lock
+.idea
