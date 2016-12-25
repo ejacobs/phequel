@@ -11,8 +11,10 @@ use Ejacobs\QueryBuilder\Component\OffsetComponent;
 use Ejacobs\QueryBuilder\Component\SelectComponent;
 use Ejacobs\QueryBuilder\Component\WhereComponent;
 
-class AbstractSelectQuery extends AbstractBaseQuery
+abstract class AbstractSelectQuery extends AbstractBaseQuery
 {
+
+    private $defaultSelectAll = true;
 
     /* @var SelectComponent[] $selectComponents */
     protected $selectComponents = [];
@@ -33,6 +35,18 @@ class AbstractSelectQuery extends AbstractBaseQuery
     protected $orderByComponent;
 
     /**
+     * AbstractSelectQuery constructor.
+     * @param $tableName
+     * @param bool $pretty
+     */
+    public function __construct($tableName, $pretty)
+    {
+        // Select all columns (*) by default, unless explicitly specified
+        $this->selectComponents[] = new SelectComponent('*');
+        parent::__construct($tableName, $pretty);
+    }
+
+    /**
      * @param $tableName
      * @return $this
      */
@@ -49,6 +63,10 @@ class AbstractSelectQuery extends AbstractBaseQuery
      */
     public function select($column, $alias = null)
     {
+        if ($this->defaultSelectAll) {
+            $this->selectComponents = [];
+            $this->defaultSelectAll = false;
+        }
         $this->selectComponents[] = new SelectComponent($column, $alias);
         return $this;
     }
@@ -114,35 +132,5 @@ class AbstractSelectQuery extends AbstractBaseQuery
         }
         return $params;
     }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        $ret = "SELECT " . implode(', ', $this->selectComponents) . ' FROM ' . $this->tableComponent . ' ';
-        if ($this->joinComponents) {
-            $ret .= implode(' ', $this->joinComponents) . ' ';
-        }
-        if ($this->whereComponents) {
-            $ret .= 'WHERE ';
-            $ret .= implode(' AND ', $this->whereComponents) . ' ';
-        }
-
-        if (isset($this->orderByComponent)) {
-            $ret .= $this->orderByComponent;
-        }
-
-        if (isset($this->limitComponent)) {
-            $ret .= $this->limitComponent;
-        }
-
-        if (isset($this->offsetComponent)) {
-            $ret .= $this->offsetComponent;
-        }
-
-        return $ret;
-    }
-
 
 }

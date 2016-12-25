@@ -17,7 +17,7 @@ class LimitComponent extends AbstractComponent
 
     public function __toString()
     {
-        return "LIMIT {$this->limit} ";
+        return "LIMIT {$this->limit}";
     }
 
 }

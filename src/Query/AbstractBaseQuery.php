@@ -10,7 +10,7 @@ abstract class AbstractBaseQuery
     protected $tableComponent;
 
     /**
-     * SelectQuery constructor.
+     * AbstractBaseQuery constructor.
      * @param $tableName
      */
     public function __construct($tableName)
