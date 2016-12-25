@@ -37,13 +37,12 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     /**
      * AbstractSelectQuery constructor.
      * @param $tableName
-     * @param bool $pretty
      */
-    public function __construct($tableName, $pretty)
+    public function __construct($tableName)
     {
         // Select all columns (*) by default, unless explicitly specified
         $this->selectComponents[] = new SelectComponent('*');
-        parent::__construct($tableName, $pretty);
+        parent::__construct($tableName);
     }
 
     /**
