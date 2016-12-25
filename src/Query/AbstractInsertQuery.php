@@ -5,7 +5,7 @@ namespace Ejacobs\QueryBuilder\Query;
 use Ejacobs\QueryBuilder\Component\InsertRowComponent;
 use Ejacobs\QueryBuilder\FluentConnection;
 
-class AbstractInsertQuery extends AbstractBaseQuery
+abstract class AbstractInsertQuery extends AbstractBaseQuery
 {
 
     protected $columns;
@@ -54,17 +54,7 @@ class AbstractInsertQuery extends AbstractBaseQuery
         return $ret;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        $ret = 'INSERT INTO ' . $this->tableComponent . ' ';
-        $ret .= '(' . implode(', ', $this->columns) . ') VALUES ';
-        $ret .= implode(",\n", $this->insertRowComponents);
 
-        return $ret;
-    }
 
     public function debug()
     {

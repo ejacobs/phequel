@@ -6,7 +6,7 @@ use Ejacobs\QueryBuilder\Component\LeftJoinComponent;
 use Ejacobs\QueryBuilder\Component\TableComponent;
 use Ejacobs\QueryBuilder\Component\WhereComponent;
 
-class AbstractDeleteQuery extends AbstractBaseQuery
+abstract class AbstractDeleteQuery extends AbstractBaseQuery
 {
     /* @var LeftJoinComponent[] $joinComponents */
     protected $joinComponents = [];
@@ -46,21 +46,5 @@ class AbstractDeleteQuery extends AbstractBaseQuery
         }
         return $ret;
     }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        $ret = 'DELETE FROM ' . $this->tableComponent . ' ';
-        $ret .= implode(', ', $this->joinComponents);
-        if ($this->whereComponents) {
-            $ret .= 'WHERE ';
-            $ret .= implode(' AND ', $this->whereComponents);
-            $ret .= ' ';
-        }
-        return $ret;
-    }
-
 
 }

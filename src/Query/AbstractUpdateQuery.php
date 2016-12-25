@@ -5,7 +5,7 @@ namespace Ejacobs\QueryBuilder\Query;
 use Ejacobs\QueryBuilder\Component\SetComponent;
 use Ejacobs\QueryBuilder\Component\WhereComponent;
 
-class AbstractUpdateQuery extends AbstractBaseQuery
+abstract class AbstractUpdateQuery extends AbstractBaseQuery
 {
 
     /* @var SetComponent[] $setComponents */
@@ -62,19 +62,5 @@ class AbstractUpdateQuery extends AbstractBaseQuery
         }
         return $params;
     }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        $ret = 'UPDATE ' . $this->tableComponent . ' ';
-        $ret .= 'SET ' . implode(', ', $this->setComponents) . ' ';
-        if ($this->whereComponents) {
-            $ret .= 'WHERE ' . implode(', ', $this->whereComponents) . ' ';
-        }
-        return $ret;
-    }
-
 
 }

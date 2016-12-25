@@ -12,14 +12,23 @@ class PostgresSelectQuery extends AbstractSelectQuery
      */
     public function __toString()
     {
-        $ret = "SELECT " . implode(', ', $this->selectComponents) . ' FROM ' . $this->tableComponent;
+        // SELECT ALL OR DISTINCT
+        $ret = "SELECT " . implode(', ', $this->selectComponents);
+
+        $ret .= ' FROM ' . $this->tableComponent;
+
         if ($this->joinComponents) {
             $ret .= ' ' . implode(' ', $this->joinComponents) . ' ';
         }
+
         if ($this->whereComponents) {
             $ret .= ' WHERE ';
             $ret .= implode(' AND ', $this->whereComponents);
         }
+
+        // GROUP BY
+        // HAVING
+        // WINDOW
 
         if (isset($this->orderByComponent)) {
             $ret .= ' ' . $this->orderByComponent;
@@ -32,6 +41,9 @@ class PostgresSelectQuery extends AbstractSelectQuery
         if (isset($this->offsetComponent)) {
             $ret .= ' ' . $this->offsetComponent;
         }
+
+        // FETCH
+        // FOR
 
         return $ret;
     }

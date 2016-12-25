@@ -15,6 +15,7 @@ class PostgresInsertQuery extends AbstractInsertQuery
         $ret = 'INSERT INTO ' . $this->tableComponent . ' ';
         $ret .= '(' . implode(', ', $this->columns) . ') VALUES ';
         $ret .= implode(",\n", $this->insertRowComponents);
+
         return $ret;
     }
 
