@@ -2,14 +2,14 @@
 
 namespace Ejacobs\QueryBuilder\Query;
 
-use Ejacobs\QueryBuilder\Component\OrComponent;
-use Ejacobs\QueryBuilder\Component\Select\Json;
-use Ejacobs\QueryBuilder\Component\OrderByComponent;
+use Ejacobs\QueryBuilder\Component\Select\OrComponent;
+use Ejacobs\QueryBuilder\Component\Select\JsonColumn;
+use Ejacobs\QueryBuilder\Component\Select\OrderByComponent;
 use Ejacobs\QueryBuilder\Component\TableComponent;
-use Ejacobs\QueryBuilder\Component\LeftJoinComponent;
-use Ejacobs\QueryBuilder\Component\LimitComponent;
-use Ejacobs\QueryBuilder\Component\OffsetComponent;
-use Ejacobs\QueryBuilder\Component\SelectComponent;
+use Ejacobs\QueryBuilder\Component\Select\LeftJoinComponent;
+use Ejacobs\QueryBuilder\Component\Select\LimitComponent;
+use Ejacobs\QueryBuilder\Component\Select\OffsetComponent;
+use Ejacobs\QueryBuilder\Component\Select\ColumnComponent;
 use Ejacobs\QueryBuilder\Component\WhereComponent;
 
 abstract class AbstractSelectQuery extends AbstractBaseQuery
@@ -17,8 +17,8 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
 
     private $defaultSelectAll = true;
 
-    /* @var SelectComponent[] $selectComponents */
-    protected $selectComponents = [];
+    /* @var ColumnComponent[] $columnComponents */
+    protected $columnComponents = [];
 
     /* @var LeftJoinComponent[] $whereComponents */
     protected $joinComponents = [];
@@ -42,7 +42,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     public function __construct($tableName = null)
     {
         // Select all columns (*) by default, unless explicitly specified
-        $this->selectComponents[] = new SelectComponent('*');
+        $this->columnComponents[] = new ColumnComponent('*');
         parent::__construct($tableName);
     }
 
@@ -64,11 +64,11 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     public function select($column, $alias = null)
     {
         if ($this->defaultSelectAll) {
-            $this->selectComponents = [];
+            $this->columnComponents = [];
             $this->defaultSelectAll = false;
         }
-        $component = new SelectComponent($column, $alias);
-        $this->selectComponents[(string)$component] = $component;
+        $component = new ColumnComponent($column, $alias);
+        $this->columnComponents[(string)$component] = $component;
         return $this;
     }
 

@@ -19,7 +19,7 @@ class PostgresSelectQuery extends AbstractSelectQuery
             throw new \Exception("You must specify a table name");
         }
         // SELECT ALL OR DISTINCT
-        $ret = "SELECT " . implode(', ', $this->selectComponents);
+        $ret = "SELECT " . implode(', ', $this->columnComponents);
 
         $ret .= ' FROM ' . $this->tableComponent;
 

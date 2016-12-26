@@ -2,9 +2,7 @@
 
 namespace Ejacobs\QueryBuilder\Component\Select;
 
-use Ejacobs\QueryBuilder\Component\SelectComponent;
-
-class JsonSelect extends SelectComponent
+class JsonColumn extends ColumnComponent
 {
 
     protected $narrows = [];

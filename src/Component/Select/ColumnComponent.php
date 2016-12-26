@@ -1,9 +1,10 @@
 <?php
 
-namespace Ejacobs\QueryBuilder\Component;
+namespace Ejacobs\QueryBuilder\Component\Select;
 
+use Ejacobs\QueryBuilder\Component\AbstractComponent;
 
-class SelectComponent extends AbstractComponent
+class ColumnComponent extends AbstractComponent
 {
     protected $column;
     protected $alias;
