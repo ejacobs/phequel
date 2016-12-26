@@ -5,10 +5,11 @@ namespace Ejacobs\QueryBuilder\Component;
 
 class WhereComponent extends AbstractComponent
 {
-    private $components;
+    private $components = [];
     private $params = [];
     private $type;
     private $validTypes = ['and', 'or'];
+    protected $level = 0;
 
     /**
      * WhereComponent constructor.
@@ -17,15 +18,23 @@ class WhereComponent extends AbstractComponent
      * @param string $type
      * @throws \Exception
      */
-    public function __construct($components, $params = [], $type = 'and')
+    public function __construct($components = [], $params = [], $type = 'and')
     {
         if (in_array(strtolower($type), $this->validTypes)) {
             $this->type = strtoupper($type);
-        }
-        else {
+        } else {
             throw new \Exception("Where conditions type must be one of the following: " . implode(', ', $this->validTypes));
         }
 
+        $this->addConditions($components, $params);
+    }
+
+    /**
+     * @param $components
+     * @param array $params
+     */
+    public function addConditions($components, $params = [])
+    {
         if (!is_array($components)) {
             $components = [$components];
         }
@@ -37,15 +46,18 @@ class WhereComponent extends AbstractComponent
         foreach ($components as $component) {
             if (is_string($component)) {
                 $this->params = $params;
-            }
-            else if ($component instanceof WhereComponent) {
+            } else if ($component instanceof WhereComponent) {
+                $component->setLevel($this->level + 1);
                 $this->params = array_merge($this->params, $component->getParams());
             }
         }
 
-        $this->components = $components;
+        $this->components = array_merge($this->components, $components);
     }
 
+    /**
+     * @return array
+     */
     public function getParams()
     {
         return $this->params;
@@ -56,7 +68,19 @@ class WhereComponent extends AbstractComponent
      */
     public function __toString()
     {
-        return '(' . implode(" {$this->type} ", $this->components) . ')';
+        $ret = '';
+        if ($this->components) {
+            if ($this->level === 0) {
+                $ret .= ' WHERE ';
+            }
+            $ret .= '(' . implode(" {$this->type} ", $this->components) . ')';
+        }
+        return $ret;
+    }
+
+    protected function setLevel($level)
+    {
+        $this->level = $level;
     }
 
 }

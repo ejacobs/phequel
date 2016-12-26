@@ -3,29 +3,25 @@
 namespace Ejacobs\QueryBuilder\Query;
 
 use Ejacobs\QueryBuilder\Component\Select\GroupByComponent;
-use Ejacobs\QueryBuilder\Component\Select\OrComponent;
-use Ejacobs\QueryBuilder\Component\Select\JsonColumn;
 use Ejacobs\QueryBuilder\Component\Select\OrderByComponent;
 use Ejacobs\QueryBuilder\Component\TableComponent;
-use Ejacobs\QueryBuilder\Component\Select\LeftJoinComponent;
+use Ejacobs\QueryBuilder\Component\Select\JoinComponent;
 use Ejacobs\QueryBuilder\Component\Select\LimitComponent;
 use Ejacobs\QueryBuilder\Component\Select\OffsetComponent;
-use Ejacobs\QueryBuilder\Component\Select\ColumnComponent;
+use Ejacobs\QueryBuilder\Component\Select\SelectComponent;
 use Ejacobs\QueryBuilder\Component\WhereComponent;
 
 abstract class AbstractSelectQuery extends AbstractBaseQuery
 {
 
-    private $defaultSelectAll = true;
+    /* @var SelectComponent $selectComponent */
+    protected $selectComponent;
 
-    /* @var ColumnComponent[] $columnComponents */
-    protected $columnComponents = [];
+    /* @var JoinComponent $joinComponent */
+    protected $joinComponent;
 
-    /* @var LeftJoinComponent[] $whereComponents */
-    protected $joinComponents = [];
-
-    /* @var WhereComponent[] $whereComponents */
-    protected $whereComponents = [];
+    /* @var WhereComponent $whereComponent */
+    protected $whereComponent;
 
     /* @var LimitComponent $whereComponents */
     protected $limitComponent;
@@ -45,9 +41,13 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      */
     public function __construct($tableName = null)
     {
-        // Select all columns (*) by default, unless explicitly specified
-        $this->columnComponents[] = new ColumnComponent('*');
+        $this->selectComponent = new SelectComponent();
+        $this->whereComponent = new WhereComponent();
+        $this->joinComponent = new JoinComponent();
         $this->groupByComponent = new GroupByComponent();
+        $this->orderByComponent = new OrderByComponent();
+        $this->limitComponent = new LimitComponent();
+        $this->offsetComponent = new OffsetComponent();
         parent::__construct($tableName);
     }
 
@@ -63,17 +63,11 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
 
     /**
      * @param $column
-     * @param null $alias
      * @return $this
      */
-    public function select($column, $alias = null)
+    public function select($column)
     {
-        if ($this->defaultSelectAll) {
-            $this->columnComponents = [];
-            $this->defaultSelectAll = false;
-        }
-        $component = new ColumnComponent($column, $alias);
-        $this->columnComponents[(string)$component] = $component;
+        $this->selectComponent->addColumns($column);
         return $this;
     }
 
@@ -84,18 +78,18 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      */
     public function leftJoin($tableName, $onClause)
     {
-        $this->joinComponents[] = new LeftJoinComponent($tableName, $onClause);
+        $this->joinComponent->addJoin($tableName, $onClause, 'left');
         return $this;
     }
 
     /**
-     * @param string $expression
+     * @param array|string $expressions
      * @param array|string|int $params
      * @return $this
      */
-    public function where($expression, $params = [])
+    public function where($expressions, $params = [])
     {
-        $this->whereComponents[] = new WhereComponent($expression, $params, 'and');
+        $this->whereComponent->addConditions(new WhereComponent($expressions, $params, 'and'));
         return $this;
     }
 
@@ -106,7 +100,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      */
     public function whereAny($expressions = [], $params = [])
     {
-        $this->whereComponents[] = new WhereComponent($expressions, $params, 'or');
+        $this->whereComponent->addConditions(new WhereComponent($expressions, $params, 'or'));
         return $this;
     }
 
@@ -156,11 +150,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      */
     public function getParams()
     {
-        $params = [];
-        foreach ($this->whereComponents as $whereComponent) {
-            $params = array_merge($params, $whereComponent->getParams());
-        }
-        return $params;
+        return $this->whereComponent->getParams();
     }
 
 }

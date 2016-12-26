@@ -10,16 +10,22 @@ class LimitComponent extends AbstractComponent
 
     /**
      * LimitComponent constructor.
-     * @param int $limit
+     * @param int|null $limit
      */
-    public function __construct($limit)
+    public function __construct($limit = null)
     {
         $this->limit = $limit;
     }
 
     public function __toString()
     {
-        return "LIMIT {$this->limit}";
+        if ($this->limit) {
+            return " LIMIT {$this->limit}";
+        }
+        else {
+            return '';
+        }
+
     }
 
 }

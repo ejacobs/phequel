@@ -14,7 +14,7 @@ class OrderByComponent extends AbstractComponent
      * @param $column
      * @param string $direction
      */
-    public function __construct($column, $direction = 'ASC')
+    public function __construct($column = null, $direction = 'ASC')
     {
         $this->column = $column;
         $this->direction = $direction;
@@ -22,7 +22,12 @@ class OrderByComponent extends AbstractComponent
 
     public function __toString()
     {
-        return "ORDER BY {$this->column} {$this->direction} ";
+        if ($this->column) {
+            return " ORDER BY {$this->column} {$this->direction}";
+        }
+        else {
+            return '';
+        }
     }
 
 }

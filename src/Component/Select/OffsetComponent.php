@@ -10,16 +10,21 @@ class OffsetComponent extends AbstractComponent
 
     /**
      * SelectComponent constructor.
-     * @param $offset
+     * @param int|null $offset
      */
-    public function __construct($offset)
+    public function __construct($offset = null)
     {
         $this->offset = $offset;
     }
 
     public function __toString()
     {
-        return ' OFFSET ' . $this->offset . ' ';
+        if ($this->offset !== null) {
+            return ' OFFSET ' . $this->offset;
+        }
+        else {
+            return '';
+        }
     }
 
 }
