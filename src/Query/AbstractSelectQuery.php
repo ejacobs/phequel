@@ -89,7 +89,10 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      */
     public function where($expressions, $params = [])
     {
-        $this->whereComponent->addConditions(new WhereComponent($expressions, $params, 'and'));
+        if (!($expressions instanceof WhereComponent)) {
+            $expressions = new WhereComponent($expressions, $params, 'and');
+        }
+        $this->whereComponent->addConditions($expressions);
         return $this;
     }
 
@@ -100,7 +103,10 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      */
     public function whereAny($expressions = [], $params = [])
     {
-        $this->whereComponent->addConditions(new WhereComponent($expressions, $params, 'or'));
+        if (!($expressions instanceof WhereComponent)) {
+            $expressions = new WhereComponent($expressions, $params, 'or');
+        }
+        $this->whereComponent->addConditions($expressions);
         return $this;
     }
 
