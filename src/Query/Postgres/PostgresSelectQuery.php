@@ -2,6 +2,8 @@
 
 namespace Ejacobs\QueryBuilder\Query\Postgres;
 
+use Ejacobs\QueryBuilder\Component\AndComponent;
+use Ejacobs\QueryBuilder\Component\WhereComponent;
 use Ejacobs\QueryBuilder\Query\AbstractSelectQuery;
 
 class PostgresSelectQuery extends AbstractSelectQuery
@@ -27,7 +29,7 @@ class PostgresSelectQuery extends AbstractSelectQuery
 
         if ($this->whereComponents) {
             $ret .= ' WHERE ';
-            $ret .= implode(' AND ', $this->whereComponents);
+            $ret .= (string)(new WhereComponent($this->whereComponents));
         }
 
         // GROUP BY
@@ -45,7 +47,7 @@ class PostgresSelectQuery extends AbstractSelectQuery
         if (isset($this->offsetComponent)) {
             $ret .= ' ' . $this->offsetComponent;
         }
-
+        $ret .= ';';
         // FETCH
         // FOR
 

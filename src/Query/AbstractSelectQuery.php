@@ -2,6 +2,7 @@
 
 namespace Ejacobs\QueryBuilder\Query;
 
+use Ejacobs\QueryBuilder\Component\OrComponent;
 use Ejacobs\QueryBuilder\Component\Select\Json;
 use Ejacobs\QueryBuilder\Component\OrderByComponent;
 use Ejacobs\QueryBuilder\Component\TableComponent;
@@ -66,7 +67,8 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
             $this->selectComponents = [];
             $this->defaultSelectAll = false;
         }
-        $this->selectComponents[] = new SelectComponent($column, $alias);
+        $component = new SelectComponent($column, $alias);
+        $this->selectComponents[(string)$component] = $component;
         return $this;
     }
 
@@ -83,12 +85,23 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
 
     /**
      * @param string $expression
-     * @param array $params
+     * @param array|string|int $params
      * @return $this
      */
     public function where($expression, $params = [])
     {
-        $this->whereComponents[] = new WhereComponent($expression, $params);
+        $this->whereComponents[] = new WhereComponent($expression, $params, 'and');
+        return $this;
+    }
+
+    /**
+     * @param array $expressions
+     * @param array $params
+     * @return $this
+     */
+    public function whereAny($expressions = [], $params = [])
+    {
+        $this->whereComponents[] = new WhereComponent($expressions, $params, 'or');
         return $this;
     }
 
@@ -123,6 +136,9 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getParams()
     {
         $params = [];
