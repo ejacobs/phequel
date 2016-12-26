@@ -32,7 +32,7 @@ class PostgresSelectQuery extends AbstractSelectQuery
             $ret .= (string)(new WhereComponent($this->whereComponents));
         }
 
-        // GROUP BY
+        $ret .= (string)$this->groupByComponent;
         // HAVING
         // WINDOW
 

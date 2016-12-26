@@ -2,6 +2,7 @@
 
 namespace Ejacobs\QueryBuilder\Query;
 
+use Ejacobs\QueryBuilder\Component\Select\GroupByComponent;
 use Ejacobs\QueryBuilder\Component\Select\OrComponent;
 use Ejacobs\QueryBuilder\Component\Select\JsonColumn;
 use Ejacobs\QueryBuilder\Component\Select\OrderByComponent;
@@ -32,6 +33,9 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     /* @var OffsetComponent $whereComponents */
     protected $offsetComponent;
 
+    /* @var GroupByComponent $groupByComponent */
+    protected $groupByComponent;
+
     /* @var OrderByComponent $orderByComponent */
     protected $orderByComponent;
 
@@ -43,6 +47,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     {
         // Select all columns (*) by default, unless explicitly specified
         $this->columnComponents[] = new ColumnComponent('*');
+        $this->groupByComponent = new GroupByComponent();
         parent::__construct($tableName);
     }
 
@@ -112,6 +117,16 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     public function limit($limit = null)
     {
         $this->limitComponent = new LimitComponent($limit);
+        return $this;
+    }
+
+    /**
+     * @param array|string $columns
+     * @return $this
+     */
+    public function groupBy($columns)
+    {
+        $this->groupByComponent->addColumns($columns);
         return $this;
     }
 
