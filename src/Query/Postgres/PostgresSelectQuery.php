@@ -9,9 +9,13 @@ class PostgresSelectQuery extends AbstractSelectQuery
 
     /**
      * @return string
+     * @throws \Exception
      */
     public function __toString()
     {
+        if ($this->tableComponent === null) {
+            throw new \Exception("You must specify a table name");
+        }
         // SELECT ALL OR DISTINCT
         $ret = "SELECT " . implode(', ', $this->selectComponents);
 

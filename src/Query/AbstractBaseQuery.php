@@ -7,7 +7,7 @@ use Ejacobs\QueryBuilder\FluentConnection;
 
 abstract class AbstractBaseQuery
 {
-    protected $tableComponent;
+    protected $tableComponent = null;
 
     /**
      * AbstractBaseQuery constructor.

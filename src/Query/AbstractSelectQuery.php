@@ -38,7 +38,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      * AbstractSelectQuery constructor.
      * @param $tableName
      */
-    public function __construct($tableName)
+    public function __construct($tableName = null)
     {
         // Select all columns (*) by default, unless explicitly specified
         $this->selectComponents[] = new SelectComponent('*');
