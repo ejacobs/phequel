@@ -23,17 +23,15 @@ class PostgresSelectQuery extends AbstractSelectQuery
         $ret .= (string)$this->whereComponent;
         $ret .= (string)$this->groupByComponent;
         $ret .= (string)$this->havingComponent;
-
-        // WINDOW
-
+        $ret .= (string)$this->windowComponent;
         $ret .= (string)$this->orderByComponent;
         $ret .= (string)$this->limitComponent;
         $ret .= (string)$this->offsetComponent;
-        $ret .= ';';
-        
+
         // FETCH
         // FOR
 
+        $ret .= ';';
         return $ret;
     }
 

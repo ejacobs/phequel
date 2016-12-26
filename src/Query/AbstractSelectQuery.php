@@ -5,6 +5,7 @@ namespace Ejacobs\QueryBuilder\Query;
 use Ejacobs\QueryBuilder\Component\Select\GroupByComponent;
 use Ejacobs\QueryBuilder\Component\Select\HavingComponent;
 use Ejacobs\QueryBuilder\Component\Select\OrderByComponent;
+use Ejacobs\QueryBuilder\Component\Select\WindowComponent;
 use Ejacobs\QueryBuilder\Component\TableComponent;
 use Ejacobs\QueryBuilder\Component\Select\JoinComponent;
 use Ejacobs\QueryBuilder\Component\Select\LimitComponent;
@@ -39,6 +40,9 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     /* @var HavingComponent $havingComponent */
     protected $havingComponent;
 
+    /* @var WindowComponent $windowComponent */
+    protected $windowComponent;
+
     /**
      * AbstractSelectQuery constructor.
      * @param $tableName
@@ -53,6 +57,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         $this->limitComponent = new LimitComponent();
         $this->offsetComponent = new OffsetComponent();
         $this->havingComponent = new HavingComponent();
+        $this->windowComponent = new WindowComponent();
         parent::__construct($tableName);
     }
 
@@ -153,6 +158,16 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     public function offset($offset = null)
     {
         $this->offsetComponent = new OffsetComponent($offset);
+        return $this;
+    }
+
+    /**
+     * @param $column
+     * @return $this
+     */
+    public function window($column)
+    {
+        $this->windowComponent->addWindow($column);
         return $this;
     }
 
