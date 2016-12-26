@@ -3,6 +3,7 @@
 namespace Ejacobs\QueryBuilder\Query;
 
 use Ejacobs\QueryBuilder\Component\Select\GroupByComponent;
+use Ejacobs\QueryBuilder\Component\Select\HavingComponent;
 use Ejacobs\QueryBuilder\Component\Select\OrderByComponent;
 use Ejacobs\QueryBuilder\Component\TableComponent;
 use Ejacobs\QueryBuilder\Component\Select\JoinComponent;
@@ -35,6 +36,9 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     /* @var OrderByComponent $orderByComponent */
     protected $orderByComponent;
 
+    /* @var HavingComponent $havingComponent */
+    protected $havingComponent;
+
     /**
      * AbstractSelectQuery constructor.
      * @param $tableName
@@ -48,6 +52,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         $this->orderByComponent = new OrderByComponent();
         $this->limitComponent = new LimitComponent();
         $this->offsetComponent = new OffsetComponent();
+        $this->havingComponent = new HavingComponent();
         parent::__construct($tableName);
     }
 
@@ -127,6 +132,17 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     public function groupBy($columns)
     {
         $this->groupByComponent->addColumns($columns);
+        return $this;
+    }
+
+    /**
+     * @param $sql
+     * @param array $params
+     * @return $this
+     */
+    public function having($sql, $params = [])
+    {
+        $this->havingComponent->addCondition($sql, $params);
         return $this;
     }
 
