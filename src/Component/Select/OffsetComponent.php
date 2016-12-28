@@ -21,8 +21,7 @@ class OffsetComponent extends AbstractComponent
     {
         if ($this->offset !== null) {
             return ' OFFSET ' . $this->offset;
-        }
-        else {
+        } else {
             return '';
         }
     }

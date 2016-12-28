@@ -5,7 +5,6 @@ namespace Ejacobs\QueryBuilder\Query;
 use Ejacobs\QueryBuilder\Component\Select\GroupByComponent;
 use Ejacobs\QueryBuilder\Component\Select\HavingComponent;
 use Ejacobs\QueryBuilder\Component\Select\OrderByComponent;
-use Ejacobs\QueryBuilder\Component\Select\WindowComponent;
 use Ejacobs\QueryBuilder\Component\TableComponent;
 use Ejacobs\QueryBuilder\Component\Select\JoinComponent;
 use Ejacobs\QueryBuilder\Component\Select\LimitComponent;
@@ -39,7 +38,6 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
 
     /* @var HavingComponent $havingComponent */
     protected $havingComponent;
-
 
     /**
      * AbstractSelectQuery constructor.

@@ -17,8 +17,7 @@ class InsertRowComponent extends AbstractComponent
         foreach ($columns as $column) {
             if (isset($data[$column])) {
                 $this->data[$column] = $data[$column];
-            }
-            else {
+            } else {
                 $this->data[$column] = null;
             }
         }

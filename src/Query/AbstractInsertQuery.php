@@ -20,7 +20,7 @@ abstract class AbstractInsertQuery extends AbstractBaseQuery
     public function __construct($tableName, $columns)
     {
         $this->columns = $columns;
-        parent::__construct( $tableName);
+        parent::__construct($tableName);
     }
 
     /**
@@ -55,7 +55,6 @@ abstract class AbstractInsertQuery extends AbstractBaseQuery
     }
 
 
-
     public function debug()
     {
         $params = end($this->insertRowComponents)->getData();
@@ -65,8 +64,7 @@ abstract class AbstractInsertQuery extends AbstractBaseQuery
             $nextParam = array_shift($params);
             if ($nextParam === null) {
                 $nextParam = 'null';
-            }
-            else {
+            } else {
                 $nextParam = "'" . $nextParam . "'";
             }
             $query = $this->strReplaceFirst('?', $nextParam, $query);
@@ -76,7 +74,7 @@ abstract class AbstractInsertQuery extends AbstractBaseQuery
 
     protected function strReplaceFirst($from, $to, $subject)
     {
-        $from = '/'.preg_quote($from, '/').'/';
+        $from = '/' . preg_quote($from, '/') . '/';
 
         return preg_replace($from, $to, $subject, 1);
     }

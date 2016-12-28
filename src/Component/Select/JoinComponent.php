@@ -31,15 +31,14 @@ class JoinComponent extends AbstractComponent
     {
         if (in_array(strtolower($type), $this->validJoinTypes)) {
             $type = strtoupper($type);
-        }
-        else {
+        } else {
             throw new \Exception("Invalid join type: {$type}");
         }
 
         $this->joins[] = [
-            'type' => $type,
+            'type'  => $type,
             'table' => $tableName,
-            'on' => $onClause
+            'on'    => $onClause
         ];
     }
 

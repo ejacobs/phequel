@@ -24,8 +24,7 @@ class OrderByComponent extends AbstractComponent
     {
         if ($this->column) {
             return " ORDER BY {$this->column} {$this->direction}";
-        }
-        else {
+        } else {
             return '';
         }
     }

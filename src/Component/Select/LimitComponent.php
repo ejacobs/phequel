@@ -21,8 +21,7 @@ class LimitComponent extends AbstractComponent
     {
         if ($this->limit) {
             return " LIMIT {$this->limit}";
-        }
-        else {
+        } else {
             return '';
         }
 

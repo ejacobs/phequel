@@ -26,7 +26,7 @@ class HavingComponent extends AbstractComponent
             $params = [$params];
         }
         $this->conditions[] = [
-            'sql' => $sql,
+            'sql'    => $sql,
             'params' => $params
         ];
     }
