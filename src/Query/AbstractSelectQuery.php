@@ -40,8 +40,6 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     /* @var HavingComponent $havingComponent */
     protected $havingComponent;
 
-    /* @var WindowComponent $windowComponent */
-    protected $windowComponent;
 
     /**
      * AbstractSelectQuery constructor.
@@ -57,7 +55,6 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         $this->limitComponent = new LimitComponent();
         $this->offsetComponent = new OffsetComponent();
         $this->havingComponent = new HavingComponent();
-        $this->windowComponent = new WindowComponent();
         parent::__construct($tableName);
     }
 
@@ -78,6 +75,17 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     public function select($column)
     {
         $this->selectComponent->addColumns($column);
+        return $this;
+    }
+
+    /**
+     * @param bool $distinct
+     * @param null $on
+     * @return $this
+     */
+    public function distinct($distinct = true, $on = null)
+    {
+        $this->selectComponent->setDistinct($distinct, $on);
         return $this;
     }
 
@@ -161,15 +169,6 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         return $this;
     }
 
-    /**
-     * @param $column
-     * @return $this
-     */
-    public function window($column)
-    {
-        $this->windowComponent->addWindow($column);
-        return $this;
-    }
 
     /**
      * @param $column

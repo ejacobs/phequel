@@ -8,6 +8,8 @@ class SelectComponent extends AbstractComponent
 {
     private $columns = [];
     private $defaultSelectAll = false;
+    private $distinct = false;
+    private $distinctOn = null;
 
     /**
      * Select all columns (*) by default, unless explicitly specified
@@ -37,11 +39,29 @@ class SelectComponent extends AbstractComponent
     }
 
     /**
+     * @param bool $distinct
+     * @param null $on
+     */
+    public function setDistinct($distinct = true, $on = null)
+    {
+        $this->distinct = $distinct;
+        $this->distinctOn = $on;
+    }
+
+    /**
      * @return string
      */
     public function __toString()
     {
-        return 'SELECT ' . implode(', ', $this->columns);
+        $ret = 'SELECT ';
+        if ($this->distinct) {
+            $ret .= 'DISTINCT ';
+            if ($this->distinctOn !== null) {
+                $ret .= 'ON (' . $this->distinctOn . ') ';
+            }
+        }
+        $ret .= implode(', ', $this->columns);
+        return $ret;
     }
 
 }

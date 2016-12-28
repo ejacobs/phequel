@@ -2,10 +2,30 @@
 
 namespace Ejacobs\QueryBuilder\Query\Postgres;
 
+use Ejacobs\QueryBuilder\Component\Select\WindowComponent;
 use Ejacobs\QueryBuilder\Query\AbstractSelectQuery;
 
 class PostgresSelectQuery extends AbstractSelectQuery
 {
+
+    /* @var WindowComponent $windowComponent */
+    protected $windowComponent;
+
+    public function __construct($tableName = null)
+    {
+        $this->windowComponent = new WindowComponent();
+        parent::__construct($tableName);
+    }
+
+    /**
+     * @param $column
+     * @return $this
+     */
+    public function window($column)
+    {
+        $this->windowComponent->addWindow($column);
+        return $this;
+    }
 
     /**
      * @return string
