@@ -14,12 +14,12 @@ class FetchComponent extends AbstractComponent
     private $validRowTypes = ['row', 'rows'];
 
     /**
-     * @param int $count
      * @param string $type
+     * @param int $count
      * @param string $rowType
      * @throws \Exception
      */
-    public function setFetch($count = 1, $type = 'first', $rowType = 'row')
+    public function setFetch($type = 'first', $count = 1, $rowType = 'row')
     {
         if (($type !== null) && !in_array(strtolower($type), $this->validTypes)) {
             throw new \Exception("type must be one of the following: " . implode(', ', $this->validTypes));
@@ -36,11 +36,11 @@ class FetchComponent extends AbstractComponent
     {
         $ret = '';
         if ($this->count) {
-            $ret .= " FETCH {$this->type}";
+            $ret .= ' FETCH ' . strtoupper($this->type);
             if ($this->count) {
-                $ret .= " {$this->count}";
+                $ret .= " {$this->count} ";
             }
-            $ret .= " {$this->rowType} ONLY";
+            $ret .= strtoupper($this->rowType) . " ONLY";
         }
         return $ret;
     }

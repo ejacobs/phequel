@@ -35,13 +35,13 @@ class PostgresSelectQuery extends AbstractSelectQuery
 
     /**
      * @param $count
-     * @param string $type
      * @param string $rowType
+     * @param string $type
      * @return $this
      */
-    public function fetchOnly($count = 1, $type = 'first', $rowType = 'rows')
+    public function fetchOnly($type = 'first', $count = 1, $rowType = 'rows')
     {
-        $this->fetchComponent->setFetch($count, $type, $rowType);
+        $this->fetchComponent->setFetch($type, $count, $rowType);
         return $this;
     }
 
