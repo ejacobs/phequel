@@ -3,6 +3,7 @@
 namespace Ejacobs\QueryBuilder\Query\Postgres;
 
 use Ejacobs\QueryBuilder\Component\Select\FetchComponent;
+use Ejacobs\QueryBuilder\Component\Select\ForComponent;
 use Ejacobs\QueryBuilder\Component\Select\WindowComponent;
 use Ejacobs\QueryBuilder\Query\AbstractSelectQuery;
 
@@ -16,10 +17,15 @@ class PostgresSelectQuery extends AbstractSelectQuery
     protected $fetchComponent;
 
 
+    /* @var ForComponent $forComponent */
+    protected $forComponent;
+
+
     public function __construct($tableName = null)
     {
         $this->windowComponent = new WindowComponent();
         $this->fetchComponent = new FetchComponent();
+        $this->forComponent = new ForComponent();
         parent::__construct($tableName);
     }
 
@@ -30,6 +36,18 @@ class PostgresSelectQuery extends AbstractSelectQuery
     public function window($column)
     {
         $this->windowComponent->addWindow($column);
+        return $this;
+    }
+
+    /**
+     * @param string $lockStrength
+     * @param null|string|array $table
+     * @param null|string $option
+     * @return $this
+     */
+    public function forLock($lockStrength, $table = null, $option = null)
+    {
+        $this->forComponent->setFor($lockStrength, $table, $option);
         return $this;
     }
 
@@ -66,10 +84,8 @@ class PostgresSelectQuery extends AbstractSelectQuery
         $ret .= (string)$this->limitComponent;
         $ret .= (string)$this->offsetComponent;
         $ret .= (string)$this->fetchComponent;
+        $ret .= (string)$this->forComponent;
 
-        // FOR
-
-        $ret .= ';';
         return $ret;
     }
 

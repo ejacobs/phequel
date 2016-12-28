@@ -17,6 +17,6 @@ class PostgresSelectQuerySpec extends ObjectBehavior
     {
         $this->beConstructedWith('table_name');
         $this->shouldHaveType(PostgresSelectQuery::class);
-        $this->select('*')->__toString()->shouldReturn('SELECT * FROM table_name;');
+        $this->select('*')->__toString()->shouldReturn('SELECT * FROM table_name');
     }
 }
