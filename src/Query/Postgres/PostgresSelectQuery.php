@@ -16,10 +16,8 @@ class PostgresSelectQuery extends AbstractSelectQuery
     /* @var FetchComponent $fetchComponent */
     protected $fetchComponent;
 
-
     /* @var ForComponent $forComponent */
     protected $forComponent;
-
 
     public function __construct($tableName = null)
     {
@@ -73,20 +71,18 @@ class PostgresSelectQuery extends AbstractSelectQuery
             throw new \Exception("You must specify a table name");
         }
 
-        $ret = (string)$this->selectComponent;
-        $ret .= (string)$this->tableComponent;
-        $ret .= (string)$this->joinComponent;
-        $ret .= (string)$this->whereComponent;
-        $ret .= (string)$this->groupByComponent;
-        $ret .= (string)$this->havingComponent;
-        $ret .= (string)$this->windowComponent;
-        $ret .= (string)$this->orderByComponent;
-        $ret .= (string)$this->limitComponent;
-        $ret .= (string)$this->offsetComponent;
-        $ret .= (string)$this->fetchComponent;
-        $ret .= (string)$this->forComponent;
-
-        return $ret;
+        return (string)$this->selectComponent
+        . (string)$this->tableComponent
+        . (string)$this->joinComponent
+        . (string)$this->whereComponent
+        . (string)$this->groupByComponent
+        . (string)$this->havingComponent
+        . (string)$this->windowComponent
+        . (string)$this->orderByComponent
+        . (string)$this->limitComponent
+        . (string)$this->offsetComponent
+        . (string)$this->fetchComponent
+        . (string)$this->forComponent;
     }
 
 
