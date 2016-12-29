@@ -9,18 +9,17 @@ class PostgresDeleteQuery extends AbstractDeleteQuery
 
     /**
      * @return string
+     * @throws \Exception
      */
     public function __toString()
     {
-        $ret = 'DELETE FROM ' . $this->tableComponent . ' ';
-        $ret .= implode(', ', $this->joinComponents);
-        if ($this->whereComponents) {
-            $ret .= 'WHERE ';
-            $ret .= implode(' AND ', $this->whereComponents);
-            $ret .= ' ';
+        if ($this->tableComponent === null) {
+            throw new \Exception("You must specify a table name");
         }
-        return $ret;
-    }
 
+        return (string)$this->deleteComponent
+        . (string)$this->tableComponent
+        . (string)$this->whereComponent;
+    }
 
 }

@@ -70,10 +70,22 @@ class WhereComponent extends AbstractComponent
     {
         $ret = '';
         if ($this->components) {
+
             if ($this->level === 0) {
                 $ret .= ' WHERE ';
             }
-            $ret .= '(' . implode(" {$this->type} ", $this->components) . ')';
+
+            $useParens = (($this->level !== 0) && (count($this->components) > 1));
+
+            if ($useParens) {
+                $ret .= '(';
+            }
+
+            $ret .= implode(" {$this->type} ", $this->components);
+
+            if ($useParens) {
+                $ret .= ')';
+            }
         }
         return $ret;
     }
