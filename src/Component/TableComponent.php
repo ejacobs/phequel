@@ -14,7 +14,7 @@ class TableComponent extends AbstractComponent
 
     public function __toString()
     {
-        return ' FROM ' . $this->tableName;
+        return ' ' . $this->tableName;
     }
 
 }

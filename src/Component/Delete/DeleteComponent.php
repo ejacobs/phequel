@@ -12,7 +12,7 @@ class DeleteComponent extends AbstractComponent
      */
     public function __toString()
     {
-        return 'DELETE';
+        return 'DELETE FROM';
     }
 
 }

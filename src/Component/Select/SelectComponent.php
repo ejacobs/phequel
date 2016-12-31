@@ -61,6 +61,7 @@ class SelectComponent extends AbstractComponent
             }
         }
         $ret .= implode(', ', $this->columns);
+        $ret .= ' FROM';
         return $ret;
     }
 

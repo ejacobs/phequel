@@ -85,5 +85,4 @@ class PostgresSelectQuery extends AbstractSelectQuery
         . (string)$this->forComponent;
     }
 
-
 }
