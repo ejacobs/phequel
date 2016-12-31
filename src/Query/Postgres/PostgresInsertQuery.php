@@ -12,11 +12,9 @@ class PostgresInsertQuery extends AbstractInsertQuery
      */
     public function __toString()
     {
-        $ret = 'INSERT INTO ' . $this->tableComponent . ' ';
-        $ret .= '(' . implode(', ', $this->columns) . ') VALUES ';
-        $ret .= implode(",\n", $this->insertRowComponents);
-
-        return $ret;
+        return (string)$this->insertComponent
+        . (string)$this->tableComponent
+        . (string)$this->rowComponent;
     }
 
 }
