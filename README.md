@@ -26,13 +26,13 @@ print_r($select->getParams());
 ```php
 use Ejacobs\QueryBuilder\Query\Postgres\PostgresUpdateQuery;
 
-$delete = new PostgresUpdateQuery();
-$delete->update('table1')
+$update = new PostgresUpdateQuery();
+$update->update('table1')
     ->set('foo', 'bar')
     ->where('somecolumn = ?', 'x');
     
-echo $delete;
-print_r($delete->getParams());
+echo $update;
+print_r($update->getParams());
 ```
 
 ### INSERT
