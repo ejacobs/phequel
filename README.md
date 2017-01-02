@@ -1,7 +1,9 @@
 # Phequel
-A fluent PHP query builder
+
 [![Build Status](https://travis-ci.org/ejacobs/querybuilder.svg?branch=master)](https://travis-ci.org/ejacobs/querybuilder)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ejacobs/querybuilder/master/LICENSE.md)
+
+## About Phequel
 
 Phequel is a framework agnostic query builder for PHP. 
 
