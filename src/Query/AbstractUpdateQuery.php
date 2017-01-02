@@ -2,17 +2,40 @@
 
 namespace Ejacobs\QueryBuilder\Query;
 
-use Ejacobs\QueryBuilder\Component\SetComponent;
+use Ejacobs\QueryBuilder\Component\Update\SetComponent;
+use Ejacobs\QueryBuilder\Component\TableComponent;
+use Ejacobs\QueryBuilder\Component\Update\UpdateComponent;
 use Ejacobs\QueryBuilder\Component\WhereComponent;
 
 abstract class AbstractUpdateQuery extends AbstractBaseQuery
 {
+    /* @var UpdateComponent $updateComponent */
+    protected $updateComponent;
 
-    /* @var SetComponent[] $setComponents */
-    protected $setComponents = [];
+    /* @var SetComponent $setComponent */
+    protected $setComponent;
 
-    /* @var WhereComponent[] $whereComponents */
-    protected $whereComponents = [];
+    /* @var WhereComponent $whereComponent */
+    protected $whereComponent;
+
+
+    public function __construct($tableName = null)
+    {
+        $this->updateComponent = new UpdateComponent();
+        $this->setComponent = new SetComponent();
+        $this->whereComponent = new WhereComponent();
+        parent::__construct($tableName);
+    }
+
+    /**
+     * @param $tableName
+     * @return $this
+     */
+    public function update($tableName)
+    {
+        $this->tableComponent = new TableComponent($tableName);
+        return $this;
+    }
 
     /**
      * @param string $column
@@ -21,7 +44,7 @@ abstract class AbstractUpdateQuery extends AbstractBaseQuery
      */
     public function set($column, $value)
     {
-        $this->setComponents[] = new SetComponent($column, $value);
+        $this->setComponent->setValue($column, $value);
         return $this;
     }
 
@@ -32,7 +55,7 @@ abstract class AbstractUpdateQuery extends AbstractBaseQuery
     public function setMultiple($values)
     {
         foreach ($values as $column => $value) {
-            $this->setComponents[] = new SetComponent($column, $value);
+            $this->setComponent->setValue($column, $value);
         }
         return $this;
     }
@@ -44,7 +67,7 @@ abstract class AbstractUpdateQuery extends AbstractBaseQuery
      */
     public function where($expression, $params = [])
     {
-        $this->whereComponents[] = new WhereComponent($expression, $params);
+        $this->whereComponent->addConditions($expression, $params);
         return $this;
     }
 
@@ -54,11 +77,11 @@ abstract class AbstractUpdateQuery extends AbstractBaseQuery
     public function getParams()
     {
         $params = [];
-        foreach ($this->setComponents as $setComponent) {
-            $params = array_merge($params, $setComponent->getParams());
+        foreach ($this->setComponent->getParams() as $value) {
+            $params[] = $value;
         }
-        foreach ($this->whereComponents as $whereComponent) {
-            $params = array_merge($params, $whereComponent->getParams());
+        foreach ($this->whereComponent->getParams() as $value) {
+            $params[] = $value;
         }
         return $params;
     }

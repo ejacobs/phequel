@@ -12,12 +12,10 @@ class PostgresUpdateQuery extends AbstractUpdateQuery
      */
     public function __toString()
     {
-        $ret = 'UPDATE ' . $this->tableComponent . ' ';
-        $ret .= 'SET ' . implode(', ', $this->setComponents) . ' ';
-        if ($this->whereComponents) {
-            $ret .= 'WHERE ' . implode(', ', $this->whereComponents) . ' ';
-        }
-        return $ret;
+        return  (string)$this->updateComponent
+        . (string)$this->tableComponent
+        . (string)$this->setComponent
+        . (string)$this->whereComponent;
     }
 
 

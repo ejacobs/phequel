@@ -1,32 +1,43 @@
 <?php
 
-namespace Ejacobs\QueryBuilder\Component;
+namespace Ejacobs\QueryBuilder\Component\Update;
 
+use Ejacobs\QueryBuilder\Component\AbstractComponent;
 
 class SetComponent extends AbstractComponent
 {
-    private $column;
-    private $value;
+    private $values;
 
     /**
-     * OrderByComponent constructor.
-     * @param $column
-     * @param $value
+     * @param string $column
+     * @param string $value
      */
-    public function __construct($column, $value)
+    public function setValue($column, $value)
     {
-        $this->column = $column;
-        $this->value = $value;
+        $this->values[$column] = $value;
     }
 
+    /**
+     * @return array
+     */
     public function getParams()
     {
-        return [$this->value];
+        return array_values($this->values);
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
-        return "{$this->column} = ?";
+        if ($this->values) {
+            $setParts = [];
+            foreach ($this->values as $column => $value) {
+                $setParts[] = "{$column} = ?";
+            }
+            return ' SET ' . implode(', ', $setParts);
+        }
+        return '';
     }
 
 }
