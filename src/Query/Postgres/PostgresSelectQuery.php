@@ -82,7 +82,8 @@ class PostgresSelectQuery extends AbstractSelectQuery
         . (string)$this->limitComponent
         . (string)$this->offsetComponent
         . (string)$this->fetchComponent
-        . (string)$this->forComponent;
+        . (string)$this->forComponent
+        . (string)$this->unionIntersectComponent;
     }
 
 }

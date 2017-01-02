@@ -5,6 +5,7 @@ namespace Ejacobs\QueryBuilder\Query;
 use Ejacobs\QueryBuilder\Component\Select\GroupByComponent;
 use Ejacobs\QueryBuilder\Component\Select\HavingComponent;
 use Ejacobs\QueryBuilder\Component\Select\OrderByComponent;
+use Ejacobs\QueryBuilder\Component\Select\UnionIntersectComponent;
 use Ejacobs\QueryBuilder\Component\TableComponent;
 use Ejacobs\QueryBuilder\Component\Select\JoinComponent;
 use Ejacobs\QueryBuilder\Component\Select\LimitComponent;
@@ -39,6 +40,11 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     /* @var HavingComponent $havingComponent */
     protected $havingComponent;
 
+    /* @var UnionIntersectComponent $unionIntersectComponent */
+    protected $unionIntersectComponent;
+
+
+
     /**
      * AbstractSelectQuery constructor.
      * @param $tableName
@@ -53,6 +59,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         $this->limitComponent = new LimitComponent();
         $this->offsetComponent = new OffsetComponent();
         $this->havingComponent = new HavingComponent();
+        $this->unionIntersectComponent = new UnionIntersectComponent();
         parent::__construct($tableName);
     }
 
@@ -176,6 +183,28 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     public function orderBy($column, $direction = 'ASC')
     {
         $this->orderByComponent = new OrderByComponent($column, $direction);
+        return $this;
+    }
+
+    /**
+     * @param $query
+     * @param array $params
+     * @return $this
+     */
+    public function union($query, $params = [])
+    {
+        $this->unionIntersectComponent->addUnion($query, $params);
+        return $this;
+    }
+
+    /**
+     * @param $query
+     * @param array $params
+     * @return $this
+     */
+    public function intersect($query, $params = [])
+    {
+        $this->unionIntersectComponent->addIntersect($query, $params);
         return $this;
     }
 
