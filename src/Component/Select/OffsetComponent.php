@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\QueryBuilder\Component\Select;
+namespace Ejacobs\Phequel\Component\Select;
 
-use Ejacobs\QueryBuilder\Component\AbstractComponent;
+use Ejacobs\Phequel\Component\AbstractComponent;
 
 class OffsetComponent extends AbstractComponent
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Ejacobs\QueryBuilder\Query\Postgres;
+namespace spec\Ejacobs\Phequel\Query\Postgres;
 
-use Ejacobs\QueryBuilder\Query\Postgres\PostgresUpdateQuery;
+use Ejacobs\Phequel\Query\Postgres\PostgresUpdateQuery;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

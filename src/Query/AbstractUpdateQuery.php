@@ -1,11 +1,11 @@
 <?php
 
-namespace Ejacobs\QueryBuilder\Query;
+namespace Ejacobs\Phequel\Query;
 
-use Ejacobs\QueryBuilder\Component\Update\SetComponent;
-use Ejacobs\QueryBuilder\Component\TableComponent;
-use Ejacobs\QueryBuilder\Component\Update\UpdateComponent;
-use Ejacobs\QueryBuilder\Component\WhereComponent;
+use Ejacobs\Phequel\Component\Update\SetComponent;
+use Ejacobs\Phequel\Component\TableComponent;
+use Ejacobs\Phequel\Component\Update\UpdateComponent;
+use Ejacobs\Phequel\Component\WhereComponent;
 
 abstract class AbstractUpdateQuery extends AbstractBaseQuery
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Ejacobs\QueryBuilder\Query;
+namespace Ejacobs\Phequel\Query;
 
-use Ejacobs\QueryBuilder\Component\TableComponent;
-use Ejacobs\QueryBuilder\FluentConnection;
+use Ejacobs\Phequel\Component\TableComponent;
+use Ejacobs\Phequel\FluentConnection;
 
 abstract class AbstractBaseQuery
 {

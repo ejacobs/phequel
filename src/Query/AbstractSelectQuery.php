@@ -1,17 +1,17 @@
 <?php
 
-namespace Ejacobs\QueryBuilder\Query;
+namespace Ejacobs\Phequel\Query;
 
-use Ejacobs\QueryBuilder\Component\Select\GroupByComponent;
-use Ejacobs\QueryBuilder\Component\Select\HavingComponent;
-use Ejacobs\QueryBuilder\Component\Select\OrderByComponent;
-use Ejacobs\QueryBuilder\Component\Select\UnionIntersectComponent;
-use Ejacobs\QueryBuilder\Component\TableComponent;
-use Ejacobs\QueryBuilder\Component\Select\JoinComponent;
-use Ejacobs\QueryBuilder\Component\Select\LimitComponent;
-use Ejacobs\QueryBuilder\Component\Select\OffsetComponent;
-use Ejacobs\QueryBuilder\Component\Select\SelectComponent;
-use Ejacobs\QueryBuilder\Component\WhereComponent;
+use Ejacobs\Phequel\Component\Select\GroupByComponent;
+use Ejacobs\Phequel\Component\Select\HavingComponent;
+use Ejacobs\Phequel\Component\Select\OrderByComponent;
+use Ejacobs\Phequel\Component\Select\UnionIntersectComponent;
+use Ejacobs\Phequel\Component\TableComponent;
+use Ejacobs\Phequel\Component\Select\JoinComponent;
+use Ejacobs\Phequel\Component\Select\LimitComponent;
+use Ejacobs\Phequel\Component\Select\OffsetComponent;
+use Ejacobs\Phequel\Component\Select\SelectComponent;
+use Ejacobs\Phequel\Component\WhereComponent;
 
 abstract class AbstractSelectQuery extends AbstractBaseQuery
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\QueryBuilder\Query\Postgres;
+namespace Ejacobs\Phequel\Query\Postgres;
 
-use Ejacobs\QueryBuilder\Query\AbstractInsertQuery;
+use Ejacobs\Phequel\Query\AbstractInsertQuery;
 
 class PostgresInsertQuery extends AbstractInsertQuery
 {

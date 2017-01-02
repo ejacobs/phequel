@@ -1,10 +1,10 @@
 <?php
 
-namespace Ejacobs\QueryBuilder\Query;
+namespace Ejacobs\Phequel\Query;
 
-use Ejacobs\QueryBuilder\Component\Insert\InsertComponent;
-use Ejacobs\QueryBuilder\Component\Insert\RowComponent;
-use Ejacobs\QueryBuilder\Component\TableComponent;
+use Ejacobs\Phequel\Component\Insert\InsertComponent;
+use Ejacobs\Phequel\Component\Insert\RowComponent;
+use Ejacobs\Phequel\Component\TableComponent;
 
 abstract class AbstractInsertQuery extends AbstractBaseQuery
 {

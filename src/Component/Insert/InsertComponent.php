@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\QueryBuilder\Component\Insert;
+namespace Ejacobs\Phequel\Component\Insert;
 
-use Ejacobs\QueryBuilder\Component\AbstractComponent;
+use Ejacobs\Phequel\Component\AbstractComponent;
 
 class InsertComponent extends AbstractComponent
 {

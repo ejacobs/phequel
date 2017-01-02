@@ -1,10 +1,10 @@
 <?php
 
-namespace Ejacobs\QueryBuilder\Query;
+namespace Ejacobs\Phequel\Query;
 
-use Ejacobs\QueryBuilder\Component\Delete\DeleteComponent;
-use Ejacobs\QueryBuilder\Component\TableComponent;
-use Ejacobs\QueryBuilder\Component\WhereComponent;
+use Ejacobs\Phequel\Component\Delete\DeleteComponent;
+use Ejacobs\Phequel\Component\TableComponent;
+use Ejacobs\Phequel\Component\WhereComponent;
 
 abstract class AbstractDeleteQuery extends AbstractBaseQuery
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\QueryBuilder\Query\Postgres;
+namespace Ejacobs\Phequel\Query\Postgres;
 
-use Ejacobs\QueryBuilder\Query\AbstractDeleteQuery;
+use Ejacobs\Phequel\Query\AbstractDeleteQuery;
 
 class PostgresDeleteQuery extends AbstractDeleteQuery
 {

@@ -11,7 +11,7 @@ Phequel is a framework agnostic query builder for PHP.
 
 ### SELECT
 ```php
-use Ejacobs\QueryBuilder\Query\Postgres\PostgresSelectQuery;
+use Ejacobs\Phequel\Query\Postgres\PostgresSelectQuery;
 
 $select = new PostgresSelectQuery();
 $select->select('foo')
@@ -24,7 +24,7 @@ print_r($select->getParams());
 
 ### UPDATE
 ```php
-use Ejacobs\QueryBuilder\Query\Postgres\PostgresUpdateQuery;
+use Ejacobs\Phequel\Query\Postgres\PostgresUpdateQuery;
 
 $update = new PostgresUpdateQuery();
 $update->update('table1')
@@ -37,7 +37,7 @@ print_r($update->getParams());
 
 ### INSERT
 ```php
-use Ejacobs\QueryBuilder\Query\Postgres\PostgresInsertQuery;
+use Ejacobs\Phequel\Query\Postgres\PostgresInsertQuery;
 
 $insert = new PostgresInsertQuery();
 $insert->into('table1')
@@ -53,7 +53,7 @@ print_r($insert->getParams());
 
 ### DELETE
 ```php
-use Ejacobs\QueryBuilder\Query\Postgres\PostgresDeleteQuery;
+use Ejacobs\Phequel\Query\Postgres\PostgresDeleteQuery;
 
 $delete = new PostgresSDeleteQuery();
 $delete->from('mytable')

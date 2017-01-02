@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\QueryBuilder\Query\Postgres;
+namespace Ejacobs\Phequel\Query\Postgres;
 
-use Ejacobs\QueryBuilder\Query\AbstractUpdateQuery;
+use Ejacobs\Phequel\Query\AbstractUpdateQuery;
 
 class PostgresUpdateQuery extends AbstractUpdateQuery
 {

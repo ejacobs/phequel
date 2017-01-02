@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\QueryBuilder\Component\Update;
+namespace Ejacobs\Phequel\Component\Update;
 
-use Ejacobs\QueryBuilder\Component\AbstractComponent;
+use Ejacobs\Phequel\Component\AbstractComponent;
 
 class SetComponent extends AbstractComponent
 {

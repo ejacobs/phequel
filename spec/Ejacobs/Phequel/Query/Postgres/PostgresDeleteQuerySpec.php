@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Ejacobs\QueryBuilder\Query\Postgres;
+namespace spec\Ejacobs\Phequel\Query\Postgres;
 
-use Ejacobs\QueryBuilder\Query\Postgres\PostgresDeleteQuery;
+use Ejacobs\Phequel\Query\Postgres\PostgresDeleteQuery;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

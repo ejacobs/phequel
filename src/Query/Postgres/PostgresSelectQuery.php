@@ -1,11 +1,11 @@
 <?php
 
-namespace Ejacobs\QueryBuilder\Query\Postgres;
+namespace Ejacobs\Phequel\Query\Postgres;
 
-use Ejacobs\QueryBuilder\Component\Select\FetchComponent;
-use Ejacobs\QueryBuilder\Component\Select\ForComponent;
-use Ejacobs\QueryBuilder\Component\Select\WindowComponent;
-use Ejacobs\QueryBuilder\Query\AbstractSelectQuery;
+use Ejacobs\Phequel\Component\Select\FetchComponent;
+use Ejacobs\Phequel\Component\Select\ForComponent;
+use Ejacobs\Phequel\Component\Select\WindowComponent;
+use Ejacobs\Phequel\Query\AbstractSelectQuery;
 
 class PostgresSelectQuery extends AbstractSelectQuery
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\QueryBuilder\Component\Delete;
+namespace Ejacobs\Phequel\Component\Delete;
 
-use Ejacobs\QueryBuilder\Component\AbstractComponent;
+use Ejacobs\Phequel\Component\AbstractComponent;
 
 class DeleteComponent extends AbstractComponent
 {

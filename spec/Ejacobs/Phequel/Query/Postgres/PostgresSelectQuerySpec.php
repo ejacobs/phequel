@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Ejacobs\QueryBuilder\Query\Postgres;
+namespace spec\Ejacobs\Phequel\Query\Postgres;
 
-use Ejacobs\QueryBuilder\Query\Postgres\PostgresSelectQuery;
+use Ejacobs\Phequel\Query\Postgres\PostgresSelectQuery;
 use PhpSpec\ObjectBehavior;
 
 class PostgresSelectQuerySpec extends ObjectBehavior

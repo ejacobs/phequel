@@ -1,4 +1,4 @@
 formatter.name: pretty
 suites:
     qb_suite:
-        namespace: Ejacobs\QueryBuilder
+        namespace: Ejacobs\Phequel

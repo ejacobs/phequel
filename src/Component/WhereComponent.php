@@ -1,6 +1,6 @@
 <?php
 
-namespace Ejacobs\QueryBuilder\Component;
+namespace Ejacobs\Phequel\Component;
 
 
 class WhereComponent extends AbstractComponent

@@ -1,5 +1,5 @@
 {
-  "name": "ejacobs/querybuilder",
+  "name": "ejacobs/phequel",
   "description": "A fluent query builder for PHP",
   "authors": [
     {
@@ -8,7 +8,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "Ejacobs\\QueryBuilder\\": "src/"
+      "Ejacobs\\Phequel\\": "src/"
     }
   },
   "require": {

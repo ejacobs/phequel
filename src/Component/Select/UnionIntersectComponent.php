@@ -1,9 +1,9 @@
 <?php
 
-namespace Ejacobs\QueryBuilder\Component\Select;
+namespace Ejacobs\Phequel\Component\Select;
 
-use Ejacobs\QueryBuilder\Component\AbstractComponent;
-use Ejacobs\QueryBuilder\Query\AbstractSelectQuery;
+use Ejacobs\Phequel\Component\AbstractComponent;
+use Ejacobs\Phequel\Query\AbstractSelectQuery;
 
 class UnionIntersectComponent extends AbstractComponent
 {
