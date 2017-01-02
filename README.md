@@ -9,16 +9,56 @@ Phequel is a framework agnostic query builder for PHP.
 
 ## Examples
 
+### SELECT
 ```php
 use Ejacobs\QueryBuilder\Query\Postgres\PostgresSelectQuery;
 
-$query = new PostgresSelectQuery();
-
-$query->select('foo')
+$select = new PostgresSelectQuery();
+$select->select('foo')
     ->from('mytable')
     ->where('foo = ?', 'bar');
     
-echo $query;
-print_r($query->getParams());
+echo $select;
+print_r($select->getParams());
+```
 
+### UPDATE
+```php
+use Ejacobs\QueryBuilder\Query\Postgres\PostgresUpdateQuery;
+
+$delete = new PostgresUpdateQuery();
+$delete->update('table1')
+    ->set('foo', 'bar')
+    ->where('somecolumn = ?', 'x');
+    
+echo $delete;
+print_r($delete->getParams());
+```
+
+### INSERT
+```php
+use Ejacobs\QueryBuilder\Query\Postgres\PostgresInsertQuery;
+
+$insert = new PostgresInsertQuery();
+$insert->into('table1')
+    ->columns(['column1', 'column2'])
+    ->addRow([
+      'column1' => 'value1',
+      'column2' => 'value2'
+    ]);
+    
+echo $insert;
+print_r($insert->getParams());
+```
+
+### DELETE
+```php
+use Ejacobs\QueryBuilder\Query\Postgres\PostgresDeleteQuery;
+
+$delete = new PostgresSDeleteQuery();
+$delete->from('mytable')
+    ->where('foo = ?', 'bar');
+    
+echo $delete;
+print_r($delete->getParams());
 ```
