@@ -55,7 +55,7 @@ print_r($insert->getParams());
 ```php
 use Ejacobs\Phequel\Query\Postgres\PostgresDeleteQuery;
 
-$delete = new PostgresSDeleteQuery();
+$delete = new PostgresDeleteQuery();
 $delete->from('mytable')
     ->where('foo = ?', 'bar');
     
