@@ -11,7 +11,7 @@
       "Ejacobs\\Phequel\\": "src/"
     }
   },
-  "require": {
+  "require-dev": {
     "phpspec/phpspec": "^3.2"
   }
 }

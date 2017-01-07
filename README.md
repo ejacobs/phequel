@@ -62,3 +62,23 @@ $delete->from('mytable')
 echo $delete;
 print_r($delete->getParams());
 ```
+
+### Running queries
+Phequel comes with its own connector to run the generated queries and return the result.
+```php
+use Ejacobs\Phequel\Query\Postgres\PostgresSelectQuery;
+use Ejacobs\Phequel\Connector\PdoConnector;
+
+$select = new PostgresSelectQuery();
+$select->from('mytable')->where('id = ?', 94);
+
+$conn = new PdoConnector(<driver>, [
+    'host'     => '<host>',
+    'port'     => '<port>',
+    'dbname'   => '<dbname>',
+    'user'     => '<user>',
+    'password' => '<password>'
+]);
+
+print_r($conn->firstRow($select));
+```
