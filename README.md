@@ -1,7 +1,7 @@
 # Phequel
 
-[![Build Status](https://travis-ci.org/ejacobs/querybuilder.svg?branch=master)](https://travis-ci.org/ejacobs/querybuilder)
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ejacobs/querybuilder/master/LICENSE.md)
+[![Build Status](https://travis-ci.org/ejacobs/phequel.svg?branch=master)](https://travis-ci.org/ejacobs/phequel)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ejacobs/phequel/master/LICENSE.md)
 
 ## About Phequel
 
