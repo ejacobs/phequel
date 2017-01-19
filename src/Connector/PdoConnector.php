@@ -46,7 +46,7 @@ class PdoConnector extends AbstractConnector
         $connection = $this->getNextConnection();
         $statement = $connection->prepare($query);
         $statement->execute($params);
-        return $statement->fetchAll();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -62,7 +62,7 @@ class PdoConnector extends AbstractConnector
         $connection = $this->getNextConnection();
         $statement = $connection->prepare($query);
         $statement->execute($params);
-        return $statement->fetch();
+        return $statement->fetch(\PDO::FETCH_ASSOC);
     }
 
     /**
