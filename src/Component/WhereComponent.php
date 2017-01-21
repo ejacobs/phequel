@@ -2,57 +2,45 @@
 
 namespace Ejacobs\Phequel\Component;
 
-
 class WhereComponent extends AbstractComponent
 {
+    private $column;
+    private $operator;
+    private $value;
     private $components = [];
-    private $params = [];
     private $type;
-    private $validTypes = ['and', 'or'];
-    protected $level = 0;
+    private $level = 0;
+
+    const valid_types = ['and', 'or'];
 
     /**
      * WhereComponent constructor.
-     * @param $components
-     * @param array $params
+     * @param null $column
+     * @param null $operator
+     * @param null $value
      * @param string $type
      * @throws \Exception
      */
-    public function __construct($components = [], $params = [], $type = 'and')
+    public function __construct($column = null, $operator = null, $value = null, $type = 'and')
     {
-        if (in_array(strtolower($type), $this->validTypes)) {
+        if (in_array(strtolower($type), self::valid_types)) {
             $this->type = strtoupper($type);
         } else {
-            throw new \Exception("Where conditions type must be one of the following: " . implode(', ', $this->validTypes));
+            throw new \Exception("Where conditions type must be one of the following: " . implode(', ', self::valid_types));
         }
 
-        $this->addConditions($components, $params);
+        $this->column = $column;
+        $this->operator = $operator;
+        $this->value = $value;
     }
 
     /**
-     * @param $components
-     * @param array $params
+     * @param WhereComponent $component
      */
-    public function addConditions($components, $params = [])
+    public function addCondition(WhereComponent $component)
     {
-        if (!is_array($components)) {
-            $components = [$components];
-        }
-
-        if (!is_array($params)) {
-            $params = [$params];
-        }
-
-        foreach ($components as $component) {
-            if (is_string($component)) {
-                $this->params = $params;
-            } else if ($component instanceof WhereComponent) {
-                $component->setLevel($this->level + 1);
-                $this->params = array_merge($this->params, $component->getParams());
-            }
-        }
-
-        $this->components = array_merge($this->components, $components);
+        $component->setLevel($this->level + 1);
+        $this->components[] = $component;
     }
 
     /**
@@ -60,7 +48,16 @@ class WhereComponent extends AbstractComponent
      */
     public function getParams()
     {
-        return $this->params;
+        $ret = [];
+        if ($this->operator) {
+            $ret[] = $this->value;
+        }
+        foreach ($this->components as $component) {
+            foreach ($component->getParams() as $param) {
+                $ret[] = $param;
+            }
+        }
+        return $ret;
     }
 
     /**
@@ -69,11 +66,18 @@ class WhereComponent extends AbstractComponent
     public function __toString()
     {
         $ret = '';
-        if ($this->components) {
 
-            if ($this->level === 0) {
+        if ($this->level === 0) {
+            if ($this->column || $this->components) {
                 $ret .= ' WHERE ';
             }
+        }
+
+        if ($this->column && $this->operator && $this->value) {
+            $ret .= "{$this->column} {$this->operator} ?";
+        }
+
+        if ($this->components) {
 
             $useParens = (($this->level !== 0) && (count($this->components) > 1));
 
@@ -90,6 +94,9 @@ class WhereComponent extends AbstractComponent
         return $ret;
     }
 
+    /**
+     * @param int $level
+     */
     protected function setLevel($level)
     {
         $this->level = $level;

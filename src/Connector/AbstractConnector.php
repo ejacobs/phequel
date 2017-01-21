@@ -68,6 +68,8 @@ abstract class AbstractConnector
 
     abstract public function firstRow($query, $params = []);
 
+    abstract public function lastInsertId($name = null);
+
     abstract public function disconnect();
 
 

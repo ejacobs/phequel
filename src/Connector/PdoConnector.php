@@ -86,4 +86,10 @@ class PdoConnector extends AbstractConnector
         return $this->driver . ':' . implode(';', $parts);
     }
 
+    public function lastInsertId($name = null)
+    {
+        return $this->getNextConnection()->lastInsertId($name);
+    }
+
+
 }
