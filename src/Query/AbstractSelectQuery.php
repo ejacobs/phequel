@@ -115,7 +115,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         if (is_array($column)) {
             if ($operator === null) {
                 $operator = 'and';
-            } 
+            }
             $component = new WhereComponent(null, null, null, $operator);
             foreach ($column as $subWhere) {
                 $component->addCondition(new WhereComponent($subWhere[0], $subWhere[1], $subWhere[2]));
