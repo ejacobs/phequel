@@ -36,16 +36,27 @@ abstract class AbstractDeleteQuery extends AbstractBaseQuery
     }
 
     /**
-     * @param array|string $expressions
-     * @param array|string|int $params
+     * @param $column
+     * @param $operator
+     * @param $param
      * @return $this
      */
-    public function where($expressions, $params = [])
+    public function where($column, $operator = null, $param = null)
     {
-        if (!($expressions instanceof WhereComponent)) {
-            $expressions = new WhereComponent($expressions, $params, 'and');
+        if (is_array($column)) {
+            if ($operator === null) {
+                $operator = 'and';
+            }
+            $component = new WhereComponent(null, null, null, $operator);
+            foreach ($column as $subWhere) {
+                $component->addCondition(new WhereComponent($subWhere[0], $subWhere[1], $subWhere[2]));
+            }
+            $this->whereComponent->addCondition($component);
+        } else if ($column instanceof WhereComponent) {
+            $this->whereComponent->addCondition($column);
+        } else {
+            $this->whereComponent->addCondition(new WhereComponent($column, $operator, $param));
         }
-        $this->whereComponent->addConditions($expressions);
         return $this;
     }
 
