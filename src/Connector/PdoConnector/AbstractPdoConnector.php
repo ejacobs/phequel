@@ -10,8 +10,38 @@ use Ejacobs\Phequel\Query\AbstractBaseQuery;
  * @method \PDO getNextConnection()
  * @method \PDO[] pool()
  */
-class PdoConnector extends AbstractConnector
+abstract class PdoConnector extends AbstractConnector
 {
+
+    protected $driver;
+    protected $params;
+
+    const driver = null;
+
+    /**
+     * AbstractConnector constructor.
+     * @param array|null $params
+     * @param bool $connect
+     * @param bool $usePooling
+     * @param int $poolSize
+     */
+    public function __construct(array $params, $connect = true, $usePooling = false, $poolSize = 10)
+    {
+        $this->params = $params;
+        $this->usePooling = $usePooling;
+        $this->poolSize = $poolSize;
+        if ($connect) {
+            if ($usePooling) {
+                for ($i=0; $i<$poolSize; $i++) {
+                    $this->pool[] = $this->connect();
+                }
+            }
+            else {
+                $this->pool[] = $this->connect();
+            }
+        }
+    }
+
 
     public function connect()
     {
@@ -83,7 +113,7 @@ class PdoConnector extends AbstractConnector
         foreach ($this->params as $key => $value) {
             $parts[] = "{$key}={$value}";
         }
-        return $this->driver . ':' . implode(';', $parts);
+        return static::driver . ':' . implode(';', $parts);
     }
 
     public function lastInsertId($name = null)

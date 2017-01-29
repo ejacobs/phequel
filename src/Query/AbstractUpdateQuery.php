@@ -61,13 +61,14 @@ abstract class AbstractUpdateQuery extends AbstractBaseQuery
     }
 
     /**
-     * @param $expression
-     * @param array $params
+     * @param $column
+     * @param $operator
+     * @param $value
      * @return $this
      */
-    public function where($expression, $params = [])
+    public function where($column, $operator, $value)
     {
-        $this->whereComponent->addConditions($expression, $params);
+        $this->whereComponent->addCondition(new WhereComponent($column, $operator, $value));
         return $this;
     }
 

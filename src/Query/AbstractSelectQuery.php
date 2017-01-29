@@ -112,16 +112,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      */
     public function where($column, $operator = null, $param = null)
     {
-        if (is_array($column)) {
-            if ($operator === null) {
-                $operator = 'and';
-            }
-            $component = new WhereComponent(null, null, null, $operator);
-            foreach ($column as $subWhere) {
-                $component->addCondition(new WhereComponent($subWhere[0], $subWhere[1], $subWhere[2]));
-            }
-            $this->whereComponent->addCondition($component);
-        } else if ($column instanceof WhereComponent) {
+        if ($column instanceof WhereComponent) {
             $this->whereComponent->addCondition($column);
         } else {
             $this->whereComponent->addCondition(new WhereComponent($column, $operator, $param));
