@@ -2,39 +2,16 @@
 
 namespace Ejacobs\Phequel\Connector;
 
+use Ejacobs\Phequel\Query\AbstractDeleteQuery;
+use Ejacobs\Phequel\Query\AbstractInsertQuery;
+use Ejacobs\Phequel\Query\AbstractSelectQuery;
+use Ejacobs\Phequel\Query\AbstractUpdateQuery;
+
 abstract class AbstractConnector
 {
-    protected $driver;
-    protected $params;
     protected $usePooling;
     protected $poolSize;
     protected $pool = [];
-
-    /**
-     * AbstractConnector constructor.
-     * @param $driver
-     * @param array|null $params
-     * @param bool $connect
-     * @param bool $usePooling
-     * @param int $poolSize
-     */
-    public function __construct($driver, array $params = null, $connect = true, $usePooling = false, $poolSize = 10)
-    {
-        $this->driver = $driver;
-        $this->params = $params;
-        $this->usePooling = $usePooling;
-        $this->poolSize = $poolSize;
-        if ($connect) {
-            if ($usePooling) {
-                for ($i=0; $i<$poolSize; $i++) {
-                    $this->pool[] = $this->connect();
-                }
-            }
-            else {
-                $this->pool[] = $this->connect();
-            }
-        }
-    }
 
     /**
      * @return mixed
@@ -71,6 +48,39 @@ abstract class AbstractConnector
     abstract public function lastInsertId($name = null);
 
     abstract public function disconnect();
+
+    // Query builder
+
+    /**
+     * @param $tableName
+     * @return AbstractSelectQuery
+     */
+    abstract public function select($tableName);
+
+    /**
+     * @param $tableName
+     * @return AbstractInsertQuery
+     */
+    abstract public function insert($tableName);
+
+    /**
+     * @param $tableName
+     * @return AbstractDeleteQuery
+     */
+    abstract public function delete($tableName);
+
+    /**
+     * @param $tableName
+     * @return AbstractUpdateQuery
+     */
+    abstract public function update($tableName);
+
+
+    abstract public function beginTransaction();
+
+    abstract public function commit();
+
+    abstract public function rollback();
 
 
 }

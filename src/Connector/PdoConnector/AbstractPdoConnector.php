@@ -1,7 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Connector;
+namespace Ejacobs\Phequel\Connector\PdoConnector;
 
+use Ejacobs\Phequel\Connector\AbstractConnector;
 use Ejacobs\Phequel\Query\AbstractBaseQuery;
 
 /**
@@ -10,7 +11,7 @@ use Ejacobs\Phequel\Query\AbstractBaseQuery;
  * @method \PDO getNextConnection()
  * @method \PDO[] pool()
  */
-abstract class PdoConnector extends AbstractConnector
+abstract class AbstractPdoConnector extends AbstractConnector
 {
 
     protected $driver;
@@ -41,7 +42,6 @@ abstract class PdoConnector extends AbstractConnector
             }
         }
     }
-
 
     public function connect()
     {
@@ -120,6 +120,5 @@ abstract class PdoConnector extends AbstractConnector
     {
         return $this->getNextConnection()->lastInsertId($name);
     }
-
 
 }
