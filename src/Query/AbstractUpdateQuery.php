@@ -6,9 +6,12 @@ use Ejacobs\Phequel\Component\Update\SetComponent;
 use Ejacobs\Phequel\Component\TableComponent;
 use Ejacobs\Phequel\Component\Update\UpdateComponent;
 use Ejacobs\Phequel\Component\WhereComponent;
+use Ejacobs\Phequel\Query\Traits\WhereTrait;
 
 abstract class AbstractUpdateQuery extends AbstractBaseQuery
 {
+    use WhereTrait;
+
     /* @var UpdateComponent $updateComponent */
     protected $updateComponent;
 
