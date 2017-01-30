@@ -112,26 +112,53 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      */
     public function where($column, $operator = null, $param = null)
     {
+
         if ($column instanceof WhereComponent) {
-            $this->whereComponent->addCondition($column);
+            $where = $column;
         } else {
-            $this->whereComponent->addCondition(new WhereComponent($column, $operator, $param));
+            $where = new WhereComponent();
+            $where->setCondition($column, $operator, $param);
         }
+        $this->whereComponent->addCondition($where);
         return $this;
     }
 
     /**
      * @param array $expressions
-     * @param array $params
      * @return $this
      */
-    public
-    function whereAny($expressions = [], $params = [])
+    public function whereAny($expressions = [])
     {
-        if (!($expressions instanceof WhereComponent)) {
-            $expressions = new WhereComponent($expressions, $params, 'or');
+        $where = new WhereComponent('or');
+        foreach ($expressions as $expression) {
+            if (!($expression instanceof WhereComponent)) {
+                $new = new WhereComponent();
+                $new->setCondition($expression[0], $expression[1], $expression[2]);
+                $expression = $new;
+            }
+            $where->addCondition($expression);
         }
-        $this->whereComponent->addConditions($expressions);
+        $this->whereComponent->addCondition($where);
+        return $this;
+    }
+
+
+    /**
+     * @param array $expressions
+     * @return $this
+     */
+    public function whereAll($expressions = [])
+    {
+        $where = new WhereComponent('and');
+        foreach ($expressions as $expression) {
+            if (!($expression instanceof WhereComponent)) {
+                $new = new WhereComponent();
+                $new->setCondition($expression[0], $expression[1], $expression[2]);
+                $expression = $new;
+            }
+            $where->addCondition($expression);
+        }
+        $this->whereComponent->addCondition($where);
         return $this;
     }
 
@@ -139,8 +166,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      * @param int $limit
      * @return $this
      */
-    public
-    function limit($limit = null)
+    public function limit($limit = null)
     {
         $this->limitComponent = new LimitComponent($limit);
         return $this;
@@ -150,8 +176,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      * @param array|string $columns
      * @return $this
      */
-    public
-    function groupBy($columns)
+    public function groupBy($columns)
     {
         $this->groupByComponent->addColumns($columns);
         return $this;
@@ -162,8 +187,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      * @param array $params
      * @return $this
      */
-    public
-    function having($sql, $params = [])
+    public function having($sql, $params = [])
     {
         $this->havingComponent->addCondition($sql, $params);
         return $this;
@@ -173,8 +197,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      * @param int $offset
      * @return $this
      */
-    public
-    function offset($offset = null)
+    public function offset($offset = null)
     {
         $this->offsetComponent = new OffsetComponent($offset);
         return $this;
@@ -186,8 +209,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      * @param string $direction
      * @return $this
      */
-    public
-    function orderBy($column, $direction = 'ASC')
+    public function orderBy($column, $direction = 'ASC')
     {
         $this->orderByComponent = new OrderByComponent($column, $direction);
         return $this;
@@ -198,8 +220,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      * @param array $params
      * @return $this
      */
-    public
-    function union($query, $params = [])
+    public function union($query, $params = [])
     {
         $this->unionIntersectComponent->addUnion($query, $params);
         return $this;
@@ -210,8 +231,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      * @param array $params
      * @return $this
      */
-    public
-    function intersect($query, $params = [])
+    public function intersect($query, $params = [])
     {
         $this->unionIntersectComponent->addIntersect($query, $params);
         return $this;
@@ -220,8 +240,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     /**
      * @return array
      */
-    public
-    function getParams()
+    public function getParams()
     {
         return $this->whereComponent->getParams();
     }

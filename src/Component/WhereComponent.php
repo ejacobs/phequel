@@ -15,32 +15,37 @@ class WhereComponent extends AbstractComponent
 
     /**
      * WhereComponent constructor.
-     * @param null $column
-     * @param null $operator
-     * @param null $value
      * @param string $type
      * @throws \Exception
      */
-    public function __construct($column = null, $operator = null, $value = null, $type = 'and')
+    public function __construct($type = 'and')
     {
         if (in_array(strtolower($type), self::valid_types)) {
             $this->type = strtoupper($type);
         } else {
             throw new \Exception("Where conditions type must be one of the following: " . implode(', ', self::valid_types));
         }
+    }
 
+    /**
+     * @param $column
+     * @param $operator
+     * @param $value
+     */
+    public function setCondition($column, $operator, $value)
+    {
         $this->column = $column;
         $this->operator = $operator;
         $this->value = $value;
     }
 
     /**
-     * @param WhereComponent $component
+     * @param WhereComponent $where
      */
-    public function addCondition(WhereComponent $component)
+    public function addCondition(WhereComponent $where)
     {
-        $component->setLevel($this->level + 1);
-        $this->components[] = $component;
+        $where->setLevel($this->level + 1);
+        $this->components[] = $where;
     }
 
     /**
@@ -49,9 +54,6 @@ class WhereComponent extends AbstractComponent
     public function getParams()
     {
         $ret = [];
-        if ($this->operator) {
-            $ret[] = $this->value;
-        }
         foreach ($this->components as $component) {
             foreach ($component->getParams() as $param) {
                 $ret[] = $param;

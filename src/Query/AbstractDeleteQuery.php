@@ -43,20 +43,53 @@ abstract class AbstractDeleteQuery extends AbstractBaseQuery
      */
     public function where($column, $operator = null, $param = null)
     {
-        if (is_array($column)) {
-            if ($operator === null) {
-                $operator = 'and';
-            }
-            $component = new WhereComponent(null, null, null, $operator);
-            foreach ($column as $subWhere) {
-                $component->addCondition(new WhereComponent($subWhere[0], $subWhere[1], $subWhere[2]));
-            }
-            $this->whereComponent->addCondition($component);
-        } else if ($column instanceof WhereComponent) {
-            $this->whereComponent->addCondition($column);
+
+        if ($column instanceof WhereComponent) {
+            $where = $column;
         } else {
-            $this->whereComponent->addCondition(new WhereComponent($column, $operator, $param));
+            $where = new WhereComponent();
+            $where->setCondition($column, $operator, $param);
         }
+        $this->whereComponent->addCondition($where);
+        return $this;
+    }
+
+    /**
+     * @param array $expressions
+     * @return $this
+     */
+    public function whereAny($expressions = [])
+    {
+        $where = new WhereComponent('or');
+        foreach ($expressions as $expression) {
+            if (!($expression instanceof WhereComponent)) {
+                $new = new WhereComponent();
+                $new->setCondition($expression[0], $expression[1], $expression[2]);
+                $expression = $new;
+            }
+            $where->addCondition($expression);
+        }
+        $this->whereComponent->addCondition($where);
+        return $this;
+    }
+
+
+    /**
+     * @param array $expressions
+     * @return $this
+     */
+    public function whereAll($expressions = [])
+    {
+        $where = new WhereComponent('and');
+        foreach ($expressions as $expression) {
+            if (!($expression instanceof WhereComponent)) {
+                $new = new WhereComponent();
+                $new->setCondition($expression[0], $expression[1], $expression[2]);
+                $expression = $new;
+            }
+            $where->addCondition($expression);
+        }
+        $this->whereComponent->addCondition($where);
         return $this;
     }
 
