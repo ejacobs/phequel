@@ -25,9 +25,13 @@ class SelectComponent extends AbstractComponent
         }
     }
 
-    public function addColumns($columns)
+    /**
+     * @param $columns
+     * @param bool $clear
+     */
+    public function addColumns($columns, $clear = false)
     {
-        if ($this->defaultSelectAll) {
+        if ($this->defaultSelectAll || $clear) {
             $this->columns = [];
             $this->defaultSelectAll = false;
         }

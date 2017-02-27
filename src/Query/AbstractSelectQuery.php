@@ -76,11 +76,12 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
 
     /**
      * @param $column
+     * @param bool $clear
      * @return $this
      */
-    public function select($column)
+    public function select($column, $clear = false)
     {
-        $this->selectComponent->addColumns($column);
+        $this->selectComponent->addColumns($column, $clear);
         return $this;
     }
 
@@ -189,6 +190,20 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     public function getParams()
     {
         return $this->whereComponent->getParams();
+    }
+
+
+    public function __clone()
+    {
+        $this->selectComponent = clone $this->selectComponent;
+        $this->joinComponent = clone $this->joinComponent;
+        $this->whereComponent = clone $this->whereComponent;
+        $this->limitComponent = clone $this->limitComponent;
+        $this->offsetComponent = clone $this->offsetComponent;
+        $this->groupByComponent = clone $this->groupByComponent;
+        $this->orderByComponent = clone $this->orderByComponent;
+        $this->havingComponent = clone $this->havingComponent;
+        $this->unionIntersectComponent = clone $this->unionIntersectComponent;
     }
 
 }

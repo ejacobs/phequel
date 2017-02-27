@@ -54,6 +54,9 @@ class WhereComponent extends AbstractComponent
     public function getParams()
     {
         $ret = [];
+        if (isset($this->value)) {
+            $ret[] = $this->value;
+        }
         foreach ($this->components as $component) {
             foreach ($component->getParams() as $param) {
                 $ret[] = $param;
