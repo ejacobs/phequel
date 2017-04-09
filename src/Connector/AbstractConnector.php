@@ -9,34 +9,6 @@ use Ejacobs\Phequel\Query\AbstractUpdateQuery;
 
 abstract class AbstractConnector
 {
-    protected $usePooling;
-    protected $poolSize;
-    protected $pool = [];
-
-    /**
-     * @return mixed
-     * @throws \Exception
-     */
-    protected function getNextConnection()
-    {
-        if ($this->pool === []) {
-            throw new \Exception('Tried to execute query before connections has been established');
-        }
-        $connection = next($this->pool);
-        if ($connection === false) {
-            $connection = reset($this->pool);
-        }
-        return $connection;
-    }
-
-    /**
-     * @return array
-     */
-    protected function pool()
-    {
-        return $this->pool;
-    }
-
     abstract public function connect();
 
     abstract public function execute($query, $params = []);
@@ -82,5 +54,6 @@ abstract class AbstractConnector
 
     abstract public function rollback();
 
+    abstract public function errorInfo();
 
 }

@@ -9,7 +9,6 @@ use Ejacobs\Phequel\Query\Postgres\PostgresSelectQuery;
 /**
  * Class PdoConnector
  * @package Ejacobs\Phequel\Connector\
- * @method \PDO getNextConnection()
  * @method \PDO[] pool()
  */
 class PostgresConnector extends AbstractPdoConnector
@@ -75,6 +74,7 @@ class PostgresConnector extends AbstractPdoConnector
     {
         return $this->execute('ROLLBACK');
     }
+
 
 
 }

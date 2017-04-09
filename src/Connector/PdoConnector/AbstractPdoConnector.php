@@ -8,7 +8,6 @@ use Ejacobs\Phequel\Query\AbstractBaseQuery;
 /**
  * Class PdoConnector
  * @package Ejacobs\Phequel\Connector\
- * @method \PDO getNextConnection()
  * @method \PDO[] pool()
  */
 abstract class AbstractPdoConnector extends AbstractConnector
@@ -17,7 +16,12 @@ abstract class AbstractPdoConnector extends AbstractConnector
     protected $driver;
     protected $params;
 
+    /* @var \PDO $pdo */
+    protected $pdo;
+
     const driver = null;
+
+    private $errorInfo = null;
 
     /**
      * AbstractConnector constructor.
@@ -29,17 +33,8 @@ abstract class AbstractPdoConnector extends AbstractConnector
     public function __construct(array $params, $connect = true, $usePooling = false, $poolSize = 10)
     {
         $this->params = $params;
-        $this->usePooling = $usePooling;
-        $this->poolSize = $poolSize;
         if ($connect) {
-            if ($usePooling) {
-                for ($i=0; $i<$poolSize; $i++) {
-                    $this->pool[] = $this->connect();
-                }
-            }
-            else {
-                $this->pool[] = $this->connect();
-            }
+            $this->pdo = $this->connect();
         }
     }
 
@@ -58,9 +53,10 @@ abstract class AbstractPdoConnector extends AbstractConnector
         if ($query instanceof AbstractBaseQuery) {
             $params = $query->getParams();
         }
-        $connection = $this->getNextConnection();
-        $statement = $connection->prepare($query);
-        return $statement->execute($params);
+        $statement = $this->pdo->prepare($query);
+        $ret = $statement->execute($params);
+        $this->errorInfo = $statement->errorInfo();
+        return $ret;
     }
 
     /**
@@ -73,8 +69,7 @@ abstract class AbstractPdoConnector extends AbstractConnector
         if ($query instanceof AbstractBaseQuery) {
             $params = $query->getParams();
         }
-        $connection = $this->getNextConnection();
-        $statement = $connection->prepare($query);
+        $statement = $this->pdo->prepare($query);
         $statement->execute($params);
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
@@ -89,8 +84,7 @@ abstract class AbstractPdoConnector extends AbstractConnector
         if ($query instanceof AbstractBaseQuery) {
             $params = $query->getParams();
         }
-        $connection = $this->getNextConnection();
-        $statement = $connection->prepare($query);
+        $statement = $this->pdo->prepare($query);
         $statement->execute($params);
         return $statement->fetch(\PDO::FETCH_ASSOC);
     }
@@ -100,7 +94,7 @@ abstract class AbstractPdoConnector extends AbstractConnector
      */
     public function disconnect()
     {
-        $this->pool = [];
+        $this->pdo = null;
         return true;
     }
 
@@ -116,9 +110,21 @@ abstract class AbstractPdoConnector extends AbstractConnector
         return static::driver . ':' . implode(';', $parts);
     }
 
+    /**
+     * @param null $name
+     * @return string
+     */
     public function lastInsertId($name = null)
     {
-        return $this->getNextConnection()->lastInsertId($name);
+        return $this->pdo->lastInsertId($name);
+    }
+
+    /**
+     * @return array
+     */
+    public function errorInfo()
+    {
+        return $this->errorInfo;
     }
 
 }
