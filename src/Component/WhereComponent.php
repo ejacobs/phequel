@@ -2,6 +2,8 @@
 
 namespace Ejacobs\Phequel\Component;
 
+use Ejacobs\Phequel\Query\AbstractBaseQuery;
+
 class WhereComponent extends AbstractComponent
 {
     private $column;
@@ -28,12 +30,16 @@ class WhereComponent extends AbstractComponent
     }
 
     /**
-     * @param $column
-     * @param $operator
-     * @param $value
+     * @param string $column
+     * @param string $operator
+     * @param string $value
+     * @throws \Exception
      */
     public function setCondition($column, $operator, $value)
     {
+        if (!in_array(strtolower($operator), AbstractBaseQuery::valid_operators)) {
+            throw new \Exception($operator . ' is not a valid operator');
+        }
         $this->column = $column;
         $this->operator = $operator;
         $this->value = $value;
