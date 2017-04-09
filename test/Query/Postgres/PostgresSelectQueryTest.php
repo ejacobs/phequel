@@ -35,10 +35,22 @@ final class PostgresSelectQueryTest extends TestCase
         $this->assertEquals($query2->getParams(), ['foo\\%']);
     }
 
+    public function testOrderBy()
+    {
+        $query1 = new \Ejacobs\Phequel\Query\Postgres\PostgresSelectQuery();
+        $query1->select('*')->from('mytable')->orderBy('age', 'asc');
+        $this->assertEquals((string)$query1, 'SELECT * FROM mytable ORDER BY age ASC');
+    }
+
+    public function testLimit()
+    {
+        $query1 = new \Ejacobs\Phequel\Query\Postgres\PostgresSelectQuery();
+        $query1->select('*')->from('mytable')->limit(100);
+        $this->assertEquals((string)$query1, 'SELECT * FROM mytable LIMIT 100');
+    }
+
 
     // TODO: test where any
     // TODO: test where all
-    // TODO: test order by
-    // TODO: test limit
 
 }

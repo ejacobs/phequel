@@ -159,7 +159,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      */
     public function orderBy($column, $direction = 'ASC')
     {
-        $this->orderByComponent = new OrderByComponent($column, $direction);
+        $this->orderByComponent = new OrderByComponent($column, strtoupper($direction));
         return $this;
     }
 
