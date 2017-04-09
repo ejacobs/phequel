@@ -7,6 +7,8 @@ use Ejacobs\Phequel\Component\WhereComponent;
 trait WhereTrait
 {
 
+
+
     /**
      * @param $column
      * @param $operator
@@ -20,7 +22,7 @@ trait WhereTrait
             $where = $column;
         } else {
             $where = new WhereComponent();
-            $where->setCondition($column, $operator, $param);
+            $where->setCondition($column, $operator, $this->escapeWildcards($param));
         }
         $this->whereComponent->addCondition($where);
         return $this;
@@ -36,7 +38,7 @@ trait WhereTrait
         foreach ($expressions as $expression) {
             if (!($expression instanceof WhereComponent)) {
                 $new = new WhereComponent();
-                $new->setCondition($expression[0], $expression[1], $expression[2]);
+                $new->setCondition($expression[0], $expression[1], $this->escapeWildcards($expression[2]));
                 $expression = $new;
             }
             $where->addCondition($expression);
@@ -56,7 +58,7 @@ trait WhereTrait
         foreach ($expressions as $expression) {
             if (!($expression instanceof WhereComponent)) {
                 $new = new WhereComponent();
-                $new->setCondition($expression[0], $expression[1], $expression[2]);
+                $new->setCondition($expression[0], $expression[1], $this->escapeWildcards($expression[2]));
                 $expression = $new;
             }
             $where->addCondition($expression);

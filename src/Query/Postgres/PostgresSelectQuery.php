@@ -19,12 +19,12 @@ class PostgresSelectQuery extends AbstractSelectQuery
     /* @var ForComponent $forComponent */
     protected $forComponent;
 
-    public function __construct($tableName = null)
+    public function __construct($tableName = null, $allowedWildcards = ['%' => '%', '_' => '_'])
     {
         $this->windowComponent = new WindowComponent();
         $this->fetchComponent = new FetchComponent();
         $this->forComponent = new ForComponent();
-        parent::__construct($tableName);
+        parent::__construct($tableName, $allowedWildcards);
     }
 
     /**
