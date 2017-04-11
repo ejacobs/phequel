@@ -49,9 +49,8 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     /**
      * AbstractSelectQuery constructor.
      * @param string|null $tableName
-     * @param array $allowedWildcards
      */
-    public function __construct($tableName = null, $allowedWildcards = ['%' => '%', '_' => '_'])
+    public function __construct($tableName = null)
     {
         $this->selectComponent = new SelectComponent();
         $this->whereComponent = new WhereComponent();
@@ -62,7 +61,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         $this->offsetComponent = new OffsetComponent();
         $this->havingComponent = new HavingComponent();
         $this->unionIntersectComponent = new UnionIntersectComponent();
-        parent::__construct($tableName, $allowedWildcards);
+        parent::__construct($tableName);
     }
 
     /**

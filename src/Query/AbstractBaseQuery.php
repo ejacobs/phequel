@@ -18,12 +18,11 @@ abstract class AbstractBaseQuery
     /**
      * AbstractBaseQuery constructor.
      * @param string|null $tableName
-     * @param array $allowedWildcards
      */
-    public function __construct($tableName, $allowedWildcards = ['%' => '%', '_' => '_'])
+    public function __construct($tableName)
     {
         $this->tableComponent = new TableComponent($tableName);
-        $this->allowedWildcards = $allowedWildcards;
+        $this->setWildcardCharacters(['%' => '%', '_' => '_']);
     }
 
     /**
@@ -35,6 +34,20 @@ abstract class AbstractBaseQuery
      * @return array
      */
     abstract public function getParams();
+
+    /**
+     * Set the allowed wildcard characters. Wildcard characters not included in this list will be escaped when they
+     * are passed as parameters. You can map various character to SQL wildcard characters, for example ['*' => '%']
+     * will cause asterisks to be converted to SQL "percent" wildcards.
+     *
+     * @param array $wildcards
+     * @return $this
+     */
+    public function setWildcardCharacters(array $wildcards)
+    {
+        $this->allowedWildcards = $wildcards;
+        return $this;
+    }
 
     /**
      * @param $string
