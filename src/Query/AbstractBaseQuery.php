@@ -3,13 +3,12 @@
 namespace Ejacobs\Phequel\Query;
 
 use Ejacobs\Phequel\Component\TableComponent;
-use Ejacobs\Phequel\FluentConnection;
 
 abstract class AbstractBaseQuery
 {
     protected $tableComponent = null;
 
-    protected $allowedWildcards = null;
+    public $allowedWildcards = null;
 
     const valid_wildcards = ['%', '_'];
     const valid_operators = ['=', '!=', '>', '>=', '<', '<=', 'like', 'in', 'is', 'between', 'not like', 'similar to',
@@ -17,12 +16,13 @@ abstract class AbstractBaseQuery
 
     /**
      * AbstractBaseQuery constructor.
-     * @param string|null $tableName
+     * @param $tableName
+     * @param array $allowedWildcards
      */
-    public function __construct($tableName)
+    public function __construct($tableName, array $allowedWildcards = ['%' => '%', '_' => '_'])
     {
         $this->tableComponent = new TableComponent($tableName);
-        $this->setWildcardCharacters(['%' => '%', '_' => '_']);
+        $this->setWildcardCharacters($allowedWildcards);
     }
 
     /**
