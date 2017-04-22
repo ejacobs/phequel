@@ -4,10 +4,12 @@ namespace Ejacobs\Phequel\Query\Traits;
 
 use Ejacobs\Phequel\Component\WhereComponent;
 
+/**
+ * Class WhereTrait
+ * @package Ejacobs\Phequel\Query\Traits
+ */
 trait WhereTrait
 {
-
-
 
     /**
      * @param $column
@@ -17,53 +19,28 @@ trait WhereTrait
      */
     public function where($column, $operator = null, $param = null)
     {
-
-        if ($column instanceof WhereComponent) {
-            $where = $column;
-        } else {
-            $where = new WhereComponent();
-            $where->setCondition($column, $operator, $this->escapeWildcards($param));
-        }
-        $this->whereComponent->addCondition($where);
+        $this->whereComponent->where($column, $operator, $param);
         return $this;
     }
 
     /**
-     * @param array $expressions
+     * @param callable $nested
      * @return $this
      */
-    public function whereAny($expressions = [])
+    public function whereAny(callable $nested)
     {
-        $where = new WhereComponent('or');
-        foreach ($expressions as $expression) {
-            if (!($expression instanceof WhereComponent)) {
-                $new = new WhereComponent();
-                $new->setCondition($expression[0], $expression[1], $this->escapeWildcards($expression[2]));
-                $expression = $new;
-            }
-            $where->addCondition($expression);
-        }
-        $this->whereComponent->addCondition($where);
+        $this->whereComponent->whereAny($nested);
         return $this;
     }
 
 
     /**
-     * @param array $expressions
+     * @param callable $nested
      * @return $this
      */
-    public function whereAll($expressions = [])
+    public function whereAll(callable $nested)
     {
-        $where = new WhereComponent('and');
-        foreach ($expressions as $expression) {
-            if (!($expression instanceof WhereComponent)) {
-                $new = new WhereComponent();
-                $new->setCondition($expression[0], $expression[1], $this->escapeWildcards($expression[2]));
-                $expression = $new;
-            }
-            $where->addCondition($expression);
-        }
-        $this->whereComponent->addCondition($where);
+        $this->whereComponent->whereAll($nested);
         return $this;
     }
 

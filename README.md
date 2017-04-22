@@ -20,6 +20,17 @@ $select->select('foo')
     
 echo $select;
 print_r($select->getParams());
+
+$select = new PostgresSelectQuery();
+$select->whereAny(function($conditions) {
+    $condition->where('foo', '=', 'bar');
+    $condition->where('bar', '=', 'baz');
+    $condition->whereAll(function($conditions) {
+        $conditions->where('age', '>', 30);
+        $conditions->where('rank', '<', 10);
+    });
+});
+
 ```
 
 ### UPDATE
