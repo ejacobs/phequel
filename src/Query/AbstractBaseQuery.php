@@ -12,8 +12,8 @@ abstract class AbstractBaseQuery
     protected $allowedWildcards = null;
 
     const valid_wildcards = ['%', '_'];
-    const valid_operators = ['=', '!=', '>', '>=', '<', '<=', 'like', 'in', 'is', 'between', 'not like', 'similar to',
-        'not similar to'];
+    const valid_operators = ['=', '!=', '>', '>=', '<', '<=', 'like', 'ilike', 'in', 'is', 'between', 'not like',
+        'similar to', 'not similar to'];
 
     /**
      * AbstractBaseQuery constructor.
