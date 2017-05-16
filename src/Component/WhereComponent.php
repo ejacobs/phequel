@@ -93,7 +93,7 @@ class WhereComponent extends AbstractComponent
 
         $ret .= implode(" {$this->type} ", $combine);
 
-        if ($this->level === 0) {
+        if (($this->level === 0) && ($ret)) {
             $ret = ' WHERE ' . $ret;
         }
         else if (count($this->conditions) > 0) {
