@@ -16,10 +16,21 @@ use Ejacobs\Phequel\Query\Postgres\PostgresSelectQuery;
 $select = new PostgresSelectQuery();
 $select->select('foo')
     ->from('mytable')
-    ->where('foo = ?', 'bar');
+    ->where('foo', '=', 'bar');
     
 echo $select;
 print_r($select->getParams());
+
+$select = new PostgresSelectQuery();
+$select->whereAny(function($conditions) {
+    $condition->where('foo', '=', 'bar');
+    $condition->where('bar', '=', 'baz');
+    $condition->whereAll(function($conditions) {
+        $conditions->where('age', '>', 30);
+        $conditions->where('rank', '<', 10);
+    });
+});
+
 ```
 
 ### UPDATE
@@ -29,7 +40,7 @@ use Ejacobs\Phequel\Query\Postgres\PostgresUpdateQuery;
 $update = new PostgresUpdateQuery();
 $update->update('table1')
     ->set('foo', 'bar')
-    ->where('somecolumn = ?', 'x');
+    ->where('somecolumn', '=', 'x');
     
 echo $update;
 print_r($update->getParams());
@@ -57,7 +68,7 @@ use Ejacobs\Phequel\Query\Postgres\PostgresDeleteQuery;
 
 $delete = new PostgresDeleteQuery();
 $delete->from('mytable')
-    ->where('foo = ?', 'bar');
+    ->where('foo', '=', 'bar');
     
 echo $delete;
 print_r($delete->getParams());
@@ -70,7 +81,7 @@ use Ejacobs\Phequel\Query\Postgres\PostgresSelectQuery;
 use Ejacobs\Phequel\Connector\PdoConnector;
 
 $select = new PostgresSelectQuery();
-$select->from('mytable')->where('id = ?', 94);
+$select->from('mytable')->where('id', '=', 94);
 
 $conn = new PdoConnector(<driver>, [
     'host'     => '<host>',

@@ -32,7 +32,7 @@ final class PostgresSelectQueryTest extends TestCase
 
         $query2 = new \Ejacobs\Phequel\Query\Postgres\PostgresSelectQuery('mytable', ['*' => '%']);
         $query2->where('mycolumn', 'LIKE', 'foo%');
-        $this->assertEquals($query2->getParams(), ['foo\\%']);
+        $this->assertEquals($query2->getParams(), ['foo\%']);
     }
 
     public function testOrderBy()
