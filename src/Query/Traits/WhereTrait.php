@@ -19,6 +19,9 @@ trait WhereTrait
      */
     public function where($column, $operator = null, $param = null)
     {
+        if ($param !== null) {
+            $param = $this->escapeWildcards($param);
+        }
         $this->whereComponent->where($column, $operator, $param);
         return $this;
     }
