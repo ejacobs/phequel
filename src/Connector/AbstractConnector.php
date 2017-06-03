@@ -27,19 +27,19 @@ abstract class AbstractConnector
      * @param $tableName
      * @return AbstractSelectQuery
      */
-    abstract public function select($tableName);
+    abstract public function selectFrom($tableName);
 
     /**
      * @param $tableName
      * @return AbstractInsertQuery
      */
-    abstract public function insert($tableName);
+    abstract public function insertInto($tableName);
 
     /**
      * @param $tableName
      * @return AbstractDeleteQuery
      */
-    abstract public function delete($tableName);
+    abstract public function deleteFrom($tableName);
 
     /**
      * @param $tableName

@@ -46,7 +46,9 @@ class JoinComponent extends AbstractComponent
     {
         $ret = '';
         foreach ($this->joins as $join) {
-            $ret .= " {$join['type']} JOIN {$join['table']} ON ({$join['on']})";
+            // TODO: Validate $onClause
+            $onClause = implode(' ', $join['on']);
+            $ret .= " {$join['type']} JOIN {$join['table']} ON ({$onClause})";
         }
         return $ret;
     }

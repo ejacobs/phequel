@@ -19,7 +19,7 @@ class PostgresConnector extends AbstractPdoConnector
      * @param $tableName
      * @return PostgresSelectQuery
      */
-    public function select($tableName)
+    public function selectFrom($tableName)
     {
         return new PostgresSelectQuery($tableName);
     }
@@ -28,7 +28,7 @@ class PostgresConnector extends AbstractPdoConnector
      * @param $tableName
      * @return PostgresInsertQuery
      */
-    public function insert($tableName)
+    public function insertInto($tableName)
     {
         return new PostgresInsertQuery($tableName);
     }
@@ -37,7 +37,7 @@ class PostgresConnector extends AbstractPdoConnector
      * @param $tableName
      * @return PostgresDeleteQuery
      */
-    public function delete($tableName)
+    public function deleteFrom($tableName)
     {
         return new PostgresDeleteQuery($tableName);
     }
