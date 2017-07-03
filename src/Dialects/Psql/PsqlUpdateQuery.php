@@ -1,10 +1,10 @@
 <?php
 
-namespace Ejacobs\Phequel\Query\Postgres;
+namespace Ejacobs\Phequel\Dialects\Psql;
 
 use Ejacobs\Phequel\Query\AbstractUpdateQuery;
 
-class PostgresUpdateQuery extends AbstractUpdateQuery
+class PsqlUpdateQuery extends AbstractUpdateQuery
 {
 
     /**
@@ -17,6 +17,5 @@ class PostgresUpdateQuery extends AbstractUpdateQuery
         . (string)$this->setComponent
         . (string)$this->whereComponent;
     }
-
 
 }

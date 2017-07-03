@@ -1,13 +1,13 @@
 <?php
 
-namespace Ejacobs\Phequel\Query\Postgres;
+namespace Ejacobs\Phequel\Dialects\Psql;
 
-use Ejacobs\Phequel\Component\Select\FetchComponent;
-use Ejacobs\Phequel\Component\Select\ForComponent;
-use Ejacobs\Phequel\Component\Select\WindowComponent;
+use Ejacobs\Phequel\Components\Select\FetchComponent;
+use Ejacobs\Phequel\Components\Select\ForComponent;
+use Ejacobs\Phequel\Components\Select\WindowComponent;
 use Ejacobs\Phequel\Query\AbstractSelectQuery;
 
-class PostgresSelectQuery extends AbstractSelectQuery
+class PsqlSelectQuery extends AbstractSelectQuery
 {
 
     /* @var WindowComponent $windowComponent */
@@ -71,19 +71,20 @@ class PostgresSelectQuery extends AbstractSelectQuery
             throw new \Exception("You must specify a table name");
         }
 
-        return (string)$this->selectComponent
-        . (string)$this->tableComponent
-        . (string)$this->joinComponent
-        . (string)$this->whereComponent
-        . (string)$this->groupByComponent
-        . (string)$this->havingComponent
-        . (string)$this->windowComponent
-        . (string)$this->orderByComponent
-        . (string)$this->limitComponent
-        . (string)$this->offsetComponent
-        . (string)$this->fetchComponent
-        . (string)$this->forComponent
-        . (string)$this->unionIntersectComponent;
+        $formatter = $this->formatter();
+        return (string)$this->selectComponent->injectFormatter($formatter)
+            . (string)$this->tableComponent->injectFormatter($formatter)
+            . (string)$this->joinComponent->injectFormatter($formatter)
+            . (string)$this->whereComponent->injectFormatter($formatter)
+            . (string)$this->groupByComponent->injectFormatter($formatter)
+            . (string)$this->havingComponent->injectFormatter($formatter)
+            . (string)$this->windowComponent->injectFormatter($formatter)
+            . (string)$this->orderByComponent->injectFormatter($formatter)
+            . (string)$this->limitComponent->injectFormatter($formatter)
+            . (string)$this->offsetComponent->injectFormatter($formatter)
+            . (string)$this->fetchComponent->injectFormatter($formatter)
+            . (string)$this->forComponent->injectFormatter($formatter)
+            . (string)$this->unionIntersectComponent->injectFormatter($formatter);
     }
 
 }
