@@ -11,9 +11,9 @@ Phequel is a framework agnostic query builder for PHP.
 
 ### SELECT
 ```php
-use Ejacobs\Phequel\Query\Postgres\PostgresSelectQuery;
+use Ejacobs\Phequel\Query\Psql\PsqlSelectQuery;
 
-$select = new PostgresSelectQuery();
+$select = new PsqlSelectQuery();
 $select->select('foo')
     ->from('mytable')
     ->where('foo', '=', 'bar');
@@ -21,7 +21,7 @@ $select->select('foo')
 echo $select;
 print_r($select->getParams());
 
-$select = new PostgresSelectQuery();
+$select = new PsqlSelectQuery();
 $select->whereAny(function($conditions) {
     $condition->where('foo', '=', 'bar');
     $condition->where('bar', '=', 'baz');
@@ -35,9 +35,9 @@ $select->whereAny(function($conditions) {
 
 ### UPDATE
 ```php
-use Ejacobs\Phequel\Query\Postgres\PostgresUpdateQuery;
+use Ejacobs\Phequel\Query\Psql\PsqlUpdateQuery;
 
-$update = new PostgresUpdateQuery();
+$update = new PsqlUpdateQuery();
 $update->update('table1')
     ->set('foo', 'bar')
     ->where('somecolumn', '=', 'x');
@@ -48,9 +48,9 @@ print_r($update->getParams());
 
 ### INSERT
 ```php
-use Ejacobs\Phequel\Query\Postgres\PostgresInsertQuery;
+use Ejacobs\Phequel\Query\Psql\PsqlInsertQuery;
 
-$insert = new PostgresInsertQuery();
+$insert = new PsqlInsertQuery();
 $insert->into('table1')
     ->columns(['column1', 'column2'])
     ->addRow([
@@ -64,9 +64,9 @@ print_r($insert->getParams());
 
 ### DELETE
 ```php
-use Ejacobs\Phequel\Query\Postgres\PostgresDeleteQuery;
+use Ejacobs\Phequel\Query\Psql\PsqlDeleteQuery;
 
-$delete = new PostgresDeleteQuery();
+$delete = new PsqlDeleteQuery();
 $delete->from('mytable')
     ->where('foo', '=', 'bar');
     
@@ -77,10 +77,10 @@ print_r($delete->getParams());
 ### Running queries
 Phequel comes with its own connector to run the generated queries and return the result.
 ```php
-use Ejacobs\Phequel\Query\Postgres\PostgresSelectQuery;
+use Ejacobs\Phequel\Query\Psql\PsqlSelectQuery;
 use Ejacobs\Phequel\Connector\PdoConnector;
 
-$select = new PostgresSelectQuery();
+$select = new PsqlSelectQuery();
 $select->from('mytable')->where('id', '=', 94);
 
 $conn = new PdoConnector(<driver>, [
