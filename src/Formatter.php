@@ -2,7 +2,7 @@
 
 namespace Ejacobs\Phequel;
 
-class Format
+class Formatter
 {
 
     private $indent = true;
@@ -12,6 +12,7 @@ class Format
     private $uppercaseKeywords = true;
     private $placeholderType = '?';
     private $numericPlaceholderCounter = 0;
+    private $interpolate = false;
 
     /**
      * @return $this
@@ -105,6 +106,15 @@ class Format
     }
 
     /**
+     * @return $this
+     */
+    public function interpolate()
+    {
+        $this->interpolate = true;
+        return $this;
+    }
+
+    /**
      * @param string $keyword
      * @return string
      */
@@ -112,8 +122,7 @@ class Format
     {
         if ($this->uppercaseKeywords) {
             return strtoupper($keyword);
-        }
-        else {
+        } else {
             return strtolower($keyword);
         }
     }
@@ -126,8 +135,7 @@ class Format
         if ($this->placeholderType === '#') {
             $this->numericPlaceholderCounter++;
             return (string)$this->numericPlaceholderCounter;
-        }
-        else {
+        } else {
             return '?';
         }
     }
