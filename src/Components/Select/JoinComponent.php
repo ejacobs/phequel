@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Component\Select;
+namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Component\AbstractComponent;
+use Ejacobs\Phequel\Components\AbstractComponent;
 
 class JoinComponent extends AbstractComponent
 {
@@ -29,26 +29,29 @@ class JoinComponent extends AbstractComponent
      */
     public function addJoin($tableName, $onClause, $type = 'left')
     {
-        if (in_array(strtolower($type), $this->validJoinTypes)) {
-            $type = strtoupper($type);
+        $type = strtolower($type);
+        if (in_array($type, $this->validJoinTypes)) {
+            $this->joins[] = [
+                'type'  => $type,
+                'table' => $tableName,
+                'on'    => $onClause
+            ];
         } else {
             throw new \Exception("Invalid join type: {$type}");
         }
-
-        $this->joins[] = [
-            'type'  => $type,
-            'table' => $tableName,
-            'on'    => $onClause
-        ];
     }
 
     public function __toString()
     {
         $ret = '';
+        $formatter = $this->formatter();
         foreach ($this->joins as $join) {
             // TODO: Validate $onClause
             $onClause = implode(' ', $join['on']);
-            $ret .= " {$join['type']} JOIN {$join['table']} ON ({$onClause})";
+            $ret .= $formatter->insertKeyword(" {$join['type']} join ")
+                . $join['table']
+                . $formatter->insertKeyword(" on ")
+                . '(' . $onClause . ')';
         }
         return $ret;
     }

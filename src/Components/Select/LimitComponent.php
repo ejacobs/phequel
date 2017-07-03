@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Component\Select;
+namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Component\AbstractComponent;
+use Ejacobs\Phequel\Components\AbstractComponent;
 
 class LimitComponent extends AbstractComponent
 {
@@ -20,7 +20,7 @@ class LimitComponent extends AbstractComponent
     public function __toString()
     {
         if ($this->limit) {
-            return " LIMIT {$this->limit}";
+            return $this->formatter()->insertKeyword(' limit ') . $this->limit;
         } else {
             return '';
         }

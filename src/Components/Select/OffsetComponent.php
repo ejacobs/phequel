@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Component\Select;
+namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Component\AbstractComponent;
+use Ejacobs\Phequel\Components\AbstractComponent;
 
 class OffsetComponent extends AbstractComponent
 {
@@ -20,7 +20,7 @@ class OffsetComponent extends AbstractComponent
     public function __toString()
     {
         if ($this->offset !== null) {
-            return ' OFFSET ' . $this->offset;
+            return $this->formatter()->insertKeyword(' offset ') . $this->offset;
         } else {
             return '';
         }

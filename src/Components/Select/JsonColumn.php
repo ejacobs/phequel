@@ -1,6 +1,6 @@
 <?php
 
-namespace Ejacobs\Phequel\Component\Select;
+namespace Ejacobs\Phequel\Components\Select;
 
 class JsonColumn extends ColumnComponent
 {

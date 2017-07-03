@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Component\Select;
+namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Component\AbstractComponent;
+use Ejacobs\Phequel\Components\AbstractComponent;
 
 class OrderByComponent extends AbstractComponent
 {
@@ -23,7 +23,10 @@ class OrderByComponent extends AbstractComponent
     public function __toString()
     {
         if ($this->column) {
-            return " ORDER BY {$this->column} {$this->direction}";
+            $formatter = $this->formatter();
+            return $formatter->insertKeyword(' order by ')
+                . $this->column
+                . $formatter->insertKeyword(" {$this->direction}");
         } else {
             return '';
         }

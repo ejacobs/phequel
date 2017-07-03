@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Component\Select;
+namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Component\AbstractComponent;
+use Ejacobs\Phequel\Components\AbstractComponent;
 
 class HavingComponent extends AbstractComponent
 {
@@ -46,7 +46,8 @@ class HavingComponent extends AbstractComponent
     public function __toString()
     {
         if ($this->conditions) {
-            return " HAVING " . implode(', ', array_column($this->conditions, 'sql'));
+            return $this->formatter()->insertKeyword(" having ")
+                . implode(', ', array_column($this->conditions, 'sql'));
         } else {
             return '';
         }

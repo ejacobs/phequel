@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Component\Delete;
+namespace Ejacobs\Phequel\Components\Delete;
 
-use Ejacobs\Phequel\Component\AbstractComponent;
+use Ejacobs\Phequel\Components\AbstractComponent;
 
 class DeleteComponent extends AbstractComponent
 {

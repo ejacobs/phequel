@@ -1,10 +1,13 @@
 <?php
 
-namespace Ejacobs\Phequel\Component;
+namespace Ejacobs\Phequel\Components;
+
+use Ejacobs\Phequel\Formatter;
 
 abstract class AbstractComponent
 {
-
+    /* @var Formatter $formatter */
+    private $formatter;
 
     /**
      * @return string
@@ -17,6 +20,27 @@ abstract class AbstractComponent
     public function getParams()
     {
         return [];
+    }
+
+    /**
+     * @return Formatter
+     */
+    public function formatter()
+    {
+        if ($this->formatter instanceof Formatter) {
+            return $this->formatter;
+        }
+        return new Formatter();
+    }
+
+    /**
+     * @param Formatter $formatter
+     * @return $this
+     */
+    public function injectFormatter(Formatter $formatter)
+    {
+        $this->formatter = $formatter;
+        return $this;
     }
 
 }

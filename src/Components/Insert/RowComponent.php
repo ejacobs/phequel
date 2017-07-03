@@ -1,12 +1,12 @@
 <?php
 
-namespace Ejacobs\Phequel\Component\Insert;
+namespace Ejacobs\Phequel\Components\Insert;
 
-use Ejacobs\Phequel\Component\AbstractComponent;
+use Ejacobs\Phequel\Components\AbstractComponent;
 
 class RowComponent extends AbstractComponent
 {
-    private $columns;
+    private $columns = [];
     private $rows;
 
     /**

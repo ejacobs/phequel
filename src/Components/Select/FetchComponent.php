@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Component\Select;
+namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Component\AbstractComponent;
+use Ejacobs\Phequel\Components\AbstractComponent;
 
 class FetchComponent extends AbstractComponent
 {
@@ -32,15 +32,19 @@ class FetchComponent extends AbstractComponent
         $this->rowType = $rowType;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $ret = '';
         if ($this->count) {
-            $ret .= ' FETCH ' . strtoupper($this->type);
+            $formatter = $this->formatter();
+            $ret .= $formatter->insertKeyword(' fetch ' . $this->type);
             if ($this->count) {
                 $ret .= " {$this->count} ";
             }
-            $ret .= strtoupper($this->rowType) . " ONLY";
+            $ret .= $formatter->insertKeyword($this->rowType . " only");
         }
         return $ret;
     }

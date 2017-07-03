@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Component\Update;
+namespace Ejacobs\Phequel\Components\Update;
 
-use Ejacobs\Phequel\Component\AbstractComponent;
+use Ejacobs\Phequel\Components\AbstractComponent;
 
 class SetComponent extends AbstractComponent
 {
@@ -35,7 +35,7 @@ class SetComponent extends AbstractComponent
             foreach ($this->values as $column => $value) {
                 $setParts[] = "{$column} = ?";
             }
-            return ' SET ' . implode(', ', $setParts);
+            return $this->formatter()->insertKeyword(' set ') . implode(', ', $setParts);
         }
         return '';
     }

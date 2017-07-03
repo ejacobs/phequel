@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Component\Select;
+namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Component\AbstractComponent;
+use Ejacobs\Phequel\Components\AbstractComponent;
 
 class ForComponent extends AbstractComponent
 {
@@ -39,12 +39,12 @@ class ForComponent extends AbstractComponent
     {
         $ret = '';
         if ($this->lockStrength) {
-            $ret .= ' FOR ' . strtoupper($this->lockStrength);
+            $ret .= $this->formatter()->insertKeyword(' for ' . $this->lockStrength);
             if ($this->tableNames) {
                 $ret .= ' ' . implode($this->tableNames, ', ');
             }
             if ($this->option) {
-                $ret .= ' ' . strtoupper($this->option);
+                $ret .= $this->formatter()->insertKeyword(' ' . $this->option);
             }
         }
         return $ret;

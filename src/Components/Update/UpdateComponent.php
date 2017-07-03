@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Component\Update;
+namespace Ejacobs\Phequel\Components\Update;
 
-use Ejacobs\Phequel\Component\AbstractComponent;
+use Ejacobs\Phequel\Components\AbstractComponent;
 
 class UpdateComponent extends AbstractComponent
 {
@@ -12,7 +12,7 @@ class UpdateComponent extends AbstractComponent
      */
     public function __toString()
     {
-        return 'UPDATE';
+        return $this->formatter()->insertKeyword('update');
     }
 
 }

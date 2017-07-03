@@ -1,13 +1,14 @@
 <?php
 
-namespace Ejacobs\Phequel\Component;
+namespace Ejacobs\Phequel\Components;
+
+use Ejacobs\Phequel\Query\AbstractSelectQuery;
 
 class WhereComponent extends AbstractComponent
 {
-    private $type;
-    private $level = 0;
-
     private $conditions = [];
+    private $level = 0;
+    private $type;
 
     const valid_types = ['and', 'or'];
 
@@ -20,17 +21,18 @@ class WhereComponent extends AbstractComponent
     public function __construct($type = 'and', $level = 0)
     {
         $this->level = $level;
-        if (in_array(strtolower($type), self::valid_types)) {
-            $this->type = strtoupper($type);
+        $type = strtolower($type);
+        if (in_array($type, self::valid_types)) {
+            $this->type = $type;
         } else {
             throw new \Exception("Where conditions type must be one of the following: " . implode(', ', self::valid_types));
         }
     }
 
     /**
-     * @param $column
-     * @param $operator
-     * @param $value
+     * @param string $column
+     * @param string $operator
+     * @param string|AbstractSelectQuery $value
      */
     public function where($column, $operator, $value)
     {
@@ -79,22 +81,22 @@ class WhereComponent extends AbstractComponent
      */
     public function __toString()
     {
-
         $ret = '';
         $combine = [];
+        $formatter = $this->formatter();
         foreach ($this->conditions as $condition) {
-           if (!is_object($condition)) {
-               $combine[] = "{$condition[0]} {$condition[1]} ?";
+           if ($condition instanceof WhereComponent) {
+               $combine[] = (string)$condition->injectFormatter($formatter);
            }
            else {
-               $combine[] = (string)$condition;
+               $combine[] = "{$condition[0]} {$condition[1]} ?";
            }
         }
 
-        $ret .= implode(" {$this->type} ", $combine);
-
+        $type = $formatter->insertKeyword(" {$this->type} ");
+        $ret .= implode($type, $combine);
         if (($this->level === 0) && ($ret)) {
-            $ret = ' WHERE ' . $ret;
+            $ret = $formatter->insertKeyword(' where ') . $ret;
         }
         else if (count($this->conditions) > 0) {
             $ret = '(' . $ret . ')';
@@ -102,6 +104,5 @@ class WhereComponent extends AbstractComponent
 
         return $ret;
     }
-
 
 }

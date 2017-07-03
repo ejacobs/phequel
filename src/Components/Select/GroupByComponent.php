@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Component\Select;
+namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Component\AbstractComponent;
+use Ejacobs\Phequel\Components\AbstractComponent;
 
 class GroupByComponent extends AbstractComponent
 {
@@ -28,10 +28,13 @@ class GroupByComponent extends AbstractComponent
         $this->columns = array_merge($this->columns, $columns);
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         if ($this->columns) {
-            return ' GROUP BY ' . implode(', ', $this->columns);
+            return $this->formatter()->insertKeyword(' group by ') . implode(', ', $this->columns);
         }
         return '';
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Component\Select;
+namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Component\AbstractComponent;
+use Ejacobs\Phequel\Components\AbstractComponent;
 
 class SelectComponent extends AbstractComponent
 {
@@ -57,15 +57,15 @@ class SelectComponent extends AbstractComponent
      */
     public function __toString()
     {
-        $ret = 'SELECT ';
+        $ret = $this->formatter()->insertKeyword('select') . ' ';
         if ($this->distinct) {
-            $ret .= 'DISTINCT ';
+            $ret .= $this->formatter()->insertKeyword('distinct') . ' ';
             if ($this->distinctOn !== null) {
-                $ret .= 'ON (' . $this->distinctOn . ') ';
+                $ret .=  $this->formatter()->insertKeyword('on') . ' (' . $this->distinctOn . ') ';
             }
         }
         $ret .= implode(', ', $this->columns);
-        $ret .= ' FROM';
+        $ret .= ' ' . $this->formatter()->insertKeyword('from');
         return $ret;
     }
 

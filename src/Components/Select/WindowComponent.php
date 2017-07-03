@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Component\Select;
+namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Component\AbstractComponent;
+use Ejacobs\Phequel\Components\AbstractComponent;
 
 class WindowComponent extends AbstractComponent
 {
@@ -30,7 +30,7 @@ class WindowComponent extends AbstractComponent
     public function __toString()
     {
         if ($this->windows) {
-            return " WINDOW " . implode(', ', $this->windows);
+            return $this->formatter()->insertKeyword(' window ') . implode(', ', $this->windows);
         } else {
             return '';
         }
