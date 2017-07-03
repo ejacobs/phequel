@@ -2,13 +2,15 @@
 
 namespace Ejacobs\Phequel\Query;
 
-use Ejacobs\Phequel\Component\TableComponent;
+use Ejacobs\Phequel\Components\TableComponent;
+use Ejacobs\Phequel\Query\Traits\FormatterTrait;
 
 abstract class AbstractBaseQuery
 {
-    protected $tableComponent = null;
+    use FormatterTrait;
 
     public $allowedWildcards = null;
+    protected $tableComponent = null;
 
     const valid_wildcards = ['%', '_'];
     const valid_operators = ['=', '!=', '>', '>=', '<', '<=', 'like', 'ilike', 'in', 'is', 'between', 'not like',
@@ -16,10 +18,10 @@ abstract class AbstractBaseQuery
 
     /**
      * AbstractBaseQuery constructor.
-     * @param $tableName
+     * @param null|string $tableName
      * @param array $allowedWildcards
      */
-    public function __construct($tableName, array $allowedWildcards = ['%' => '%', '_' => '_'])
+    public function __construct($tableName = null, array $allowedWildcards = ['%' => '%', '_' => '_'])
     {
         $this->tableComponent = new TableComponent($tableName);
         $this->setWildcardCharacters($allowedWildcards);
@@ -50,7 +52,11 @@ abstract class AbstractBaseQuery
     }
 
     /**
-     * @param $string
+     * Converts wildcards specified in the constructor into valid SQL wildcards. In some instances asterisks (*) may be
+     * preferred to percent signs (%) when writing wildcard queries. This method will make those conversions as well as
+     * escape any wildcard characters not explicitly defined in the constructor for the query object.
+     *
+     * @param string $string
      * @throws \Exception
      * @return string
      */
@@ -73,6 +79,5 @@ abstract class AbstractBaseQuery
 
         return $string;
     }
-
 
 }

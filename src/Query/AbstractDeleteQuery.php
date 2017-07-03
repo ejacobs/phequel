@@ -2,9 +2,9 @@
 
 namespace Ejacobs\Phequel\Query;
 
-use Ejacobs\Phequel\Component\Delete\DeleteComponent;
-use Ejacobs\Phequel\Component\TableComponent;
-use Ejacobs\Phequel\Component\WhereComponent;
+use Ejacobs\Phequel\Components\Delete\DeleteComponent;
+use Ejacobs\Phequel\Components\TableComponent;
+use Ejacobs\Phequel\Components\WhereComponent;
 use Ejacobs\Phequel\Query\Traits\WhereTrait;
 
 abstract class AbstractDeleteQuery extends AbstractBaseQuery

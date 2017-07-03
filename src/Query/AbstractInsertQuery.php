@@ -2,9 +2,9 @@
 
 namespace Ejacobs\Phequel\Query;
 
-use Ejacobs\Phequel\Component\Insert\InsertComponent;
-use Ejacobs\Phequel\Component\Insert\RowComponent;
-use Ejacobs\Phequel\Component\TableComponent;
+use Ejacobs\Phequel\Components\Insert\InsertComponent;
+use Ejacobs\Phequel\Components\Insert\RowComponent;
+use Ejacobs\Phequel\Components\TableComponent;
 
 abstract class AbstractInsertQuery extends AbstractBaseQuery
 {
@@ -75,6 +75,5 @@ abstract class AbstractInsertQuery extends AbstractBaseQuery
     {
         return $this->rowComponent->getParams();
     }
-
 
 }

@@ -2,16 +2,16 @@
 
 namespace Ejacobs\Phequel\Query;
 
-use Ejacobs\Phequel\Component\Select\GroupByComponent;
-use Ejacobs\Phequel\Component\Select\HavingComponent;
-use Ejacobs\Phequel\Component\Select\OrderByComponent;
-use Ejacobs\Phequel\Component\Select\UnionIntersectComponent;
-use Ejacobs\Phequel\Component\TableComponent;
-use Ejacobs\Phequel\Component\Select\JoinComponent;
-use Ejacobs\Phequel\Component\Select\LimitComponent;
-use Ejacobs\Phequel\Component\Select\OffsetComponent;
-use Ejacobs\Phequel\Component\Select\SelectComponent;
-use Ejacobs\Phequel\Component\WhereComponent;
+use Ejacobs\Phequel\Components\Select\GroupByComponent;
+use Ejacobs\Phequel\Components\Select\HavingComponent;
+use Ejacobs\Phequel\Components\Select\JoinComponent;
+use Ejacobs\Phequel\Components\Select\LimitComponent;
+use Ejacobs\Phequel\Components\Select\OffsetComponent;
+use Ejacobs\Phequel\Components\Select\OrderByComponent;
+use Ejacobs\Phequel\Components\Select\SelectComponent;
+use Ejacobs\Phequel\Components\Select\UnionIntersectComponent;
+use Ejacobs\Phequel\Components\TableComponent;
+use Ejacobs\Phequel\Components\WhereComponent;
 use Ejacobs\Phequel\Query\Traits\WhereTrait;
 
 abstract class AbstractSelectQuery extends AbstractBaseQuery
@@ -75,7 +75,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     }
 
     /**
-     * @param $column
+     * @param string $column
      * @param bool $clear
      * @return $this
      */
@@ -87,7 +87,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
 
     /**
      * @param bool $distinct
-     * @param null $on
+     * @param null|string $on
      * @return $this
      */
     public function distinct($distinct = true, $on = null)
@@ -106,8 +106,6 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         $this->joinComponent->addJoin($tableName, $onClause, 'left');
         return $this;
     }
-
-
 
     /**
      * @param int $limit
@@ -150,7 +148,6 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         return $this;
     }
 
-
     /**
      * @param $column
      * @param string $direction
@@ -192,7 +189,9 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         return $this->whereComponent->getParams();
     }
 
-
+    /**
+     * When cloning, clone all sub-components
+     */
     public function __clone()
     {
         $this->selectComponent = clone $this->selectComponent;

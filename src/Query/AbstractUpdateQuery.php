@@ -2,10 +2,10 @@
 
 namespace Ejacobs\Phequel\Query;
 
-use Ejacobs\Phequel\Component\Update\SetComponent;
-use Ejacobs\Phequel\Component\TableComponent;
-use Ejacobs\Phequel\Component\Update\UpdateComponent;
-use Ejacobs\Phequel\Component\WhereComponent;
+use Ejacobs\Phequel\Components\TableComponent;
+use Ejacobs\Phequel\Components\Update\SetComponent;
+use Ejacobs\Phequel\Components\Update\UpdateComponent;
+use Ejacobs\Phequel\Components\WhereComponent;
 use Ejacobs\Phequel\Query\Traits\WhereTrait;
 
 abstract class AbstractUpdateQuery extends AbstractBaseQuery
@@ -21,7 +21,10 @@ abstract class AbstractUpdateQuery extends AbstractBaseQuery
     /* @var WhereComponent $whereComponent */
     protected $whereComponent;
 
-
+    /**
+     * AbstractUpdateQuery constructor.
+     * @param null|string $tableName
+     */
     public function __construct($tableName = null)
     {
         $this->updateComponent = new UpdateComponent();
@@ -31,7 +34,7 @@ abstract class AbstractUpdateQuery extends AbstractBaseQuery
     }
 
     /**
-     * @param $tableName
+     * @param null|string $tableName
      * @return $this
      */
     public function update($tableName)

@@ -2,7 +2,7 @@
 
 namespace Ejacobs\Phequel\Query\Traits;
 
-use Ejacobs\Phequel\Component\WhereComponent;
+use Ejacobs\Phequel\Components\WhereComponent;
 
 /**
  * Class WhereTrait
