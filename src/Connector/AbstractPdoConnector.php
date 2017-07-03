@@ -1,8 +1,7 @@
 <?php
 
-namespace Ejacobs\Phequel\Connector\PdoConnector;
+namespace Ejacobs\Phequel\Connector;
 
-use Ejacobs\Phequel\Connector\AbstractConnector;
 use Ejacobs\Phequel\Query\AbstractBaseQuery;
 
 /**
@@ -13,15 +12,12 @@ use Ejacobs\Phequel\Query\AbstractBaseQuery;
 abstract class AbstractPdoConnector extends AbstractConnector
 {
 
-    protected $driver;
-    protected $params;
-
     /* @var \PDO $pdo */
     protected $pdo;
+    protected $params = [];
+    private $errorInfo = null;
 
     const driver = null;
-
-    private $errorInfo = null;
 
     /**
      * AbstractConnector constructor.
@@ -38,13 +34,16 @@ abstract class AbstractPdoConnector extends AbstractConnector
         }
     }
 
+    /**
+     * @return \PDO
+     */
     public function connect()
     {
         return new \PDO($this->getConnectionString());
     }
 
     /**
-     * @param $query
+     * @param AbstractBaseQuery|string $query
      * @param array $params
      * @return bool
      */
@@ -60,7 +59,7 @@ abstract class AbstractPdoConnector extends AbstractConnector
     }
 
     /**
-     * @param $query
+     * @param AbstractBaseQuery|string $query
      * @param array $params
      * @return array
      */
@@ -75,7 +74,7 @@ abstract class AbstractPdoConnector extends AbstractConnector
     }
 
     /**
-     * @param $query
+     * @param AbstractBaseQuery|string $query
      * @param array $params
      * @return array
      */

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ejacobs\Phequel\Queries;
+namespace Ejacobs\Phequel\Factories;
 
 use Ejacobs\Phequel\Query\AbstractDeleteQuery;
 use Ejacobs\Phequel\Query\AbstractInsertQuery;
@@ -12,13 +12,12 @@ use Ejacobs\Phequel\Query\AbstractUpdateQuery;
  *
  * Nested Queries include all DML queries (select, insert, update, delete) but are only available within the nested
  * callback of a transaction. As such, nested queries include transaction level controls such as savepoints and
- * rollbacks. Unlike QueriesInterface, nested queries retain all created queries so that the nested block can be
+ * rollbacks. Unlike QueryFactoryInterface, nested queries retain all created queries so that the nested block can be
  * serialized as a single string.
  *
  * @package Ejacobs\Phequel\Queries
  */
-interface NestedQueriesInterface extends QueriesInterface
-{
+interface NestedQueryFactoryInterface {
 
     /**
      * @param $tableName

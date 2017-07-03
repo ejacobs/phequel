@@ -1,51 +1,52 @@
 <?php
 
-namespace Ejacobs\Phequel\Queries;
+namespace Ejacobs\Phequel\Factories;
 
 use Ejacobs\Phequel\Query\AbstractDeleteQuery;
 use Ejacobs\Phequel\Query\AbstractInsertQuery;
 use Ejacobs\Phequel\Query\AbstractSelectQuery;
+use Ejacobs\Phequel\Query\AbstractTransactionQuery;
 use Ejacobs\Phequel\Query\AbstractUpdateQuery;
 
 /**
- * Interface QueriesInterface
+ * Interface QueryFactoryInterface
  *
  * Queries include all DML queries (select, insert, update, delete) but adds the ability to begin transactions.
- * This is to differentiate from nested queries which are nested within a transaction and thus cannot begin a new
- * transaction.
+ * This is to differentiate from nested queries which are already nested within a transaction and thus cannot begin a
+ * new one.
  *
  * @package Ejacobs\Phequel\Queries
  */
-interface QueriesInterface
+interface QueryFactoryInterface
 {
 
     /**
-     * @param $tableName
+     * @param string $tableName
      * @return AbstractSelectQuery
      */
     public function select($tableName);
 
     /**
-     * @param $tableName
+     * @param string $tableName
      * @return AbstractInsertQuery
      */
     public function insert($tableName);
 
     /**
-     * @param $tableName
+     * @param string $tableName
      * @return AbstractDeleteQuery
      */
     public function delete($tableName);
 
     /**
-     * @param $tableName
+     * @param string $tableName
      * @return AbstractUpdateQuery
      */
     public function update($tableName);
 
     /**
      * @param callable $nested
-     * @return mixed
+     * @return AbstractTransactionQuery
      */
     public function transaction(callable $nested);
 
