@@ -58,7 +58,7 @@ class UnionIntersectComponent extends AbstractComponent
     {
         $ret = '';
         foreach ($this->queries as $query) {
-            $ret .= ' ' . strtoupper($query[0]) . ' ' . $query[1];
+            $ret .= $this->formatter()->insertKeyword(" {$query[0]} ") . $query[1];
         }
         return $ret;
     }

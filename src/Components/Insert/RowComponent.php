@@ -51,7 +51,9 @@ class RowComponent extends AbstractComponent
      */
     public function __toString()
     {
-        $ret = ' (' . implode(', ', $this->columns) . ") VALUES\n  ";
+        $ret = ' (' . implode(', ', $this->columns) . ') '
+            . $this->formatter()->insertKeyword('values')
+            . "\n";
         $rows = [];
         $rowPlaceholder = '(' . implode(', ', array_fill(0, count($this->columns), '?')) . ')';
         foreach ($this->rows as $row) {

@@ -24,7 +24,6 @@ class LimitComponent extends AbstractComponent
         } else {
             return '';
         }
-
     }
 
 }
