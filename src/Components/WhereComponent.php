@@ -89,7 +89,7 @@ class WhereComponent extends AbstractComponent
                $combine[] = (string)$condition->injectFormatter($formatter);
            }
            else {
-               $combine[] = "{$condition[0]} {$condition[1]} ?";
+               $combine[] = "{$condition[0]} {$condition[1]} " . $formatter->insertPlaceholder($condition[2]);
            }
         }
 

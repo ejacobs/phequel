@@ -3,7 +3,6 @@
 namespace Ejacobs\Phequel\Connector;
 
 use Ejacobs\Phequel\Factories\QueryFactoryInterface;
-use Ejacobs\Phequel\Formatter;
 
 abstract class AbstractConnector
 {
@@ -27,12 +26,6 @@ abstract class AbstractConnector
 
     abstract public function errorInfo();
 
-    /**
-     * @return Formatter
-     */
-    public function formatter()
-    {
-        return new Formatter();
-    }
+    abstract public function escape($value);
 
 }

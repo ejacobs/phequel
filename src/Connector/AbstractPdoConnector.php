@@ -126,4 +126,13 @@ abstract class AbstractPdoConnector extends AbstractConnector
         return $this->errorInfo;
     }
 
+    /**
+     * @param $value
+     * @return string
+     */
+    public function escape($value)
+    {
+        return  $this->pdo->quote($value);
+    }
+
 }

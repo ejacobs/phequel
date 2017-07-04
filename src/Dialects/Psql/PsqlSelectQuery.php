@@ -19,6 +19,11 @@ class PsqlSelectQuery extends AbstractSelectQuery
     /* @var ForComponent $forComponent */
     protected $forComponent;
 
+    /**
+     * PsqlSelectQuery constructor.
+     * @param null|string $tableName
+     * @param array $allowedWildcards
+     */
     public function __construct($tableName = null, $allowedWildcards = ['%' => '%', '_' => '_'])
     {
         $this->windowComponent = new WindowComponent();
@@ -71,20 +76,21 @@ class PsqlSelectQuery extends AbstractSelectQuery
             throw new \Exception("You must specify a table name");
         }
 
-        $formatter = $this->formatter();
-        return (string)$this->selectComponent->injectFormatter($formatter)
-            . (string)$this->tableComponent->injectFormatter($formatter)
-            . (string)$this->joinComponent->injectFormatter($formatter)
-            . (string)$this->whereComponent->injectFormatter($formatter)
-            . (string)$this->groupByComponent->injectFormatter($formatter)
-            . (string)$this->havingComponent->injectFormatter($formatter)
-            . (string)$this->windowComponent->injectFormatter($formatter)
-            . (string)$this->orderByComponent->injectFormatter($formatter)
-            . (string)$this->limitComponent->injectFormatter($formatter)
-            . (string)$this->offsetComponent->injectFormatter($formatter)
-            . (string)$this->fetchComponent->injectFormatter($formatter)
-            . (string)$this->forComponent->injectFormatter($formatter)
-            . (string)$this->unionIntersectComponent->injectFormatter($formatter);
+        return $this->formatter()->compose([
+            $this->selectComponent,
+            $this->tableComponent,
+            $this->joinComponent,
+            $this->whereComponent,
+            $this->groupByComponent,
+            $this->havingComponent,
+            $this->windowComponent,
+            $this->orderByComponent,
+            $this->limitComponent,
+            $this->offsetComponent,
+            $this->fetchComponent,
+            $this->forComponent,
+            $this->unionIntersectComponent,
+        ]);
     }
 
 }

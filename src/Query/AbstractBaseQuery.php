@@ -3,11 +3,9 @@
 namespace Ejacobs\Phequel\Query;
 
 use Ejacobs\Phequel\Components\TableComponent;
-use Ejacobs\Phequel\Query\Traits\FormatterTrait;
 
-abstract class AbstractBaseQuery
+abstract class AbstractBaseQuery extends AbstractQuery
 {
-    use FormatterTrait;
 
     public $allowedWildcards = null;
     protected $tableComponent = null;
@@ -26,11 +24,6 @@ abstract class AbstractBaseQuery
         $this->tableComponent = new TableComponent($tableName);
         $this->setWildcardCharacters($allowedWildcards);
     }
-
-    /**
-     * @return string
-     */
-    abstract public function __toString();
 
     /**
      * @return array

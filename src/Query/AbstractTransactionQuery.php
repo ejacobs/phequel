@@ -5,11 +5,9 @@ namespace Ejacobs\Phequel\Query;
 use Ejacobs\Phequel\Components\Transaction\BeginComponent;
 use Ejacobs\Phequel\Components\Transaction\CommitComponent;
 use Ejacobs\Phequel\Factories\NestedQueryFactoryInterface;
-use Ejacobs\Phequel\Query\Traits\FormatterTrait;
 
-abstract class AbstractTransactionQuery
+abstract class AbstractTransactionQuery extends AbstractQuery
 {
-    use FormatterTrait;
 
     /* @var BeginComponent $beginComponent */
     protected $beginComponent;
@@ -34,10 +32,5 @@ abstract class AbstractTransactionQuery
      * @return array
      */
     abstract public function getParams();
-
-    /**
-     * @return string
-     */
-    abstract public function __toString();
 
 }

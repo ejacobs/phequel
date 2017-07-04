@@ -41,11 +41,12 @@ class PsqlInsertQuery extends AbstractInsertQuery
      */
     public function __toString()
     {
-        $formatter = $this->formatter();
-        return (string)$this->insertComponent->injectFormatter($formatter)
-            . (string)$this->tableComponent->injectFormatter($formatter)
-            . (string)$this->rowComponent->injectFormatter($formatter)
-            . (string)$this->returningComponent->injectFormatter($formatter);
+        return $this->formatter()->compose([
+            $this->insertComponent,
+            $this->tableComponent,
+            $this->rowComponent,
+            $this->returningComponent,
+        ]);
     }
 
 }

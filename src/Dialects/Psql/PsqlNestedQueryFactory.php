@@ -6,11 +6,9 @@ use Ejacobs\Phequel\Components\Transaction\ReleaseComponent;
 use Ejacobs\Phequel\Components\Transaction\RollbackComponent;
 use Ejacobs\Phequel\Components\Transaction\SavepointComponent;
 use Ejacobs\Phequel\Factories\NestedQueryFactoryInterface;
-use Ejacobs\Phequel\Query\Traits\FormatterTrait;
 
 class PsqlNestedQueryFactory implements NestedQueryFactoryInterface
 {
-    use FormatterTrait;
 
     private $queries = [];
 

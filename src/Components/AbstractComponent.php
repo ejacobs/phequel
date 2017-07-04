@@ -30,7 +30,7 @@ abstract class AbstractComponent
         if ($this->formatter instanceof Formatter) {
             return $this->formatter;
         }
-        return new Formatter();
+        return $this->formatter = new Formatter();
     }
 
     /**

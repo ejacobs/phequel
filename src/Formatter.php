@@ -2,17 +2,52 @@
 
 namespace Ejacobs\Phequel;
 
+use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\Connector\AbstractConnector;
+use Ejacobs\Phequel\Factories\EscaperInterface;
+use Ejacobs\Phequel\Query\AbstractQuery;
+
 class Formatter
 {
-
     private $indent = true;
     private $indentWhereClauses = true;
+    private $interpolate = false;
+    private $newlineAtEnd = false;
     private $numberOfSpaces = 4;
+    private $numericPlaceholderCounter = 0;
+    private $parentQuery;
+    private $placeholderType = '?';
+    private $semicolonAtEnd = false;
     private $tabsOrSpaces = 'spaces';
     private $uppercaseKeywords = true;
-    private $placeholderType = '?';
-    private $numericPlaceholderCounter = 0;
-    private $interpolate = false;
+
+    /* @var AbstractConnector $connector */
+    private $connector;
+
+    /**
+     * Formatter constructor.
+     * @param AbstractQuery $parentQuery
+     */
+    public function __construct(AbstractQuery $parentQuery)
+    {
+        $this->parentQuery = $parentQuery;
+    }
+
+    /**
+     * @param AbstractComponent[] $components
+     * @return string
+     */
+    public function compose(array $components)
+    {
+        $ret = '';
+        foreach ($components as $component) {
+            if ($component instanceof AbstractComponent) {
+                $ret .= (string)$component->injectFormatter($this);
+            }
+        }
+        $ret .= $this->insertEnding();
+        return $ret;
+    }
 
     /**
      * @return $this
@@ -106,11 +141,36 @@ class Formatter
     }
 
     /**
+     * WARNING: Query value interpolation is potentially dangerous and should not be used on production. It exists as a
+     * tool to assist developers when debugging queries.
+     *
+     * @param AbstractConnector $connector
      * @return $this
      */
-    public function interpolate()
+    public function interpolate(AbstractConnector $connector)
     {
+        $this->connector = $connector;
         $this->interpolate = true;
+        return $this;
+    }
+
+    /**
+     * @param bool $newlineAtEnd
+     * @return $this
+     */
+    public function newlineAfterEnd($newlineAtEnd = true)
+    {
+        $this->newlineAtEnd = $newlineAtEnd;
+        return $this;
+    }
+
+    /**
+     * @param bool $semicolonAtEnd
+     * @return $this
+     */
+    public function semicolonAtEnd($semicolonAtEnd = true)
+    {
+        $this->semicolonAtEnd = $semicolonAtEnd;
         return $this;
     }
 
@@ -128,16 +188,42 @@ class Formatter
     }
 
     /**
+     * @param $value
      * @return string
      */
-    public function insertPlaceholder()
+    public function insertPlaceholder($value)
     {
-        if ($this->placeholderType === '#') {
+        if ($this->interpolate) {
+            return $this->connector->escape($value);
+        } else if ($this->placeholderType === '#') {
             $this->numericPlaceholderCounter++;
             return (string)$this->numericPlaceholderCounter;
         } else {
             return '?';
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function insertEnding()
+    {
+        $ret = '';
+        if ($this->semicolonAtEnd) {
+            $ret .= ';';
+        }
+        if ($this->newlineAtEnd) {
+            $ret .= "\n";
+        }
+        return $ret;
+    }
+
+    /**
+     * @return string
+     */
+    function __toString()
+    {
+        return (string)$this->parentQuery;
     }
 
 }
