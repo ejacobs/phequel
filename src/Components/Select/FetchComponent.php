@@ -6,30 +6,18 @@ use Ejacobs\Phequel\Components\AbstractComponent;
 
 class FetchComponent extends AbstractComponent
 {
+    private $firstNext = null;
     private $count = null;
-    private $type = null;
-    private $rowType = null;
 
-    private $validTypes = ['first', 'next'];
-    private $validRowTypes = ['row', 'rows'];
+    const valid_first_next = ['first', 'next'];
 
-    /**
-     * @param string $type
-     * @param int $count
-     * @param string $rowType
-     * @throws \Exception
-     */
-    public function setFetch($type = 'first', $count = 1, $rowType = 'row')
+    public function setFetch($firstNext, $count)
     {
-        if (($type !== null) && !in_array(strtolower($type), $this->validTypes)) {
-            throw new \Exception("type must be one of the following: " . implode(', ', $this->validTypes));
+        if (($firstNext !== null) && !in_array(strtolower($firstNext), self::valid_first_next)) {
+            throw new \Exception("firstNext must be one of the following: " . implode(', ', self::valid_first_next));
         }
-        if (($rowType !== null) && !in_array(strtolower($rowType), $this->validRowTypes)) {
-            throw new \Exception("rowType must be one of the following: " . implode(', ', $this->validRowTypes));
-        }
+        $this->firstNext = $firstNext;
         $this->count = $count;
-        $this->type = $type;
-        $this->rowType = $rowType;
     }
 
     /**
@@ -37,16 +25,15 @@ class FetchComponent extends AbstractComponent
      */
     public function __toString()
     {
-        $ret = '';
-        if ($this->count) {
-            $formatter = $this->formatter();
-            $ret .= $formatter->insertKeyword(' fetch ' . $this->type);
-            if ($this->count) {
-                $ret .= " {$this->count} ";
-            }
-            $ret .= $formatter->insertKeyword($this->rowType . " only");
+        if ($this->count === null) {
+            return '';
         }
-        return $ret;
+        $formatter = $this->formatter();
+        return $formatter->insert($formatter::type_block_keyword, 'fetch')
+            . $formatter->insert($formatter::type_keyword, $this->firstNext)
+            . $formatter->insert($formatter::type_block_number, $this->count)
+            . $formatter->insert($formatter::type_keyword, 'only')
+            . $formatter->insert($formatter::type_end);
     }
 
 }

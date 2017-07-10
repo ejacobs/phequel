@@ -52,4 +52,14 @@ class PsqlQueryFactory implements QueryFactoryInterface
         return new PsqlTransactionQuery($nested);
     }
 
+    /**
+     * @param callable|null $queries
+     * @return PsqlUnionIntersectQuery
+     */
+    public function unionIntersect(callable $queries = null)
+    {
+        return new PsqlUnionIntersectQuery($queries);
+    }
+
+
 }

@@ -2,8 +2,6 @@
 
 namespace Ejacobs\Phequel\Query;
 
-use Ejacobs\Phequel\Components\TableComponent;
-
 abstract class AbstractBaseQuery extends AbstractQuery
 {
 
@@ -19,9 +17,8 @@ abstract class AbstractBaseQuery extends AbstractQuery
      * @param null|string $tableName
      * @param array $allowedWildcards
      */
-    public function __construct($tableName = null, array $allowedWildcards = ['%' => '%', '_' => '_'])
+    public function __construct($tableName = null, array $allowedWildcards = ['*' => '%', '_' => '_'])
     {
-        $this->tableComponent = new TableComponent($tableName);
         $this->setWildcardCharacters($allowedWildcards);
     }
 

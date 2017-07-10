@@ -3,6 +3,8 @@
 namespace Ejacobs\Phequel\Components\Select;
 
 use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\Components\ColumnComponent;
+use Ejacobs\Phequel\Formatter;
 
 class SelectComponent extends AbstractComponent
 {
@@ -19,14 +21,14 @@ class SelectComponent extends AbstractComponent
      */
     public function __construct($columns = '*')
     {
+        $this->addColumns($columns);
         if ($columns === '*') {
             $this->defaultSelectAll = true;
-            $this->columns = ['*'];
         }
     }
 
     /**
-     * @param $columns
+     * @param array|string $columns
      * @param bool $clear
      */
     public function addColumns($columns, $clear = false)
@@ -38,8 +40,9 @@ class SelectComponent extends AbstractComponent
         if (!is_array($columns)) {
             $columns = [$columns];
         }
-        $this->columns = array_merge($this->columns, $columns);
-        $this->columns = array_unique($this->columns);
+        foreach ($columns as $column) {
+            $this->columns[] = $column;
+        }
     }
 
     /**
@@ -57,16 +60,10 @@ class SelectComponent extends AbstractComponent
      */
     public function __toString()
     {
-        $ret = $this->formatter()->insertKeyword('select') . ' ';
-        if ($this->distinct) {
-            $ret .= $this->formatter()->insertKeyword('distinct') . ' ';
-            if ($this->distinctOn !== null) {
-                $ret .=  $this->formatter()->insertKeyword('on') . ' (' . $this->distinctOn . ') ';
-            }
-        }
-        $ret .= implode(', ', $this->columns);
-        $ret .= ' ' . $this->formatter()->insertKeyword('from');
-        return $ret;
+        $formatter = $this->formatter();
+        return $formatter->insert($formatter::type_block_keyword, 'select')
+            . $formatter->insert($formatter::type_columns, $this->columns)
+            . $formatter->insert($formatter::type_end);
     }
 
 }

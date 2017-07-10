@@ -10,6 +10,8 @@ use Ejacobs\Phequel\Components\WhereComponent;
  */
 trait WhereTrait
 {
+    /* @var WhereComponent $whereComponent */
+    protected $whereComponent;
 
     /**
      * @param $column
@@ -35,7 +37,6 @@ trait WhereTrait
         $this->whereComponent->whereAny($nested);
         return $this;
     }
-
 
     /**
      * @param callable $nested

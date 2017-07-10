@@ -2,6 +2,7 @@
 
 namespace Ejacobs\Phequel\Query;
 
+use Ejacobs\Phequel\Components\Select\FromComponent;
 use Ejacobs\Phequel\Components\Select\GroupByComponent;
 use Ejacobs\Phequel\Components\Select\HavingComponent;
 use Ejacobs\Phequel\Components\Select\JoinComponent;
@@ -10,7 +11,6 @@ use Ejacobs\Phequel\Components\Select\OffsetComponent;
 use Ejacobs\Phequel\Components\Select\OrderByComponent;
 use Ejacobs\Phequel\Components\Select\SelectComponent;
 use Ejacobs\Phequel\Components\Select\UnionIntersectComponent;
-use Ejacobs\Phequel\Components\TableComponent;
 use Ejacobs\Phequel\Components\WhereComponent;
 use Ejacobs\Phequel\Query\Traits\WhereTrait;
 
@@ -20,6 +20,9 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
 
     /* @var SelectComponent $selectComponent */
     protected $selectComponent;
+
+    /* @var FromComponent $fromComponent */
+    protected $fromComponent;
 
     /* @var JoinComponent $joinComponent */
     protected $joinComponent;
@@ -42,9 +45,6 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     /* @var HavingComponent $havingComponent */
     protected $havingComponent;
 
-    /* @var UnionIntersectComponent $unionIntersectComponent */
-    protected $unionIntersectComponent;
-
     /**
      * AbstractSelectQuery constructor.
      * @param string|null  $tableName
@@ -53,6 +53,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     public function __construct($tableName = null, $allowedWildcards = ['%' => '%', '_' => '_'])
     {
         $this->selectComponent = new SelectComponent();
+        $this->fromComponent = new FromComponent($tableName);
         $this->whereComponent = new WhereComponent();
         $this->joinComponent = new JoinComponent();
         $this->groupByComponent = new GroupByComponent();
@@ -60,17 +61,16 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         $this->limitComponent = new LimitComponent();
         $this->offsetComponent = new OffsetComponent();
         $this->havingComponent = new HavingComponent();
-        $this->unionIntersectComponent = new UnionIntersectComponent();
         parent::__construct($tableName, $allowedWildcards);
     }
 
     /**
-     * @param $tableName
+     * @param string $tableName
      * @return $this
      */
     public function from($tableName)
     {
-        $this->tableComponent = new TableComponent($tableName);
+        $this->fromComponent = new FromComponent($tableName);
         return $this;
     }
 
@@ -128,13 +128,14 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     }
 
     /**
-     * @param $sql
-     * @param array $params
+     * @param $column
+     * @param $operator
+     * @param $value
      * @return $this
      */
-    public function having($sql, $params = [])
+    public function having($column, $operator, $value)
     {
-        $this->havingComponent->addCondition($sql, $params);
+        $this->havingComponent->having($column, $operator, $value);
         return $this;
     }
 
@@ -150,34 +151,12 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
 
     /**
      * @param $column
-     * @param string $direction
+     * @param string|null $direction
      * @return $this
      */
-    public function orderBy($column, $direction = 'ASC')
+    public function orderBy($column, $direction = null)
     {
-        $this->orderByComponent = new OrderByComponent($column, strtoupper($direction));
-        return $this;
-    }
-
-    /**
-     * @param $query
-     * @param array $params
-     * @return $this
-     */
-    public function union($query, $params = [])
-    {
-        $this->unionIntersectComponent->addUnion($query, $params);
-        return $this;
-    }
-
-    /**
-     * @param $query
-     * @param array $params
-     * @return $this
-     */
-    public function intersect($query, $params = [])
-    {
-        $this->unionIntersectComponent->addIntersect($query, $params);
+        $this->orderByComponent = new OrderByComponent($column, $direction);
         return $this;
     }
 
@@ -195,6 +174,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     public function __clone()
     {
         $this->selectComponent = clone $this->selectComponent;
+        $this->fromComponent = clone $this->fromComponent;
         $this->joinComponent = clone $this->joinComponent;
         $this->whereComponent = clone $this->whereComponent;
         $this->limitComponent = clone $this->limitComponent;
@@ -202,7 +182,6 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         $this->groupByComponent = clone $this->groupByComponent;
         $this->orderByComponent = clone $this->orderByComponent;
         $this->havingComponent = clone $this->havingComponent;
-        $this->unionIntersectComponent = clone $this->unionIntersectComponent;
     }
 
 }

@@ -33,10 +33,13 @@ class GroupByComponent extends AbstractComponent
      */
     public function __toString()
     {
-        if ($this->columns) {
-            return $this->formatter()->insertKeyword(' group by ') . implode(', ', $this->columns);
+        if (!$this->columns) {
+            return '';
         }
-        return '';
+        $formatter = $this->formatter();
+        return $formatter->insert($formatter::type_block_keyword, 'group by')
+            . $formatter->insert($formatter::type_columns, $this->columns)
+            . $formatter->insert($formatter::type_end);
     }
 
 }

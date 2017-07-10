@@ -4,25 +4,39 @@ namespace Ejacobs\Phequel;
 
 use Ejacobs\Phequel\Components\AbstractComponent;
 use Ejacobs\Phequel\Connector\AbstractConnector;
-use Ejacobs\Phequel\Factories\EscaperInterface;
 use Ejacobs\Phequel\Query\AbstractQuery;
 
 class Formatter
 {
-    private $indent = true;
-    private $indentWhereClauses = true;
-    private $interpolate = false;
-    private $newlineAtEnd = false;
-    private $numberOfSpaces = 4;
-    private $numericPlaceholderCounter = 0;
+    /* @var int $level */
+    public $level = 0;
+
+    /* @var AbstractQuery $connector */
     private $parentQuery;
-    private $placeholderType = '?';
-    private $semicolonAtEnd = false;
-    private $tabsOrSpaces = 'spaces';
-    private $uppercaseKeywords = true;
 
     /* @var AbstractConnector $connector */
     private $connector;
+
+    /* @var int $numericPlaceholderCounter */
+    private $numericPlaceholderCounter = 1;
+
+    private $indent = false;
+    private $uppercase = true;
+    private $indentColumns = false;
+    private $placeholder = '?';
+    private $indentation = "\t";
+    private $interpolate = false;
+
+    const type_block_keyword = 1;
+    const type_keyword = 2;
+    const type_columns = 3;
+    const type_end = 4;
+    const type_statement = 5;
+    const type_condition = 8;
+    const type_indentation = 9;
+    const type_table = 10;
+    const type_on_clause = 11;
+    const type_block_number = 12;
 
     /**
      * Formatter constructor.
@@ -31,6 +45,61 @@ class Formatter
     public function __construct(AbstractQuery $parentQuery)
     {
         $this->parentQuery = $parentQuery;
+    }
+
+    public function insert($type, $value = null, $paren = false)
+    {
+        switch ($type) {
+            case self::type_block_keyword:
+                $ret = "\n{$this->addIndent()}{$this->keyword($value)}";
+                $ret .= $this->insert(self::type_indentation, null, $paren);
+                return $ret;
+            case self::type_keyword:
+                $ret = "\n{$this->addIndent()}{$this->keyword($value)}";
+                if ($paren) {
+                    $ret .= " (";
+                }
+                return $ret;
+            case self::type_columns:
+                $glue = "\n{$this->addIndent()}";
+                return $glue . implode("," . $glue, $value);
+            case self::type_end:
+                $ret = '';
+                $this->level--;
+                if ($paren) {
+                    $ret .= "\n{$this->addIndent()})";
+                }
+                return $ret;
+            case self::type_statement:
+                if ($paren) {
+                    return "\n{$this->addIndent()}({$value})";
+                }
+                else {
+                    return "\n{$this->addIndent()}{$value}";
+                }
+            case self::type_condition:
+                return "\n{$this->addIndent()}{$value[0]} {$value[1]} {$this->placeholder($value[2])}";
+            case self::type_indentation:
+                $this->level++;
+                if ($paren) {
+                    return ' (';
+                }
+                return '';
+            case self::type_table:
+                return " {$value}";
+            case self::type_on_clause:
+                return "\n{$this->addIndent()}{$value[0]} {$value[1]} {$value[2]}";
+            case self::type_block_number:
+                return "\n{$this->addIndent()}{$value}";
+        }
+        return '';
+    }
+
+    private function addIndent($adjust = 0)
+    {
+        $level = $this->level;
+        $this->level += $adjust;
+        return str_repeat("  ", $level);
     }
 
     /**
@@ -45,25 +114,26 @@ class Formatter
                 $ret .= (string)$component->injectFormatter($this);
             }
         }
-        $ret .= $this->insertEnding();
-        return $ret;
+        return $ret . ";\n";
     }
 
     /**
+     * @param bool $indent
      * @return $this
      */
-    public function indent()
+    public function indent($indent = true)
     {
-        $this->indent = true;
+        $this->indent = $indent;
         return $this;
     }
 
     /**
+     * @param bool $indent
      * @return $this
      */
-    public function flatten()
+    public function indentColumns($indent = true)
     {
-        $this->indent = false;
+        $this->indentColumns = $indent;
         return $this;
     }
 
@@ -72,16 +142,7 @@ class Formatter
      */
     public function useTabs()
     {
-        $this->tabsOrSpaces = 'tabs';
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function useSpaces()
-    {
-        $this->tabsOrSpaces = 'spaces';
+        $this->indentation = "\t";
         return $this;
     }
 
@@ -89,54 +150,30 @@ class Formatter
      * @param int $numberOfSpaces
      * @return $this
      */
-    public function indentationSpaces($numberOfSpaces)
+    public function useSpaces($numberOfSpaces = 4)
     {
-        $this->numberOfSpaces = $numberOfSpaces;
+        $this->indentation = str_repeat(' ', $numberOfSpaces);
         return $this;
     }
 
     /**
+     * @param bool $uppercase
      * @return $this
      */
-    public function uppercaseKeywords()
+    public function uppercaseKeywords($uppercase = true)
     {
-        $this->uppercaseKeywords = true;
+        $this->uppercase = $uppercase;
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function lowercaseKeywords()
-    {
-        $this->uppercaseKeywords = false;
-        return $this;
-    }
 
     /**
+     * @param string $type
      * @return $this
      */
-    public function indentWhereClauses()
+    public function placeholderType($type = '?')
     {
-        $this->indentWhereClauses = true;
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function placeholderQuestionMarks()
-    {
-        $this->placeholderType = '?';
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function placeholderNumbered()
-    {
-        $this->placeholderType = '#';
+        $this->placeholder = $type;
         return $this;
     }
 
@@ -154,69 +191,34 @@ class Formatter
         return $this;
     }
 
-    /**
-     * @param bool $newlineAtEnd
-     * @return $this
-     */
-    public function newlineAfterEnd($newlineAtEnd = true)
-    {
-        $this->newlineAtEnd = $newlineAtEnd;
-        return $this;
-    }
-
-    /**
-     * @param bool $semicolonAtEnd
-     * @return $this
-     */
-    public function semicolonAtEnd($semicolonAtEnd = true)
-    {
-        $this->semicolonAtEnd = $semicolonAtEnd;
-        return $this;
-    }
 
     /**
      * @param string $keyword
      * @return string
      */
-    public function insertKeyword($keyword)
+    private function keyword($keyword)
     {
-        if ($this->uppercaseKeywords) {
+        if ($this->uppercase) {
             return strtoupper($keyword);
         } else {
             return strtolower($keyword);
         }
     }
 
+
     /**
      * @param $value
      * @return string
      */
-    public function insertPlaceholder($value)
+    private function placeholder($value)
     {
         if ($this->interpolate) {
             return $this->connector->escape($value);
-        } else if ($this->placeholderType === '#') {
-            $this->numericPlaceholderCounter++;
-            return (string)$this->numericPlaceholderCounter;
         } else {
-            return '?';
+            return str_replace('#', $this->numericPlaceholderCounter++, $this->placeholder);
         }
     }
 
-    /**
-     * @return string
-     */
-    public function insertEnding()
-    {
-        $ret = '';
-        if ($this->semicolonAtEnd) {
-            $ret .= ';';
-        }
-        if ($this->newlineAtEnd) {
-            $ret .= "\n";
-        }
-        return $ret;
-    }
 
     /**
      * @return string

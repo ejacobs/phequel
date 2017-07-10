@@ -13,10 +13,11 @@ class PsqlDeleteQuery extends AbstractDeleteQuery
      */
     public function __toString()
     {
-        $formatter = $this->formatter();
-        return (string)$this->deleteComponent->injectFormatter($formatter)
-            . (string)$this->tableComponent->injectFormatter($formatter)
-            . (string)$this->whereComponent->injectFormatter($formatter);
+        return $this->formatter()->compose([
+            $this->deleteComponent,
+            $this->tableComponent,
+            $this->whereComponent,
+        ]);
     }
 
 }

@@ -14,22 +14,28 @@ class OrderByComponent extends AbstractComponent
      * @param $column
      * @param string $direction
      */
-    public function __construct($column = null, $direction = 'asc')
+    public function __construct($column = null, $direction = null)
     {
         $this->column = $column;
         $this->direction = $direction;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
-        if ($this->column) {
-            $formatter = $this->formatter();
-            return $formatter->insertKeyword(' order by ')
-                . $this->column
-                . $formatter->insertKeyword(" {$this->direction}");
-        } else {
+        if ($this->column === null) {
             return '';
         }
+        $formatter = $this->formatter();
+        $ret = $formatter->insert($formatter::type_block_keyword, 'order by')
+            . $formatter->insert($formatter::type_columns, [$this->column]);
+        if ($this->direction !== null) {
+            $ret .= $formatter->insert($formatter::type_keyword, $this->direction);
+        }
+        $ret .= $formatter->insert($formatter::type_end);
+        return $ret;
     }
 
 }

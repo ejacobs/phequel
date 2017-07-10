@@ -5,11 +5,10 @@ namespace Ejacobs\Phequel\Dialects\Psql;
 use Ejacobs\Phequel\Components\Transaction\ReleaseComponent;
 use Ejacobs\Phequel\Components\Transaction\RollbackComponent;
 use Ejacobs\Phequel\Components\Transaction\SavepointComponent;
-use Ejacobs\Phequel\Factories\NestedQueryFactoryInterface;
+use Ejacobs\Phequel\Components\AbstractTransactionComponent;
 
-class PsqlNestedQueryFactory implements NestedQueryFactoryInterface
+class PsqlAbstractTransactionComponent extends AbstractTransactionComponent
 {
-
     private $queries = [];
 
     public function select($tableName)

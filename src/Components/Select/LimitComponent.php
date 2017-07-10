@@ -3,6 +3,7 @@
 namespace Ejacobs\Phequel\Components\Select;
 
 use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\Components\NumberComponent;
 
 class LimitComponent extends AbstractComponent
 {
@@ -19,11 +20,13 @@ class LimitComponent extends AbstractComponent
 
     public function __toString()
     {
-        if ($this->limit) {
-            return $this->formatter()->insertKeyword(' limit ') . $this->limit;
-        } else {
+        if ($this->limit === null) {
             return '';
         }
+        $formatter = $this->formatter();
+        return $formatter->insert($formatter::type_block_keyword, 'limit')
+            . $formatter->insert($formatter::type_block_number, $this->limit)
+            . $formatter->insert($formatter::type_end);
     }
 
 }

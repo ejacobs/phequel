@@ -35,17 +35,22 @@ class ForComponent extends AbstractComponent
         $this->option = $option;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
-        $ret = '';
-        if ($this->lockStrength) {
-            $ret .= $this->formatter()->insertKeyword(' for ' . $this->lockStrength);
-            if ($this->tableNames) {
-                $ret .= ' ' . implode($this->tableNames, ', ');
-            }
-            if ($this->option) {
-                $ret .= $this->formatter()->insertKeyword(' ' . $this->option);
-            }
+        if ($this->lockStrength === null) {
+            return '';
+        }
+        $formatter = $this->formatter();
+        $ret = $formatter->insert($formatter::type_block_keyword, 'for')
+            . $formatter->insert($formatter::type_keyword, $this->lockStrength);
+        foreach ($this->tableNames as $table) {
+            $ret .= $formatter->insert($formatter::type_table, $table);
+        }
+        if ($this->option !== null) {
+            $ret .= $formatter->insert($formatter::type_keyword, $this->option);
         }
         return $ret;
     }

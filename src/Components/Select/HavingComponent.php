@@ -3,32 +3,44 @@
 namespace Ejacobs\Phequel\Components\Select;
 
 use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\Components\ConditionsComponent;
 
 class HavingComponent extends AbstractComponent
 {
-    private $conditions = [];
+    private $conditions;
 
     /**
      * HavingComponent constructor.
-     * @param null $sql
-     * @param array $params
      */
-    public function __construct($sql = null, $params = [])
+    public function __construct()
     {
-        if ($sql) {
-            $this->addCondition($sql, $params);
-        }
+        $this->conditions = new ConditionsComponent();
     }
 
-    public function addCondition($sql, $params = [])
+    /**
+     * @param $column
+     * @param $operator
+     * @param $value
+     */
+    public function having($column, $operator, $value)
     {
-        if (!is_array($params)) {
-            $params = [$params];
-        }
-        $this->conditions[] = [
-            'sql'    => $sql,
-            'params' => $params
-        ];
+        $this->conditions->where($column, $operator, $value);
+    }
+
+    /**
+     * @param callable $nested
+     */
+    public function havingAny(callable $nested)
+    {
+        $this->conditions->whereAny($nested);
+    }
+
+    /**
+     * @param callable $nested
+     */
+    public function havingAll(callable $nested)
+    {
+        $this->conditions->whereAll($nested);
     }
 
     /**
@@ -43,14 +55,18 @@ class HavingComponent extends AbstractComponent
         return $params;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
-        if ($this->conditions) {
-            return $this->formatter()->insertKeyword(" having ")
-                . implode(', ', array_column($this->conditions, 'sql'));
-        } else {
+        if (!$this->conditions->hasConditions()) {
             return '';
         }
+        $formatter = $this->formatter();
+        return $formatter->insert($formatter::type_block_keyword, 'having')
+            . $this->conditions->injectFormatter($formatter)
+            . $formatter->insert($formatter::type_end);
     }
 
 }

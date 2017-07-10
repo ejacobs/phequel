@@ -32,7 +32,7 @@ class JoinComponent extends AbstractComponent
         $type = strtolower($type);
         if (in_array($type, $this->validJoinTypes)) {
             $this->joins[] = [
-                'type'  => $type,
+                'type'  => $type . ' join',
                 'table' => $tableName,
                 'on'    => $onClause
             ];
@@ -46,12 +46,11 @@ class JoinComponent extends AbstractComponent
         $ret = '';
         $formatter = $this->formatter();
         foreach ($this->joins as $join) {
-            // TODO: Validate $onClause
-            $onClause = implode(' ', $join['on']);
-            $ret .= $formatter->insertKeyword(" {$join['type']} join ")
-                . $join['table']
-                . $formatter->insertKeyword(" on ")
-                . '(' . $onClause . ')';
+            $ret .= $formatter->insert($formatter::type_block_keyword, $join['type']);
+            $ret .= $formatter->insert($formatter::type_table, $join['table']);
+            $ret .= $formatter->insert($formatter::type_keyword, 'on');
+            $ret .= $formatter->insert($formatter::type_on_clause, $join['on']);
+            $ret .= $formatter->insert($formatter::type_end);
         }
         return $ret;
     }

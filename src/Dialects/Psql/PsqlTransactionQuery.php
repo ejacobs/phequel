@@ -14,7 +14,7 @@ class PsqlTransactionQuery extends AbstractTransactionQuery
     public function __construct(callable $nested)
     {
         parent::__construct($nested);
-        $this->subQueries = new PsqlNestedQueryFactory();
+        $this->subQueries = new PsqlAbstractTransactionComponent();
         $nested($this->subQueries);
     }
 
@@ -23,10 +23,11 @@ class PsqlTransactionQuery extends AbstractTransactionQuery
      */
     public function __toString()
     {
-        $formatter = $this->formatter();
-        return (string)$this->beginComponent->injectFormatter($formatter)
-        . (string)$this->subQueries->injectFormatter($formatter)
-        . (string)$this->commitComponent->injectFormatter($formatter);
+        return $this->formatter()->compose([
+            $this->beginComponent,
+            $this->subQueries,
+            $this->commitComponent,
+        ]);
     }
 
     /**

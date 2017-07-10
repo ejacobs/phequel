@@ -24,7 +24,7 @@ class PsqlSelectQuery extends AbstractSelectQuery
      * @param null|string $tableName
      * @param array $allowedWildcards
      */
-    public function __construct($tableName = null, $allowedWildcards = ['%' => '%', '_' => '_'])
+    public function __construct($tableName = null, $allowedWildcards = ['*' => '%', '_' => '_'])
     {
         $this->windowComponent = new WindowComponent();
         $this->fetchComponent = new FetchComponent();
@@ -33,12 +33,13 @@ class PsqlSelectQuery extends AbstractSelectQuery
     }
 
     /**
-     * @param $column
+     * @param string $alias
+     * @param string $statement
      * @return $this
      */
-    public function window($column)
+    public function window($alias, $statement)
     {
-        $this->windowComponent->addWindow($column);
+        $this->windowComponent->addWindow($alias, $statement);
         return $this;
     }
 
@@ -55,14 +56,13 @@ class PsqlSelectQuery extends AbstractSelectQuery
     }
 
     /**
-     * @param $count
-     * @param string $rowType
-     * @param string $type
+     * @param string $firstNext
+     * @param int $count
      * @return $this
      */
-    public function fetchOnly($type = 'first', $count = 1, $rowType = 'rows')
+    public function fetch($firstNext, $count)
     {
-        $this->fetchComponent->setFetch($type, $count, $rowType);
+        $this->fetchComponent->setFetch($firstNext, $count);
         return $this;
     }
 
@@ -72,13 +72,9 @@ class PsqlSelectQuery extends AbstractSelectQuery
      */
     public function __toString()
     {
-        if ($this->tableComponent === null) {
-            throw new \Exception("You must specify a table name");
-        }
-
         return $this->formatter()->compose([
             $this->selectComponent,
-            $this->tableComponent,
+            $this->fromComponent,
             $this->joinComponent,
             $this->whereComponent,
             $this->groupByComponent,
@@ -89,7 +85,6 @@ class PsqlSelectQuery extends AbstractSelectQuery
             $this->offsetComponent,
             $this->fetchComponent,
             $this->forComponent,
-            $this->unionIntersectComponent,
         ]);
     }
 

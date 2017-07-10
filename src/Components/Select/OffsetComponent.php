@@ -19,11 +19,13 @@ class OffsetComponent extends AbstractComponent
 
     public function __toString()
     {
-        if ($this->offset !== null) {
-            return $this->formatter()->insertKeyword(' offset ') . $this->offset;
-        } else {
+        if ($this->offset === null) {
             return '';
         }
+        $formatter = $this->formatter();
+        return $formatter->insert($formatter::type_block_keyword, 'offset')
+            . $formatter->insert($formatter::type_block_number, $this->offset)
+            . $formatter->insert($formatter::type_end);
     }
 
 }
