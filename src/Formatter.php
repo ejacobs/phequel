@@ -26,7 +26,8 @@ class Formatter
     private $placeholder = '?';
     private $indentation = "\t";
     private $interpolate = false;
-
+    private $newlineAtEnd = false;
+    private $semicolonAtEnd = false;
     const type_block_keyword = 1;
     const type_keyword = 2;
     const type_columns = 3;
@@ -51,34 +52,34 @@ class Formatter
     {
         switch ($type) {
             case self::type_block_keyword:
-                $ret = "\n{$this->addIndent()}{$this->keyword($value)}";
+                $ret = "{$this->addIndent()}{$this->keyword($value)}";
                 $ret .= $this->insert(self::type_indentation, null, $paren);
                 return $ret;
             case self::type_keyword:
-                $ret = "\n{$this->addIndent()}{$this->keyword($value)}";
+                $ret = "{$this->addIndent()} {$this->keyword($value)}";
                 if ($paren) {
                     $ret .= " (";
                 }
                 return $ret;
             case self::type_columns:
-                $glue = "\n{$this->addIndent()}";
+                $glue = "{$this->addIndent()} ";
                 return $glue . implode("," . $glue, $value);
             case self::type_end:
                 $ret = '';
                 $this->level--;
                 if ($paren) {
-                    $ret .= "\n{$this->addIndent()})";
+                    $ret .= "{$this->addIndent()} )";
                 }
                 return $ret;
             case self::type_statement:
                 if ($paren) {
-                    return "\n{$this->addIndent()}({$value})";
+                    return "{$this->addIndent()} ({$value})";
                 }
                 else {
-                    return "\n{$this->addIndent()}{$value}";
+                    return "{$this->addIndent()} {$value}";
                 }
             case self::type_condition:
-                return "\n{$this->addIndent()}{$value[0]} {$value[1]} {$this->placeholder($value[2])}";
+                return "{$this->addIndent()} {$value[0]} {$value[1]} {$this->placeholder($value[2])}";
             case self::type_indentation:
                 $this->level++;
                 if ($paren) {
@@ -88,18 +89,24 @@ class Formatter
             case self::type_table:
                 return " {$value}";
             case self::type_on_clause:
-                return "\n{$this->addIndent()}{$value[0]} {$value[1]} {$value[2]}";
+                return "{$this->addIndent()} {$value[0]} {$value[1]} {$value[2]}";
             case self::type_block_number:
-                return "\n{$this->addIndent()}{$value}";
+                return "{$this->addIndent()} {$value}";
         }
         return '';
     }
 
     private function addIndent($adjust = 0)
     {
-        $level = $this->level;
-        $this->level += $adjust;
-        return str_repeat("  ", $level);
+        if ($this->indent) {
+            $level = $this->level;
+            $this->level += $adjust;
+            return "\n" . str_repeat($this->indentation, $level);
+        }
+        else {
+            return ' ';
+        }
+
     }
 
     /**
@@ -114,7 +121,13 @@ class Formatter
                 $ret .= (string)$component->injectFormatter($this);
             }
         }
-        return $ret . ";\n";
+        if ($this->newlineAtEnd) {
+            $ret .= "\n";
+        }
+        if ($this->semicolonAtEnd) {
+            $ret .= ";";
+        }
+        return $ret;
     }
 
     /**

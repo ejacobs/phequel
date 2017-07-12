@@ -8,7 +8,7 @@ abstract class AbstractUnionIntersectQuery extends AbstractQuery
     /* @var AbstractSelectQuery[] $selectQueries */
     protected $selectQueries = [];
 
-    abstract public function union($tableName);
+    abstract public function union($tableName, $all = false);
 
     abstract public function intersect($tableName);
 

@@ -8,12 +8,17 @@ class PsqlUnionIntersectQuery extends AbstractUnionIntersectQuery
 {
 
     /**
-     * @param callable $tableName
+     * @param $tableName
+     * @param bool $all
      * @return \Ejacobs\Phequel\Query\AbstractSelectQuery
      */
-    public function union($tableName)
+    public function union($tableName, $all = false)
     {
-        return $this->add('union', new PsqlSelectQuery($tableName));
+        $keyword = 'union';
+        if ($all) {
+            $keyword .= ' all';
+        }
+        return $this->add($keyword, new PsqlSelectQuery($tableName));
     }
 
     /**
