@@ -2,9 +2,9 @@
 
 namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\AbstractExpression;
 
-class OrderByComponent extends AbstractComponent
+class OrderByComponent extends AbstractExpression
 {
     private $column;
     private $direction;

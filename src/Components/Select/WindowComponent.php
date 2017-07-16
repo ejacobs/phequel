@@ -2,10 +2,10 @@
 
 namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\AbstractExpression;
 use Ejacobs\Phequel\Components\ColumnComponent;
 
-class WindowComponent extends AbstractComponent
+class WindowComponent extends AbstractExpression
 {
     private $windows = [];
 

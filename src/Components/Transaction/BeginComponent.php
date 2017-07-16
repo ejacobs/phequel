@@ -2,9 +2,9 @@
 
 namespace Ejacobs\Phequel\Components\Transaction;
 
-use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\AbstractExpression;
 
-class BeginComponent extends AbstractComponent
+class BeginComponent extends AbstractExpression
 {
 
     /**

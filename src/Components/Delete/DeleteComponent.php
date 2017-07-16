@@ -2,9 +2,9 @@
 
 namespace Ejacobs\Phequel\Components\Delete;
 
-use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\AbstractExpression;
 
-class DeleteComponent extends AbstractComponent
+class DeleteComponent extends AbstractExpression
 {
 
     /**

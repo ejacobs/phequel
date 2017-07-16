@@ -2,10 +2,10 @@
 
 namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\AbstractExpression;
 use Ejacobs\Phequel\Components\TableComponent;
 
-class FromComponent extends AbstractComponent
+class FromComponent extends AbstractExpression
 {
     /* @var TableComponent $table */
     private $table;

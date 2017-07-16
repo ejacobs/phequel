@@ -2,7 +2,9 @@
 
 namespace Ejacobs\Phequel\Components;
 
-class NumberComponent extends AbstractComponent
+use Ejacobs\Phequel\AbstractExpression;
+
+class NumberComponent extends AbstractExpression
 {
     private $number;
 

@@ -2,9 +2,9 @@
 
 namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\AbstractExpression;
 
-class GroupByComponent extends AbstractComponent
+class GroupByComponent extends AbstractExpression
 {
     private $columns = [];
 

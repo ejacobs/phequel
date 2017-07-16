@@ -2,11 +2,11 @@
 
 namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\AbstractExpression;
 
-class ForComponent extends AbstractComponent
+class ForComponent extends AbstractExpression
 {
-    private $tableNames = null;
+    private $tableNames = [];
     private $lockStrength = null;
     private $option = null;
 
@@ -15,7 +15,7 @@ class ForComponent extends AbstractComponent
 
     /**
      * @param $lockStrength
-     * @param null $tableNames
+     * @param array $tableNames
      * @param null $option
      * @throws \Exception
      */
@@ -52,6 +52,7 @@ class ForComponent extends AbstractComponent
         if ($this->option !== null) {
             $ret .= $formatter->insert($formatter::type_keyword, $this->option);
         }
+        $formatter->insert($formatter::type_end);
         return $ret;
     }
 

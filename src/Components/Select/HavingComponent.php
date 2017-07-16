@@ -2,10 +2,10 @@
 
 namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\AbstractExpression;
 use Ejacobs\Phequel\Components\ConditionsComponent;
 
-class HavingComponent extends AbstractComponent
+class HavingComponent extends AbstractExpression
 {
     private $conditions;
 
@@ -64,8 +64,9 @@ class HavingComponent extends AbstractComponent
             return '';
         }
         $formatter = $this->formatter();
+        $this->conditions->formatter($formatter);
         return $formatter->insert($formatter::type_block_keyword, 'having')
-            . $this->conditions->injectFormatter($formatter)
+            . (string) $this->conditions
             . $formatter->insert($formatter::type_end);
     }
 

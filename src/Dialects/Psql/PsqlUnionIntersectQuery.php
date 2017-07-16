@@ -2,6 +2,8 @@
 
 namespace Ejacobs\Phequel\Dialects\Psql;
 
+use Ejacobs\Phequel\Components\IntersectComponent;
+use Ejacobs\Phequel\Components\UnionComponent;
 use Ejacobs\Phequel\Query\AbstractUnionIntersectQuery;
 
 class PsqlUnionIntersectQuery extends AbstractUnionIntersectQuery
@@ -14,11 +16,7 @@ class PsqlUnionIntersectQuery extends AbstractUnionIntersectQuery
      */
     public function union($tableName, $all = false)
     {
-        $keyword = 'union';
-        if ($all) {
-            $keyword .= ' all';
-        }
-        return $this->add($keyword, new PsqlSelectQuery($tableName));
+        return $this->add(new UnionComponent($all), new PsqlSelectQuery($tableName));
     }
 
     /**
@@ -27,7 +25,7 @@ class PsqlUnionIntersectQuery extends AbstractUnionIntersectQuery
      */
     public function intersect($tableName)
     {
-        return $this->add('intersect', new PsqlSelectQuery($tableName));
+        return $this->add(new IntersectComponent(), new PsqlSelectQuery($tableName));
     }
 
 }

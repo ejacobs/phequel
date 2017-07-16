@@ -2,9 +2,9 @@
 
 namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\AbstractExpression;
 
-class FetchComponent extends AbstractComponent
+class FetchComponent extends AbstractExpression
 {
     private $firstNext = null;
     private $count = null;

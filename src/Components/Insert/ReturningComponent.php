@@ -2,9 +2,9 @@
 
 namespace Ejacobs\Phequel\Components\Insert;
 
-use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\AbstractExpression;
 
-class ReturningComponent extends AbstractComponent
+class ReturningComponent extends AbstractExpression
 {
     private $column;
     private $alias;

@@ -2,9 +2,9 @@
 
 namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\AbstractExpression;
 
-class JoinComponent extends AbstractComponent
+class JoinComponent extends AbstractExpression
 {
     private $joins = [];
     private $validJoinTypes = ['left', 'right', 'inner', 'outer'];

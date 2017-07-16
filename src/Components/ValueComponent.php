@@ -2,8 +2,9 @@
 
 namespace Ejacobs\Phequel\Components;
 
+use Ejacobs\Phequel\AbstractExpression;
 
-class ValueComponent extends AbstractComponent
+class ValueComponent extends AbstractExpression
 {
     private $value;
 

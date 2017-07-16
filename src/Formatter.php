@@ -2,16 +2,14 @@
 
 namespace Ejacobs\Phequel;
 
-use Ejacobs\Phequel\Components\AbstractComponent;
 use Ejacobs\Phequel\Connector\AbstractConnector;
-use Ejacobs\Phequel\Query\AbstractQuery;
 
 class Formatter
 {
     /* @var int $level */
     public $level = 0;
 
-    /* @var AbstractQuery $connector */
+    /* @var AbstractExpression $connector */
     private $parentQuery;
 
     /* @var AbstractConnector $connector */
@@ -28,6 +26,10 @@ class Formatter
     private $interpolate = false;
     private $newlineAtEnd = false;
     private $semicolonAtEnd = false;
+
+    private $initiated = false;
+
+    const type_primary_keyword = 0;
     const type_block_keyword = 1;
     const type_keyword = 2;
     const type_columns = 3;
@@ -38,12 +40,13 @@ class Formatter
     const type_table = 10;
     const type_on_clause = 11;
     const type_block_number = 12;
+    const type_value = 13;
 
     /**
      * Formatter constructor.
-     * @param AbstractQuery $parentQuery
+     * @param AbstractExpression $parentQuery
      */
-    public function __construct(AbstractQuery $parentQuery)
+    public function __construct(AbstractExpression $parentQuery)
     {
         $this->parentQuery = $parentQuery;
     }
@@ -51,35 +54,44 @@ class Formatter
     public function insert($type, $value = null, $paren = false)
     {
         switch ($type) {
+            case self::type_primary_keyword:
+                if (!$this->initiated) {
+                    $this->initiated = true;
+                    $ret = $this->keyword($value);
+                }
+                else {
+                    $ret = "{$this->addIndent()}{$this->keyword($value)}";
+                }
+                $this->level++;
+                return $ret;
             case self::type_block_keyword:
                 $ret = "{$this->addIndent()}{$this->keyword($value)}";
                 $ret .= $this->insert(self::type_indentation, null, $paren);
                 return $ret;
             case self::type_keyword:
-                $ret = "{$this->addIndent()} {$this->keyword($value)}";
+                $ret = "{$this->addIndent()}{$this->keyword($value)}";
                 if ($paren) {
                     $ret .= " (";
                 }
                 return $ret;
             case self::type_columns:
-                $glue = "{$this->addIndent()} ";
+                $glue = "{$this->addIndent()}";
                 return $glue . implode("," . $glue, $value);
             case self::type_end:
                 $ret = '';
                 $this->level--;
                 if ($paren) {
-                    $ret .= "{$this->addIndent()} )";
+                    $ret .= "{$this->addIndent()})";
                 }
                 return $ret;
             case self::type_statement:
                 if ($paren) {
-                    return "{$this->addIndent()} ({$value})";
-                }
-                else {
-                    return "{$this->addIndent()} {$value}";
+                    return "{$this->addIndent()}({$value})";
+                } else {
+                    return "{$this->addIndent()}{$value}";
                 }
             case self::type_condition:
-                return "{$this->addIndent()} {$value[0]} {$value[1]} {$this->placeholder($value[2])}";
+                return "{$this->addIndent()}{$value[0]} {$value[1]} {$this->insert(self::type_value, $value[2])}";
             case self::type_indentation:
                 $this->level++;
                 if ($paren) {
@@ -87,47 +99,19 @@ class Formatter
                 }
                 return '';
             case self::type_table:
-                return " {$value}";
+                return "{$this->addIndent()}{$value}";
             case self::type_on_clause:
-                return "{$this->addIndent()} {$value[0]} {$value[1]} {$value[2]}";
+                return "{$this->addIndent()}{$value[0]} {$value[1]} {$value[2]}";
             case self::type_block_number:
-                return "{$this->addIndent()} {$value}";
+                return "{$this->addIndent()}{$value}";
+            case self::type_value:
+                if ($this->interpolate) {
+                    return $this->connector->escape($value);
+                } else {
+                    return str_replace('#', $this->numericPlaceholderCounter++, $this->placeholder);
+                }
         }
         return '';
-    }
-
-    private function addIndent($adjust = 0)
-    {
-        if ($this->indent) {
-            $level = $this->level;
-            $this->level += $adjust;
-            return "\n" . str_repeat($this->indentation, $level);
-        }
-        else {
-            return ' ';
-        }
-
-    }
-
-    /**
-     * @param AbstractComponent[] $components
-     * @return string
-     */
-    public function compose(array $components)
-    {
-        $ret = '';
-        foreach ($components as $component) {
-            if ($component instanceof AbstractComponent) {
-                $ret .= (string)$component->injectFormatter($this);
-            }
-        }
-        if ($this->newlineAtEnd) {
-            $ret .= "\n";
-        }
-        if ($this->semicolonAtEnd) {
-            $ret .= ";";
-        }
-        return $ret;
     }
 
     /**
@@ -195,15 +179,15 @@ class Formatter
      * tool to assist developers when debugging queries.
      *
      * @param AbstractConnector $connector
+     * @param bool $interpolate
      * @return $this
      */
-    public function interpolate(AbstractConnector $connector)
+    public function interpolate(AbstractConnector $connector, $interpolate = true)
     {
         $this->connector = $connector;
-        $this->interpolate = true;
+        $this->interpolate = $interpolate;
         return $this;
     }
-
 
     /**
      * @param string $keyword
@@ -218,20 +202,17 @@ class Formatter
         }
     }
 
-
     /**
-     * @param $value
      * @return string
      */
-    private function placeholder($value)
+    private function addIndent()
     {
-        if ($this->interpolate) {
-            return $this->connector->escape($value);
+        if ($this->indent) {
+            return "\n" . str_repeat($this->indentation, $this->level);
         } else {
-            return str_replace('#', $this->numericPlaceholderCounter++, $this->placeholder);
+            return ' ';
         }
     }
-
 
     /**
      * @return string

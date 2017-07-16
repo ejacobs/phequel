@@ -72,7 +72,7 @@ class PsqlSelectQuery extends AbstractSelectQuery
      */
     public function __toString()
     {
-        return $this->formatter()->compose([
+        return $this->compose(true, [
             $this->selectComponent,
             $this->fromComponent,
             $this->joinComponent,

@@ -2,11 +2,11 @@
 
 namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\AbstractExpression;
 use Ejacobs\Phequel\Components\ColumnComponent;
 use Ejacobs\Phequel\Formatter;
 
-class SelectComponent extends AbstractComponent
+class SelectComponent extends AbstractExpression
 {
     private $columns = [];
     private $defaultSelectAll = false;
@@ -61,7 +61,7 @@ class SelectComponent extends AbstractComponent
     public function __toString()
     {
         $formatter = $this->formatter();
-        return $formatter->insert($formatter::type_block_keyword, 'select')
+        return $formatter->insert($formatter::type_primary_keyword, 'select')
             . $formatter->insert($formatter::type_columns, $this->columns)
             . $formatter->insert($formatter::type_end);
     }

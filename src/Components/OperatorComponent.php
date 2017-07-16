@@ -2,8 +2,9 @@
 
 namespace Ejacobs\Phequel\Components;
 
+use Ejacobs\Phequel\AbstractExpression;
 
-class OperatorComponent extends AbstractComponent
+class OperatorComponent extends AbstractExpression
 {
     private $operator;
 

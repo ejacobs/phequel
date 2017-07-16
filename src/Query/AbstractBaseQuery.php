@@ -2,7 +2,9 @@
 
 namespace Ejacobs\Phequel\Query;
 
-abstract class AbstractBaseQuery extends AbstractQuery
+use Ejacobs\Phequel\AbstractExpression;
+
+abstract class AbstractBaseQuery extends AbstractExpression
 {
 
     public $allowedWildcards = null;
@@ -21,11 +23,6 @@ abstract class AbstractBaseQuery extends AbstractQuery
     {
         $this->setWildcardCharacters($allowedWildcards);
     }
-
-    /**
-     * @return array
-     */
-    abstract public function getParams();
 
     /**
      * Set the allowed wildcard characters. Wildcard characters not included in this list will be escaped when they

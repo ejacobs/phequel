@@ -2,11 +2,12 @@
 
 namespace Ejacobs\Phequel\Query;
 
+use Ejacobs\Phequel\AbstractExpression;
 use Ejacobs\Phequel\Components\Transaction\BeginComponent;
 use Ejacobs\Phequel\Components\Transaction\CommitComponent;
-use Ejacobs\Phequel\Factories\NestedQueryFactoryInterface;
+use Ejacobs\Phequel\Factories\QueryFactoryInterface;
 
-abstract class AbstractTransactionQuery extends AbstractQuery
+abstract class AbstractTransactionQuery extends AbstractExpression
 {
 
     /* @var BeginComponent $beginComponent */
@@ -15,7 +16,7 @@ abstract class AbstractTransactionQuery extends AbstractQuery
     /* @var CommitComponent $beginComponent */
     protected $commitComponent;
 
-    /* @var NestedQueryFactoryInterface $subQueries */
+    /* @var QueryFactoryInterface $subQueries */
     protected $subQueries;
 
     /**
@@ -27,10 +28,5 @@ abstract class AbstractTransactionQuery extends AbstractQuery
         $this->beginComponent = new BeginComponent();
         $this->commitComponent = new CommitComponent();
     }
-
-    /**
-     * @return array
-     */
-    abstract public function getParams();
 
 }

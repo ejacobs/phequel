@@ -2,9 +2,9 @@
 
 namespace Ejacobs\Phequel\Components\Insert;
 
-use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\AbstractExpression;
 
-class InsertComponent extends AbstractComponent
+class InsertComponent extends AbstractExpression
 {
 
     /**

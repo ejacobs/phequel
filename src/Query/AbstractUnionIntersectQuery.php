@@ -2,15 +2,16 @@
 
 namespace Ejacobs\Phequel\Query;
 
-abstract class AbstractUnionIntersectQuery extends AbstractQuery
+use Ejacobs\Phequel\AbstractExpression;
+
+abstract class AbstractUnionIntersectQuery extends AbstractBaseQuery
 {
 
-    /* @var AbstractSelectQuery[] $selectQueries */
-    protected $selectQueries = [];
-
-    abstract public function union($tableName, $all = false);
+    /* @var AbstractExpression[] $expressions */
+    protected $expressions = [];
 
     abstract public function intersect($tableName);
+    abstract public function union($tableName, $all = false);
 
     /**
      * AbstractUnionIntersectQuery constructor.
@@ -22,16 +23,23 @@ abstract class AbstractUnionIntersectQuery extends AbstractQuery
         if ($nested !== null) {
             $nested($this);
         }
+        parent::__construct();
     }
 
     /**
-     * @param string $type
+     * @param AbstractExpression $unionOrIntersect
      * @param AbstractSelectQuery $query
      * @return AbstractSelectQuery
      */
-    protected function add($type, AbstractSelectQuery $query)
+    protected function add(AbstractExpression $unionOrIntersect, AbstractSelectQuery $query)
     {
-        $this->selectQueries[] = [$type, $query];
+        if ($this->expressions) {
+            $this->expressions[] = $unionOrIntersect;
+            $this->expressions[] = $query;
+        }
+        else {
+            $this->expressions[] = $query;
+        }
         return $query;
     }
 
@@ -41,8 +49,8 @@ abstract class AbstractUnionIntersectQuery extends AbstractQuery
     public function getParams()
     {
         $params = [];
-        foreach ($this->selectQueries as $query) {
-            $params = array_merge($params, $query->getParams());
+        foreach ($this->expressions as $expression) {
+            $params = array_merge($params, $expression->getParams());
         }
         return $params;
     }
@@ -52,17 +60,8 @@ abstract class AbstractUnionIntersectQuery extends AbstractQuery
      */
     public function __toString()
     {
-        $ret = '';
-        $formatter = $this->formatter();
-        $first = true;
-        foreach ($this->selectQueries as $queryArr) {
-            if (!$first) {
-                $ret .= $formatter->insert($formatter::type_keyword, $queryArr[0]);
-            }
-            $first = false;
-            $ret .= (string)$queryArr[1];
-        }
-        return $ret;
+
+        return $this->formatter()->compose($this->expressions);
     }
 
 }

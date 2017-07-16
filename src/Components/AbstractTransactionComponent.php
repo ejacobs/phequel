@@ -6,6 +6,7 @@ use Ejacobs\Phequel\Query\AbstractDeleteQuery;
 use Ejacobs\Phequel\Query\AbstractInsertQuery;
 use Ejacobs\Phequel\Query\AbstractSelectQuery;
 use Ejacobs\Phequel\Query\AbstractUpdateQuery;
+use Ejacobs\Phequel\AbstractExpression;
 
 /**
  * Class AbstractTransactionComponent
@@ -17,7 +18,7 @@ use Ejacobs\Phequel\Query\AbstractUpdateQuery;
  *
  * @package Ejacobs\Phequel\Components
  */
-abstract class AbstractTransactionComponent extends AbstractComponent
+abstract class AbstractTransactionComponent extends AbstractExpression
 {
 
     /**

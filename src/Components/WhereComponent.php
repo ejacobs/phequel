@@ -2,9 +2,11 @@
 
 namespace Ejacobs\Phequel\Components;
 
+use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Formatter;
 use Ejacobs\Phequel\Query\AbstractSelectQuery;
 
-class WhereComponent extends AbstractComponent
+class WhereComponent extends AbstractExpression
 {
     private $conditions;
     private $level = 0;
@@ -69,14 +71,11 @@ class WhereComponent extends AbstractComponent
      */
     public function __toString()
     {
-        if (!$this->conditions->hasConditions()) {
-            return '';
-        }
-        $formatter = $this->formatter();
-        return $formatter->insert($formatter::type_block_keyword, 'where')
-            . (string)$this->conditions->injectFormatter($formatter)
-            . $formatter->insert($formatter::type_end);
-
+        return $this->compose($this->conditions->hasConditions(), [
+            [Formatter::type_block_keyword, 'where'],
+            $this->conditions,
+            [Formatter::type_end]
+        ]);
     }
 
 }

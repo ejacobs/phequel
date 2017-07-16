@@ -2,9 +2,9 @@
 
 namespace Ejacobs\Phequel\Components\Transaction;
 
-use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\AbstractExpression;
 
-class ReleaseComponent extends AbstractComponent
+class ReleaseComponent extends AbstractExpression
 {
 
     private $savepointName;

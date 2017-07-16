@@ -2,7 +2,9 @@
 
 namespace Ejacobs\Phequel\Components;
 
-class BlockComponent extends AbstractComponent
+use Ejacobs\Phequel\AbstractExpression;
+
+class BlockComponent extends AbstractExpression
 {
     private $start;
     private $components;

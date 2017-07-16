@@ -2,8 +2,9 @@
 
 namespace Ejacobs\Phequel\Components;
 
+use Ejacobs\Phequel\AbstractExpression;
 
-class ConditionsComponent extends AbstractComponent
+class ConditionsComponent extends AbstractExpression
 {
     private $conditions = [];
     private $type;
@@ -63,8 +64,9 @@ class ConditionsComponent extends AbstractComponent
         $ret = '';
         while ($condition = array_shift($conditions)) {
             if ($condition instanceof ConditionsComponent) {
+                $condition->formatter($formatter);
                 $ret .= $formatter->insert($formatter::type_indentation, null, true);
-                $ret .= (string)$condition->injectFormatter($formatter);
+                $ret .= (string)$condition;
                 $ret .= $formatter->insert($formatter::type_end, null, true);
             } else {
                 $ret .= $formatter->insert($formatter::type_condition, $condition);

@@ -2,7 +2,9 @@
 
 namespace Ejacobs\Phequel\Components;
 
-class ColumnComponent extends AbstractComponent
+use Ejacobs\Phequel\AbstractExpression;
+
+class ColumnComponent extends AbstractExpression
 {
     /* @var string|null $column */
     private $column;

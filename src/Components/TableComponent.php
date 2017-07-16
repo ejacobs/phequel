@@ -2,8 +2,9 @@
 
 namespace Ejacobs\Phequel\Components;
 
+use Ejacobs\Phequel\AbstractExpression;
 
-class TableComponent extends AbstractComponent
+class TableComponent extends AbstractExpression
 {
     private $tableName;
 

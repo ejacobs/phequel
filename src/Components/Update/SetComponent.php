@@ -2,9 +2,9 @@
 
 namespace Ejacobs\Phequel\Components\Update;
 
-use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\AbstractExpression;
 
-class SetComponent extends AbstractComponent
+class SetComponent extends AbstractExpression
 {
     private $values;
 

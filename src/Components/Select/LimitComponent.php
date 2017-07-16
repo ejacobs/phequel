@@ -2,10 +2,10 @@
 
 namespace Ejacobs\Phequel\Components\Select;
 
-use Ejacobs\Phequel\Components\AbstractComponent;
+use Ejacobs\Phequel\AbstractExpression;
 use Ejacobs\Phequel\Components\NumberComponent;
 
-class LimitComponent extends AbstractComponent
+class LimitComponent extends AbstractExpression
 {
     private $limit;
 

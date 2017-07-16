@@ -23,7 +23,7 @@ class PsqlTransactionQuery extends AbstractTransactionQuery
      */
     public function __toString()
     {
-        return $this->formatter()->compose([
+        return $this->compose(true, [
             $this->beginComponent,
             $this->subQueries,
             $this->commitComponent,
