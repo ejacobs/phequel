@@ -41,7 +41,7 @@ class PsqlInsertQuery extends AbstractInsertQuery
      */
     public function __toString()
     {
-        return $this->formatter()->compose([
+        return $this->format()->compose([
             $this->insertComponent,
             $this->tableComponent,
             $this->rowComponent,

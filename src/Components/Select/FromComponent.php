@@ -24,10 +24,10 @@ class FromComponent extends AbstractExpression
      */
     public function __toString()
     {
-        $formatter = $this->formatter();
+        $formatter = $this->format();
         return $formatter->insert($formatter::type_block_keyword, 'from')
             . $formatter->insert($formatter::type_columns, [$this->table])
-            . $formatter->insert($formatter::type_end);
+            . $formatter->insert($formatter::type_block_end);
     }
 
 }

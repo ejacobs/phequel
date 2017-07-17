@@ -30,7 +30,7 @@ class ValueComponent extends AbstractExpression
      */
     public function __toString()
     {
-        return $this->formatter()->insertPlaceholder($this->value);
+        return $this->format()->insertPlaceholder($this->value);
     }
 
 }

@@ -18,7 +18,7 @@ class NumberComponent extends AbstractExpression
 
     public function __toString()
     {
-        return $this->formatter()->insertNumber($this->number);
+        return $this->format()->insertNumber($this->number);
     }
 
 }

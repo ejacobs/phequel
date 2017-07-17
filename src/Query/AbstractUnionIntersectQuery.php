@@ -61,7 +61,7 @@ abstract class AbstractUnionIntersectQuery extends AbstractBaseQuery
     public function __toString()
     {
 
-        return $this->formatter()->compose($this->expressions);
+        return $this->format()->compose($this->expressions);
     }
 
 }

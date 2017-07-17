@@ -28,13 +28,13 @@ class OrderByComponent extends AbstractExpression
         if ($this->column === null) {
             return '';
         }
-        $formatter = $this->formatter();
+        $formatter = $this->format();
         $ret = $formatter->insert($formatter::type_block_keyword, 'order by')
             . $formatter->insert($formatter::type_columns, [$this->column]);
         if ($this->direction !== null) {
             $ret .= $formatter->insert($formatter::type_keyword, $this->direction);
         }
-        $ret .= $formatter->insert($formatter::type_end);
+        $ret .= $formatter->insert($formatter::type_block_end);
         return $ret;
     }
 

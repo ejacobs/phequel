@@ -23,10 +23,10 @@ class LimitComponent extends AbstractExpression
         if ($this->limit === null) {
             return '';
         }
-        $formatter = $this->formatter();
+        $formatter = $this->format();
         return $formatter->insert($formatter::type_block_keyword, 'limit')
             . $formatter->insert($formatter::type_block_number, $this->limit)
-            . $formatter->insert($formatter::type_end);
+            . $formatter->insert($formatter::type_block_end);
     }
 
 }

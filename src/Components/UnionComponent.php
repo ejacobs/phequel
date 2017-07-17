@@ -3,7 +3,7 @@
 namespace Ejacobs\Phequel\Components;
 
 use Ejacobs\Phequel\AbstractExpression;
-use Ejacobs\Phequel\Formatter;
+use Ejacobs\Phequel\Format;
 
 class UnionComponent extends AbstractExpression
 {
@@ -23,13 +23,13 @@ class UnionComponent extends AbstractExpression
      */
     public function __toString()
     {
-        $formatter = $this->formatter();
+        $formatter = $this->format();
         if ($this->all) {
-            return $formatter->insert(Formatter::type_primary_keyword, 'union all')
-                . $formatter->insert(Formatter::type_end);
+            return $formatter->insert(Format::type_primary_keyword, 'union all')
+                . $formatter->insert(Format::type_block_end);
         } else {
-            return $formatter->insert(Formatter::type_primary_keyword, 'union')
-                . $formatter->insert(Formatter::type_end);
+            return $formatter->insert(Format::type_primary_keyword, 'union')
+                . $formatter->insert(Format::type_block_end);
         }
     }
 

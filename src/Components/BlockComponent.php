@@ -30,7 +30,7 @@ class BlockComponent extends AbstractExpression
     public function __toString()
     {
 
-        return $this->formatter()->insertColumn($this->column);
+        return $this->format()->insertColumn($this->column);
     }
 
 }

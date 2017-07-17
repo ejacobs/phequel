@@ -43,7 +43,7 @@ class ForComponent extends AbstractExpression
         if ($this->lockStrength === null) {
             return '';
         }
-        $formatter = $this->formatter();
+        $formatter = $this->format();
         $ret = $formatter->insert($formatter::type_block_keyword, 'for')
             . $formatter->insert($formatter::type_keyword, $this->lockStrength);
         foreach ($this->tableNames as $table) {
@@ -52,7 +52,7 @@ class ForComponent extends AbstractExpression
         if ($this->option !== null) {
             $ret .= $formatter->insert($formatter::type_keyword, $this->option);
         }
-        $formatter->insert($formatter::type_end);
+        $formatter->insert($formatter::type_block_end);
         return $ret;
     }
 

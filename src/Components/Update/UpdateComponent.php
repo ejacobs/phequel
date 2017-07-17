@@ -12,7 +12,7 @@ class UpdateComponent extends AbstractExpression
      */
     public function __toString()
     {
-        return $this->formatter()->insertKeyword('update');
+        return $this->format()->insertKeyword('update');
     }
 
 }

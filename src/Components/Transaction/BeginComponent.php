@@ -12,7 +12,7 @@ class BeginComponent extends AbstractExpression
      */
     public function __toString()
     {
-        return $this->formatter()->insertKeyword('begin transaction') . ";\n";
+        return $this->format()->insertKeyword('begin transaction') . ";\n";
     }
 
 }

@@ -36,10 +36,10 @@ class GroupByComponent extends AbstractExpression
         if (!$this->columns) {
             return '';
         }
-        $formatter = $this->formatter();
+        $formatter = $this->format();
         return $formatter->insert($formatter::type_block_keyword, 'group by')
             . $formatter->insert($formatter::type_columns, $this->columns)
-            . $formatter->insert($formatter::type_end);
+            . $formatter->insert($formatter::type_block_end);
     }
 
 }

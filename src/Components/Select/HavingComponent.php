@@ -63,11 +63,11 @@ class HavingComponent extends AbstractExpression
         if (!$this->conditions->hasConditions()) {
             return '';
         }
-        $formatter = $this->formatter();
-        $this->conditions->formatter($formatter);
+        $formatter = $this->format();
+        $this->conditions->format($formatter);
         return $formatter->insert($formatter::type_block_keyword, 'having')
             . (string) $this->conditions
-            . $formatter->insert($formatter::type_end);
+            . $formatter->insert($formatter::type_block_end);
     }
 
 }

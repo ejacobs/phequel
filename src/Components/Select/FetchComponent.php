@@ -28,12 +28,12 @@ class FetchComponent extends AbstractExpression
         if ($this->count === null) {
             return '';
         }
-        $formatter = $this->formatter();
+        $formatter = $this->format();
         return $formatter->insert($formatter::type_block_keyword, 'fetch')
             . $formatter->insert($formatter::type_keyword, $this->firstNext)
             . $formatter->insert($formatter::type_block_number, $this->count)
             . $formatter->insert($formatter::type_keyword, 'only')
-            . $formatter->insert($formatter::type_end);
+            . $formatter->insert($formatter::type_block_end);
     }
 
 }

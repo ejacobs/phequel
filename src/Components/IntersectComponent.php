@@ -3,7 +3,7 @@
 namespace Ejacobs\Phequel\Components;
 
 use Ejacobs\Phequel\AbstractExpression;
-use Ejacobs\Phequel\Formatter;
+use Ejacobs\Phequel\Format;
 
 class IntersectComponent extends AbstractExpression
 {
@@ -12,9 +12,9 @@ class IntersectComponent extends AbstractExpression
      */
     public function __toString()
     {
-        $formatter = $this->formatter();
-        return $formatter->insert(Formatter::type_primary_keyword, 'intersect')
-            . $formatter->insert(Formatter::type_end);
+        $formatter = $this->format();
+        return $formatter->insert(Format::type_primary_keyword, 'intersect')
+            . $formatter->insert(Format::type_block_end);
     }
 
 }

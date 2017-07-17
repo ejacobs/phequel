@@ -23,9 +23,9 @@ class ReturningComponent extends AbstractExpression
     public function __toString()
     {
         if ($this->column) {
-            $ret = $this->formatter()->insertKeyword(' returning ') . $this->column;
+            $ret = $this->format()->insertKeyword(' returning ') . $this->column;
             if ($this->alias !== null) {
-                $ret .= $this->formatter()->insertKeyword(' as ') . $this->alias;
+                $ret .= $this->format()->insertKeyword(' as ') . $this->alias;
             }
             return $ret;
         } else {

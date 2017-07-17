@@ -12,7 +12,7 @@ class PsqlUpdateQuery extends AbstractUpdateQuery
      */
     public function __toString()
     {
-        return $this->formatter()->compose([
+        return $this->compose(true, [
             $this->updateComponent,
             $this->tableComponent,
             $this->setComponent,

@@ -4,7 +4,7 @@ namespace Ejacobs\Phequel;
 
 abstract class AbstractExpression
 {
-    /* @var Formatter $formatter */
+    /* @var Format $formatter */
     private $formatter;
 
     /**
@@ -21,20 +21,20 @@ abstract class AbstractExpression
     }
 
     /**
-     * @param Formatter|null $formatter
-     * @return Formatter
+     * @param Format|null $formatter
+     * @return Format
      * @throws \Exception
      */
-    public function formatter(Formatter $formatter = null)
+    public function format(Format $formatter = null)
     {
-        if ($formatter instanceof Formatter) {
+        if ($formatter instanceof Format) {
             return $this->formatter = $formatter;
         }
-        elseif ($this->formatter instanceof Formatter) {
+        elseif ($this->formatter instanceof Format) {
             return $this->formatter;
         }
         else {
-            return $this->formatter = new Formatter($this);
+            return $this->formatter = new Format($this);
         }
     }
 
@@ -49,10 +49,10 @@ abstract class AbstractExpression
             return '';
         }
         $ret = '';
-        $formatter = $this->formatter();
+        $formatter = $this->format();
         foreach ($components as &$component) {
             if ($component instanceof AbstractExpression) {
-                $component->formatter($formatter);
+                $component->format($formatter);
                 $ret .= (string)$component;
             }
             else if (is_array($component)) {

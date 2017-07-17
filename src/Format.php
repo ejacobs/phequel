@@ -4,19 +4,20 @@ namespace Ejacobs\Phequel;
 
 use Ejacobs\Phequel\Connector\AbstractConnector;
 
-class Formatter
+class Format
 {
-    /* @var int $level */
-    public $level = 0;
-
-    /* @var AbstractExpression $connector */
-    private $parentQuery;
 
     /* @var AbstractConnector $connector */
     private $connector;
 
+    /* @var int $level */
+    private $level = 0;
+
     /* @var int $numericPlaceholderCounter */
     private $numericPlaceholderCounter = 1;
+
+    /* @var AbstractExpression $connector */
+    private $parentQuery;
 
     private $indent = false;
     private $uppercase = true;
@@ -33,17 +34,16 @@ class Formatter
     const type_block_keyword = 1;
     const type_keyword = 2;
     const type_columns = 3;
-    const type_end = 4;
+    const type_block_end = 4;
     const type_statement = 5;
     const type_condition = 8;
-    const type_indentation = 9;
     const type_table = 10;
     const type_on_clause = 11;
     const type_block_number = 12;
     const type_value = 13;
 
     /**
-     * Formatter constructor.
+     * Format constructor.
      * @param AbstractExpression $parentQuery
      */
     public function __construct(AbstractExpression $parentQuery)
@@ -51,6 +51,12 @@ class Formatter
         $this->parentQuery = $parentQuery;
     }
 
+    /**
+     * @param $type
+     * @param null $value
+     * @param bool $paren
+     * @return mixed|string
+     */
     public function insert($type, $value = null, $paren = false)
     {
         switch ($type) {
@@ -66,7 +72,10 @@ class Formatter
                 return $ret;
             case self::type_block_keyword:
                 $ret = "{$this->addIndent()}{$this->keyword($value)}";
-                $ret .= $this->insert(self::type_indentation, null, $paren);
+                $this->level++;
+                if ($paren) {
+                    $ret .= ' (';
+                }
                 return $ret;
             case self::type_keyword:
                 $ret = "{$this->addIndent()}{$this->keyword($value)}";
@@ -77,7 +86,7 @@ class Formatter
             case self::type_columns:
                 $glue = "{$this->addIndent()}";
                 return $glue . implode("," . $glue, $value);
-            case self::type_end:
+            case self::type_block_end:
                 $ret = '';
                 $this->level--;
                 if ($paren) {
@@ -92,12 +101,6 @@ class Formatter
                 }
             case self::type_condition:
                 return "{$this->addIndent()}{$value[0]} {$value[1]} {$this->insert(self::type_value, $value[2])}";
-            case self::type_indentation:
-                $this->level++;
-                if ($paren) {
-                    return ' (';
-                }
-                return '';
             case self::type_table:
                 return "{$this->addIndent()}{$value}";
             case self::type_on_clause:

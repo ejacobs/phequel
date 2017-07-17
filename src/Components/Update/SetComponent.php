@@ -35,7 +35,7 @@ class SetComponent extends AbstractExpression
             foreach ($this->values as $column => $value) {
                 $setParts[] = "{$column} = ?";
             }
-            return $this->formatter()->insertKeyword(' set ') . implode(', ', $setParts);
+            return $this->format()->insertKeyword(' set ') . implode(', ', $setParts);
         }
         return '';
     }

@@ -45,14 +45,14 @@ class WindowComponent extends AbstractExpression
         if (!$this->windows) {
             return '';
         }
-        $formatter = $this->formatter();
+        $formatter = $this->format();
         $ret = $formatter->insert($formatter::type_block_keyword, 'window');
         foreach ($this->windows as $alias => $window) {
             $ret .= $formatter->insert($formatter::type_columns, [$alias]);
             $ret .= $formatter->insert($formatter::type_keyword, 'AS');
             $ret .= $formatter->insert($formatter::type_statement, $window, true);
         }
-        $ret .= $formatter->insert($formatter::type_end);
+        $ret .= $formatter->insert($formatter::type_block_end);
         return $ret;
     }
 

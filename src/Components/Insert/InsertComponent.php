@@ -12,7 +12,7 @@ class InsertComponent extends AbstractExpression
      */
     public function __toString()
     {
-        return $this->formatter()->insertKeyword('insert into');
+        return $this->format()->insertKeyword('insert into');
     }
 
 }

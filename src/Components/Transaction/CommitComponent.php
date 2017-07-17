@@ -12,7 +12,7 @@ class CommitComponent extends AbstractExpression
      */
     public function __toString()
     {
-        return $this->formatter()->insertKeyword('commit') . ";\n";
+        return $this->format()->insertKeyword('commit') . ";\n";
     }
 
 }

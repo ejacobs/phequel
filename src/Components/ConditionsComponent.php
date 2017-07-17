@@ -59,15 +59,15 @@ class ConditionsComponent extends AbstractExpression
      */
     public function __toString()
     {
-        $formatter = $this->formatter();
+        $formatter = $this->format();
         $conditions = $this->conditions;
         $ret = '';
         while ($condition = array_shift($conditions)) {
             if ($condition instanceof ConditionsComponent) {
-                $condition->formatter($formatter);
+                $condition->format($formatter);
                 $ret .= $formatter->insert($formatter::type_indentation, null, true);
                 $ret .= (string)$condition;
-                $ret .= $formatter->insert($formatter::type_end, null, true);
+                $ret .= $formatter->insert($formatter::type_block_end, null, true);
             } else {
                 $ret .= $formatter->insert($formatter::type_condition, $condition);
                 if ($conditions) {

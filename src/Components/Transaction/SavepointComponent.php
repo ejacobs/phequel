@@ -23,7 +23,7 @@ class SavepointComponent extends AbstractExpression
      */
     public function __toString()
     {
-        return $this->formatter()->insertKeyword('savepoint ') . $this->savepointName . ";\n";
+        return $this->format()->insertKeyword('savepoint ') . $this->savepointName . ";\n";
     }
 
 }

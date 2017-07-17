@@ -22,7 +22,7 @@ class RollbackComponent extends AbstractExpression
      */
     public function __toString()
     {
-        $formatter = $this->formatter();
+        $formatter = $this->format();
         $ret = $formatter->insertKeyword('rollback');
         if (is_String($this->rollbackTo)) {
             $ret .= $formatter->insertKeyword(' to ') . $this->rollbackTo;

@@ -12,7 +12,7 @@ class DeleteComponent extends AbstractExpression
      */
     public function __toString()
     {
-        return $this->formatter()->insertKeyword('delete from');
+        return $this->format()->insertKeyword('delete from');
     }
 
 }

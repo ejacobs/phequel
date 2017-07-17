@@ -23,7 +23,7 @@ class ReleaseComponent extends AbstractExpression
      */
     public function __toString()
     {
-        return $this->formatter()->insertKeyword('release savepoint ') . $this->savepointName . ";\n";
+        return $this->format()->insertKeyword('release savepoint ') . $this->savepointName . ";\n";
     }
 
 }

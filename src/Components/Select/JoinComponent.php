@@ -44,13 +44,13 @@ class JoinComponent extends AbstractExpression
     public function __toString()
     {
         $ret = '';
-        $formatter = $this->formatter();
+        $formatter = $this->format();
         foreach ($this->joins as $join) {
             $ret .= $formatter->insert($formatter::type_block_keyword, $join['type']);
             $ret .= $formatter->insert($formatter::type_table, $join['table']);
             $ret .= $formatter->insert($formatter::type_keyword, 'on');
             $ret .= $formatter->insert($formatter::type_on_clause, $join['on']);
-            $ret .= $formatter->insert($formatter::type_end);
+            $ret .= $formatter->insert($formatter::type_block_end);
         }
         return $ret;
     }
