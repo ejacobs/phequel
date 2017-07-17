@@ -3,6 +3,7 @@
 namespace Ejacobs\Phequel\Components\Select;
 
 use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Format;
 
 class FetchComponent extends AbstractExpression
 {
@@ -25,15 +26,13 @@ class FetchComponent extends AbstractExpression
      */
     public function __toString()
     {
-        if ($this->count === null) {
-            return '';
-        }
-        $formatter = $this->format();
-        return $formatter->insert($formatter::type_block_keyword, 'fetch')
-            . $formatter->insert($formatter::type_keyword, $this->firstNext)
-            . $formatter->insert($formatter::type_block_number, $this->count)
-            . $formatter->insert($formatter::type_keyword, 'only')
-            . $formatter->insert($formatter::type_block_end);
+        return $this->compose(!!$this->count, [
+            [Format::type_block_keyword, 'fetch'],
+            [Format::type_keyword, $this->firstNext],
+            [Format::type_block_number, $this->count],
+            [Format::type_keyword,'only'],
+            [Format::type_block_end]
+        ]);
     }
 
 }

@@ -3,6 +3,7 @@
 namespace Ejacobs\Phequel\Components\Select;
 
 use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Format;
 
 class JoinComponent extends AbstractExpression
 {
@@ -41,18 +42,20 @@ class JoinComponent extends AbstractExpression
         }
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
-        $ret = '';
-        $formatter = $this->format();
+        $components = [];
         foreach ($this->joins as $join) {
-            $ret .= $formatter->insert($formatter::type_block_keyword, $join['type']);
-            $ret .= $formatter->insert($formatter::type_table, $join['table']);
-            $ret .= $formatter->insert($formatter::type_keyword, 'on');
-            $ret .= $formatter->insert($formatter::type_on_clause, $join['on']);
-            $ret .= $formatter->insert($formatter::type_block_end);
+            $components[] = [Format::type_block_keyword, $join['type']];
+            $components[] = [Format::type_table, $join['table']];
+            $components[] = [Format::type_keyword, 'on'];
+            $components[] = [Format::type_on_clause, $join['on']];
+            $components[] = [Format::type_block_end];
         }
-        return $ret;
+        return $this->compose(true, $components);
     }
 
 }

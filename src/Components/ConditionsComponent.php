@@ -3,6 +3,7 @@
 namespace Ejacobs\Phequel\Components;
 
 use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Format;
 
 class ConditionsComponent extends AbstractExpression
 {
@@ -59,23 +60,21 @@ class ConditionsComponent extends AbstractExpression
      */
     public function __toString()
     {
-        $formatter = $this->format();
+        $components = [];
         $conditions = $this->conditions;
-        $ret = '';
         while ($condition = array_shift($conditions)) {
             if ($condition instanceof ConditionsComponent) {
-                $condition->format($formatter);
-                $ret .= $formatter->insert($formatter::type_indentation, null, true);
-                $ret .= (string)$condition;
-                $ret .= $formatter->insert($formatter::type_block_end, null, true);
+                $components[] = [Format::type_indentation, null, true];
+                $components[] = $condition;
+                $components[] = [Format::type_block_end, null, true];
             } else {
-                $ret .= $formatter->insert($formatter::type_condition, $condition);
+                $components[] = [Format::type_condition, $condition];
                 if ($conditions) {
-                    $ret .= $formatter->insert($formatter::type_keyword, $this->type);
+                    $components[] = [Format::type_keyword, $this->type];
                 }
             }
         }
-        return $ret;
+        return $this->compose(true, $components);
     }
 
     /**

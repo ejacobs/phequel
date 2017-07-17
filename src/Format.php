@@ -37,6 +37,7 @@ class Format
     const type_block_end = 4;
     const type_statement = 5;
     const type_condition = 8;
+    const type_indentation = 9;
     const type_table = 10;
     const type_on_clause = 11;
     const type_block_number = 12;
@@ -72,10 +73,7 @@ class Format
                 return $ret;
             case self::type_block_keyword:
                 $ret = "{$this->addIndent()}{$this->keyword($value)}";
-                $this->level++;
-                if ($paren) {
-                    $ret .= ' (';
-                }
+                $ret .= $this->insert(self::type_indentation, null, $paren);
                 return $ret;
             case self::type_keyword:
                 $ret = "{$this->addIndent()}{$this->keyword($value)}";
@@ -84,6 +82,9 @@ class Format
                 }
                 return $ret;
             case self::type_columns:
+                if (!is_array($value)) {
+                    $value = [$value];
+                }
                 $glue = "{$this->addIndent()}";
                 return $glue . implode("," . $glue, $value);
             case self::type_block_end:
@@ -101,6 +102,12 @@ class Format
                 }
             case self::type_condition:
                 return "{$this->addIndent()}{$value[0]} {$value[1]} {$this->insert(self::type_value, $value[2])}";
+            case self::type_indentation:
+                $this->level++;
+                if ($paren) {
+                    return ' (';
+                }
+                return '';
             case self::type_table:
                 return "{$this->addIndent()}{$value}";
             case self::type_on_clause:

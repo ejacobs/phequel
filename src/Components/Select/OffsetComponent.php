@@ -3,6 +3,7 @@
 namespace Ejacobs\Phequel\Components\Select;
 
 use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Format;
 
 class OffsetComponent extends AbstractExpression
 {
@@ -17,15 +18,16 @@ class OffsetComponent extends AbstractExpression
         $this->offset = $offset;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
-        if ($this->offset === null) {
-            return '';
-        }
-        $formatter = $this->format();
-        return $formatter->insert($formatter::type_block_keyword, 'offset')
-            . $formatter->insert($formatter::type_block_number, $this->offset)
-            . $formatter->insert($formatter::type_block_end);
+        return $this->compose(!!$this->offset, [
+            [Format::type_block_keyword, 'offset'],
+            [Format::type_block_number, $this->offset],
+            [Format::type_block_end]
+        ]);
     }
 
 }

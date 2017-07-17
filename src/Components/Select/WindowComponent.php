@@ -3,7 +3,7 @@
 namespace Ejacobs\Phequel\Components\Select;
 
 use Ejacobs\Phequel\AbstractExpression;
-use Ejacobs\Phequel\Components\ColumnComponent;
+use Ejacobs\Phequel\Format;
 
 class WindowComponent extends AbstractExpression
 {
@@ -42,18 +42,15 @@ class WindowComponent extends AbstractExpression
      */
     public function __toString()
     {
-        if (!$this->windows) {
-            return '';
-        }
-        $formatter = $this->format();
-        $ret = $formatter->insert($formatter::type_block_keyword, 'window');
+        $components = [];
+        $components[] = [Format::type_block_keyword, 'window'];
         foreach ($this->windows as $alias => $window) {
-            $ret .= $formatter->insert($formatter::type_columns, [$alias]);
-            $ret .= $formatter->insert($formatter::type_keyword, 'AS');
-            $ret .= $formatter->insert($formatter::type_statement, $window, true);
+            $components[] = [Format::type_columns, $alias];
+            $components[] = [Format::type_keyword, 'as'];
+            $components[] = [Format::type_statement, $window, true];
         }
-        $ret .= $formatter->insert($formatter::type_block_end);
-        return $ret;
+        $components[] = [Format::type_block_end];
+        return $this->compose(!!$this->windows, $components);
     }
 
 }

@@ -3,6 +3,7 @@
 namespace Ejacobs\Phequel\Components;
 
 use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Format;
 
 class ColumnComponent extends AbstractExpression
 {
@@ -23,10 +24,9 @@ class ColumnComponent extends AbstractExpression
      */
     public function __toString()
     {
-        if (!$this->column) {
-            return '';
-        }
-        return $this->column;
+        return $this->compose(!!$this->column, [
+            [Format::type_columns, $this->column]
+        ]);
     }
 
 }

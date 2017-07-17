@@ -12,9 +12,10 @@ class IntersectComponent extends AbstractExpression
      */
     public function __toString()
     {
-        $formatter = $this->format();
-        return $formatter->insert(Format::type_primary_keyword, 'intersect')
-            . $formatter->insert(Format::type_block_end);
+        return $this->compose(true, [
+            [Format::type_primary_keyword, 'intersect'],
+            [Format::type_block_end]
+        ]);
     }
 
 }

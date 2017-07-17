@@ -3,6 +3,7 @@
 namespace Ejacobs\Phequel\Components\Select;
 
 use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Format;
 
 class OrderByComponent extends AbstractExpression
 {
@@ -25,17 +26,14 @@ class OrderByComponent extends AbstractExpression
      */
     public function __toString()
     {
-        if ($this->column === null) {
-            return '';
-        }
-        $formatter = $this->format();
-        $ret = $formatter->insert($formatter::type_block_keyword, 'order by')
-            . $formatter->insert($formatter::type_columns, [$this->column]);
+        $components = [];
+        $components[] = [Format::type_block_keyword, 'order by'];
+        $components[] = [Format::type_columns, $this->column];
         if ($this->direction !== null) {
-            $ret .= $formatter->insert($formatter::type_keyword, $this->direction);
+            $components[] = [Format::type_keyword, $this->direction];
         }
-        $ret .= $formatter->insert($formatter::type_block_end);
-        return $ret;
+        $components[] = [Format::type_block_end];
+        return $this->compose(!!$this->column, $components);
     }
 
 }

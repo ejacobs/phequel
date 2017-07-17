@@ -3,6 +3,7 @@
 namespace Ejacobs\Phequel\Components;
 
 use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Format;
 
 class TableComponent extends AbstractExpression
 {
@@ -22,7 +23,9 @@ class TableComponent extends AbstractExpression
      */
     public function __toString()
     {
-        return $this->tableName;
+        return $this->compose(true, [
+            [Format::type_table, $this->tableName]
+        ]);
     }
 
 }

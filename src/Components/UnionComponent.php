@@ -23,14 +23,14 @@ class UnionComponent extends AbstractExpression
      */
     public function __toString()
     {
-        $formatter = $this->format();
+        $keyword = 'union';
         if ($this->all) {
-            return $formatter->insert(Format::type_primary_keyword, 'union all')
-                . $formatter->insert(Format::type_block_end);
-        } else {
-            return $formatter->insert(Format::type_primary_keyword, 'union')
-                . $formatter->insert(Format::type_block_end);
+            $keyword .= ' all';
         }
+        return $this->compose(true, [
+            [Format::type_primary_keyword, $keyword],
+            [Format::type_block_end]
+        ]);
     }
 
 }

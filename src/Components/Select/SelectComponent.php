@@ -60,10 +60,11 @@ class SelectComponent extends AbstractExpression
      */
     public function __toString()
     {
-        $formatter = $this->format();
-        return $formatter->insert($formatter::type_primary_keyword, 'select')
-            . $formatter->insert($formatter::type_columns, $this->columns)
-            . $formatter->insert($formatter::type_block_end);
+        return $this->compose(true, [
+            [Format::type_primary_keyword, 'select'],
+            [Format::type_columns, $this->columns],
+            [Format::type_block_end]
+        ]);
     }
 
 }

@@ -4,6 +4,7 @@ namespace Ejacobs\Phequel\Components\Select;
 
 use Ejacobs\Phequel\AbstractExpression;
 use Ejacobs\Phequel\Components\ConditionsComponent;
+use Ejacobs\Phequel\Format;
 
 class HavingComponent extends AbstractExpression
 {
@@ -60,14 +61,11 @@ class HavingComponent extends AbstractExpression
      */
     public function __toString()
     {
-        if (!$this->conditions->hasConditions()) {
-            return '';
-        }
-        $formatter = $this->format();
-        $this->conditions->format($formatter);
-        return $formatter->insert($formatter::type_block_keyword, 'having')
-            . (string) $this->conditions
-            . $formatter->insert($formatter::type_block_end);
+        return $this->compose($this->conditions->hasConditions(), [
+            [Format::type_primary_keyword, 'having'],
+            $this->conditions,
+            [Format::type_block_end]
+        ]);
     }
 
 }

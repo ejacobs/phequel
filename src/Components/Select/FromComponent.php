@@ -4,6 +4,7 @@ namespace Ejacobs\Phequel\Components\Select;
 
 use Ejacobs\Phequel\AbstractExpression;
 use Ejacobs\Phequel\Components\TableComponent;
+use Ejacobs\Phequel\Format;
 
 class FromComponent extends AbstractExpression
 {
@@ -24,10 +25,11 @@ class FromComponent extends AbstractExpression
      */
     public function __toString()
     {
-        $formatter = $this->format();
-        return $formatter->insert($formatter::type_block_keyword, 'from')
-            . $formatter->insert($formatter::type_columns, [$this->table])
-            . $formatter->insert($formatter::type_block_end);
+        return $this->compose(true, [
+            [Format::type_block_keyword, 'from'],
+            [Format::type_columns, $this->table],
+            [Format::type_block_end]
+        ]);
     }
 
 }

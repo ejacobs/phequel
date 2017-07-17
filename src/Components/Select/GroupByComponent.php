@@ -3,6 +3,7 @@
 namespace Ejacobs\Phequel\Components\Select;
 
 use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Format;
 
 class GroupByComponent extends AbstractExpression
 {
@@ -33,13 +34,11 @@ class GroupByComponent extends AbstractExpression
      */
     public function __toString()
     {
-        if (!$this->columns) {
-            return '';
-        }
-        $formatter = $this->format();
-        return $formatter->insert($formatter::type_block_keyword, 'group by')
-            . $formatter->insert($formatter::type_columns, $this->columns)
-            . $formatter->insert($formatter::type_block_end);
+        return $this->compose(!!$this->columns, [
+            [Format::type_block_keyword, 'group by'],
+            [Format::type_columns, $this->columns],
+            [Format::type_block_end]
+        ]);
     }
 
 }

@@ -3,6 +3,7 @@
 namespace Ejacobs\Phequel\Components\Select;
 
 use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Format;
 
 class ForComponent extends AbstractExpression
 {
@@ -40,20 +41,17 @@ class ForComponent extends AbstractExpression
      */
     public function __toString()
     {
-        if ($this->lockStrength === null) {
-            return '';
-        }
-        $formatter = $this->format();
-        $ret = $formatter->insert($formatter::type_block_keyword, 'for')
-            . $formatter->insert($formatter::type_keyword, $this->lockStrength);
+        $components = [];
+        $components[] = [Format::type_block_keyword, 'for'];
+        $components[] = [Format::type_keyword, $this->lockStrength];
         foreach ($this->tableNames as $table) {
-            $ret .= $formatter->insert($formatter::type_table, $table);
+            $components[] = [Format::type_table, $table];
         }
         if ($this->option !== null) {
-            $ret .= $formatter->insert($formatter::type_keyword, $this->option);
+            $components[] = [Format::type_keyword, $this->option];
         }
-        $formatter->insert($formatter::type_block_end);
-        return $ret;
+        $components[] = [Format::type_block_end];
+        return $this->compose(!!$this->lockStrength, $components);
     }
 
 }
