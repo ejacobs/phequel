@@ -23,7 +23,7 @@ abstract class AbstractDeleteQuery extends AbstractBaseQuery
      */
     public function __construct($tableName = null)
     {
-        $this->deleteComponent = new DeleteComponent();
+        $this->deleteComponent = new DeleteComponent($tableName);
         $this->whereComponent = new WhereComponent();
         parent::__construct($tableName);
     }

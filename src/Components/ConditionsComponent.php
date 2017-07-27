@@ -84,7 +84,12 @@ class ConditionsComponent extends AbstractExpression
     {
         $ret = [];
         foreach ($this->conditions as $condition) {
-            $ret[] = $condition[2];
+            if ($condition instanceof ConditionsComponent) {
+                $ret = array_merge($ret, $condition->getParams());
+            }
+            else {
+                $ret[] = $condition[2];
+            }
         }
         return $ret;
     }

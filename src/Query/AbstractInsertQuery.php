@@ -21,7 +21,7 @@ abstract class AbstractInsertQuery extends AbstractBaseQuery
      */
     public function __construct($tableName = null)
     {
-        $this->insertComponent = new InsertComponent();
+        $this->insertComponent = new InsertComponent($tableName);
         $this->rowComponent = new RowComponent();
         parent::__construct($tableName);
     }

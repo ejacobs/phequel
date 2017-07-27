@@ -3,7 +3,6 @@
 namespace Ejacobs\Phequel\Components\Select;
 
 use Ejacobs\Phequel\AbstractExpression;
-use Ejacobs\Phequel\Components\NumberComponent;
 use Ejacobs\Phequel\Format;
 
 class LimitComponent extends AbstractExpression

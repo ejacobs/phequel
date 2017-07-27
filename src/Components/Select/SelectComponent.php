@@ -3,7 +3,6 @@
 namespace Ejacobs\Phequel\Components\Select;
 
 use Ejacobs\Phequel\AbstractExpression;
-use Ejacobs\Phequel\Components\ColumnComponent;
 use Ejacobs\Phequel\Format;
 
 class SelectComponent extends AbstractExpression

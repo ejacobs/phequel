@@ -3,6 +3,7 @@
 namespace Ejacobs\Phequel\Components\Transaction;
 
 use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Format;
 
 class CommitComponent extends AbstractExpression
 {
@@ -12,7 +13,10 @@ class CommitComponent extends AbstractExpression
      */
     public function __toString()
     {
-        return $this->format()->insertKeyword('commit') . ";\n";
+        return $this->compose(true, [
+            [Format::type_block_keyword, 'commit'],
+            [Format::type_block_end]
+        ]);
     }
 
 }

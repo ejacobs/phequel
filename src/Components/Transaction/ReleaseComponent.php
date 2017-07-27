@@ -3,6 +3,7 @@
 namespace Ejacobs\Phequel\Components\Transaction;
 
 use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Format;
 
 class ReleaseComponent extends AbstractExpression
 {
@@ -23,7 +24,11 @@ class ReleaseComponent extends AbstractExpression
      */
     public function __toString()
     {
-        return $this->format()->insertKeyword('release savepoint ') . $this->savepointName . ";\n";
+        return $this->compose(!!$this->savepointName, [
+            [Format::type_block_keyword, 'release savepoint'],
+            [Format::type_columns, $this->savepointName],
+            [Format::type_block_end]
+        ]);
     }
 
 }

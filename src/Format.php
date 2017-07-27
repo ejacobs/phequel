@@ -42,6 +42,12 @@ class Format
     const type_on_clause = 11;
     const type_block_number = 12;
     const type_value = 13;
+    const type_operator = 14;
+    const type_values = 15;
+    const type_comma_separated = 16;
+    const type_open_paren = 17;
+    const type_close_paren = 18;
+    const type_column = 19;
 
     /**
      * Format constructor.
@@ -65,8 +71,7 @@ class Format
                 if (!$this->initiated) {
                     $this->initiated = true;
                     $ret = $this->keyword($value);
-                }
-                else {
+                } else {
                     $ret = "{$this->addIndent()}{$this->keyword($value)}";
                 }
                 $this->level++;
@@ -77,16 +82,15 @@ class Format
                 return $ret;
             case self::type_keyword:
                 $ret = "{$this->addIndent()}{$this->keyword($value)}";
-                if ($paren) {
-                    $ret .= " (";
-                }
                 return $ret;
             case self::type_columns:
                 if (!is_array($value)) {
                     $value = [$value];
                 }
                 $glue = "{$this->addIndent()}";
-                return $glue . implode("," . $glue, $value);
+                return $this->insert(self::type_open_paren, null, $paren)
+                    . $glue . implode(',' . $glue, $value)
+                    . $this->insert(self::type_close_paren, null, $paren);
             case self::type_block_end:
                 $ret = '';
                 $this->level--;
@@ -120,6 +124,34 @@ class Format
                 } else {
                     return str_replace('#', $this->numericPlaceholderCounter++, $this->placeholder);
                 }
+            case self::type_values:
+                $parts = [];
+                foreach ($value as $singleValue) {
+                    $parts[] = [self::type_value, $singleValue, false];
+                }
+                return $this->insert(self::type_comma_separated, $parts, true);
+            case self::type_operator:
+                return ' =';
+            case self::type_comma_separated:
+                $strings = [];
+                foreach ($value as $singleValue) {
+                    $strings[] = $this->insert($singleValue[0], $singleValue[1], $singleValue[2]);
+                }
+                return $this->insert(self::type_open_paren, null, $paren)
+                    . implode(',', $strings)
+                    . $this->insert(self::type_close_paren, null, $paren);
+            case self::type_open_paren:
+                if ($paren) {
+                    return "{$this->addIndent()}(";
+                }
+                return '';
+            case self::type_close_paren:
+                if ($paren) {
+                    return ")";
+                }
+                return '';
+            case self::type_column:
+                return $value;
         }
         return '';
     }

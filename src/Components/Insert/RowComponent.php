@@ -3,6 +3,7 @@
 namespace Ejacobs\Phequel\Components\Insert;
 
 use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Format;
 
 class RowComponent extends AbstractExpression
 {
@@ -40,7 +41,6 @@ class RowComponent extends AbstractExpression
                 else {
                     $params[] = null;
                 }
-
             }
         }
         return $params;
@@ -51,16 +51,22 @@ class RowComponent extends AbstractExpression
      */
     public function __toString()
     {
-        $ret = ' (' . implode(', ', $this->columns) . ') '
-            . $this->format()->insertKeyword('values')
-            . "\n";
-        $rows = [];
-        $rowPlaceholder = '(' . implode(', ', array_fill(0, count($this->columns), '?')) . ')';
-        foreach ($this->rows as $row) {
-            $rows[] = $rowPlaceholder;
+        $columns = [];
+        foreach ($this->columns as $column) {
+            $columns[] = [Format::type_column, $column, false];
         }
-        $ret .= implode(",\n  ", $rows);
-        return $ret;
+        $components = [];
+        $components[] = [Format::type_indentation];
+        $components[] = [Format::type_comma_separated, $columns, true];
+        $components[] = [Format::type_block_end];
+        $components[] = [Format::type_block_keyword, 'values'];
+        $rows = [];
+        foreach ($this->rows as $row) {
+            $rows[] = [Format::type_values, $row, true];
+        }
+        $components[] = [Format::type_comma_separated, $rows, false];
+        $components[] = [Format::type_block_end];
+        return $this->compose(true, $components);
     }
 
 }

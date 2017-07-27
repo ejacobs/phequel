@@ -3,6 +3,7 @@
 namespace Ejacobs\Phequel\Components\Transaction;
 
 use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Format;
 
 class SavepointComponent extends AbstractExpression
 {
@@ -23,7 +24,11 @@ class SavepointComponent extends AbstractExpression
      */
     public function __toString()
     {
-        return $this->format()->insertKeyword('savepoint ') . $this->savepointName . ";\n";
+        return $this->compose(!!$this->savepointName, [
+            [Format::type_block_keyword, 'savepoint'],
+            [Format::type_keyword, $this->savepointName],
+            [Format::type_block_end]
+        ]);
     }
 
 }

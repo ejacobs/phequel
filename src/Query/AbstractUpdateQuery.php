@@ -27,7 +27,7 @@ abstract class AbstractUpdateQuery extends AbstractBaseQuery
      */
     public function __construct($tableName = null)
     {
-        $this->updateComponent = new UpdateComponent();
+        $this->updateComponent = new UpdateComponent($tableName);
         $this->setComponent = new SetComponent();
         $this->whereComponent = new WhereComponent();
         parent::__construct($tableName);

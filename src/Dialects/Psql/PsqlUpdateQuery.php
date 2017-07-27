@@ -14,7 +14,6 @@ class PsqlUpdateQuery extends AbstractUpdateQuery
     {
         return $this->compose(true, [
             $this->updateComponent,
-            $this->tableComponent,
             $this->setComponent,
             $this->whereComponent,
         ]);

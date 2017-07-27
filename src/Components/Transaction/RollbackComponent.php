@@ -3,6 +3,7 @@
 namespace Ejacobs\Phequel\Components\Transaction;
 
 use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Format;
 
 class RollbackComponent extends AbstractExpression
 {
@@ -22,12 +23,14 @@ class RollbackComponent extends AbstractExpression
      */
     public function __toString()
     {
-        $formatter = $this->format();
-        $ret = $formatter->insertKeyword('rollback');
-        if (is_String($this->rollbackTo)) {
-            $ret .= $formatter->insertKeyword(' to ') . $this->rollbackTo;
+        $components = [];
+        $components[] = [Format::type_block_keyword, 'rollback'];
+        if (is_string($this->rollbackTo)) {
+            $components[] = [Format::type_keyword, 'to'];
+            $components[] = [Format::type_columns, $this->rollbackTo];
         }
-        return "{$ret};\n";
+        $components[] = [Format::type_block_end];
+        return $this->compose(true, $components);
     }
 
 }

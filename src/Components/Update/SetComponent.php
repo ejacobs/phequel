@@ -3,10 +3,11 @@
 namespace Ejacobs\Phequel\Components\Update;
 
 use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Format;
 
 class SetComponent extends AbstractExpression
 {
-    private $values;
+    private $values = [];
 
     /**
      * @param string $column
@@ -30,14 +31,15 @@ class SetComponent extends AbstractExpression
      */
     public function __toString()
     {
-        if ($this->values) {
-            $setParts = [];
-            foreach ($this->values as $column => $value) {
-                $setParts[] = "{$column} = ?";
-            }
-            return $this->format()->insertKeyword(' set ') . implode(', ', $setParts);
+        $components = [];
+        $components[] = [Format::type_block_keyword, 'set'];
+        $setStatements = [];
+        foreach ($this->values as $column => $value) {
+            $setStatements[] = [Format::type_condition, [$column, '=', $value], false];
         }
-        return '';
+        $components[] = [Format::type_comma_separated, $setStatements];
+        $components[] = [Format::type_block_end];
+        return $this->compose(!!$this->values, $components);
     }
 
 }

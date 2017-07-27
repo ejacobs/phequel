@@ -3,6 +3,7 @@
 namespace Ejacobs\Phequel\Components\Transaction;
 
 use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Format;
 
 class BeginComponent extends AbstractExpression
 {
@@ -12,7 +13,10 @@ class BeginComponent extends AbstractExpression
      */
     public function __toString()
     {
-        return $this->format()->insertKeyword('begin transaction') . ";\n";
+        return $this->compose(true, [
+            [Format::type_block_keyword, 'begin transaction'],
+            [Format::type_block_end]
+        ]);
     }
 
 }

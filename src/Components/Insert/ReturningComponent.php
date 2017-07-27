@@ -3,6 +3,7 @@
 namespace Ejacobs\Phequel\Components\Insert;
 
 use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Format;
 
 class ReturningComponent extends AbstractExpression
 {
@@ -22,15 +23,14 @@ class ReturningComponent extends AbstractExpression
 
     public function __toString()
     {
-        if ($this->column) {
-            $ret = $this->format()->insertKeyword(' returning ') . $this->column;
-            if ($this->alias !== null) {
-                $ret .= $this->format()->insertKeyword(' as ') . $this->alias;
-            }
-            return $ret;
-        } else {
-            return '';
+        $components = [];
+        $components[] = [Format::type_block_keyword, 'returning'];
+        if ($this->alias !== null) {
+            $components[] = [Format::type_keyword, 'as'];
+            $components[] = [Format::type_columns, $this->alias];
         }
+        $components[] = [Format::type_block_end];
+        return $this->compose(!!$this->column, $components);
     }
 
 }
