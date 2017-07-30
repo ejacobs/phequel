@@ -53,11 +53,7 @@ class PsqlAbstractTransactionComponent extends AbstractTransactionComponent
 
     public function __toString()
     {
-        $ret = '';
-        foreach ($this->queries as $query) {
-            $ret .= "\t{$query};\n";
-        }
-        return $ret;
+        return $this->compose(true, $this->queries);
     }
 
 }

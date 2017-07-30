@@ -60,7 +60,7 @@ class SelectComponent extends AbstractExpression
     public function __toString()
     {
         return $this->compose(true, [
-            [Format::type_primary_keyword, 'select'],
+            [Format::type_block_keyword, 'select'],
             [Format::type_columns, $this->columns],
             [Format::type_block_end]
         ]);

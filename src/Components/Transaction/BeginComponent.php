@@ -15,7 +15,6 @@ class BeginComponent extends AbstractExpression
     {
         return $this->compose(true, [
             [Format::type_block_keyword, 'begin transaction'],
-            [Format::type_block_end]
         ]);
     }
 
