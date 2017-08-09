@@ -27,7 +27,8 @@ class ReleaseComponent extends AbstractExpression
         return $this->compose(!!$this->savepointName, [
             [Format::type_block_keyword, 'release savepoint'],
             [Format::type_columns, $this->savepointName],
-            [Format::type_block_end]
+            [Format::type_block_end],
+            [Format::type_query_ending]
         ]);
     }
 

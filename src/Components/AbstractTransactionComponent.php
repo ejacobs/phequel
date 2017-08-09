@@ -22,10 +22,11 @@ abstract class AbstractTransactionComponent extends AbstractExpression
 {
 
     /**
-     * @param $tableName
+     * @param string $tableName
+     * @param null|string $alias
      * @return AbstractSelectQuery
      */
-    abstract public function select($tableName);
+    abstract public function select($tableName, $alias = null);
 
     /**
      * @param $tableName

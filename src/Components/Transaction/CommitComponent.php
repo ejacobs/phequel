@@ -15,7 +15,8 @@ class CommitComponent extends AbstractExpression
     {
         return $this->compose(true, [
             [Format::type_block_end],
-            [Format::type_block_keyword, 'commit']
+            [Format::type_block_keyword, 'commit'],
+            [Format::type_query_ending]
         ]);
     }
 

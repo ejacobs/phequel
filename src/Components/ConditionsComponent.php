@@ -4,6 +4,7 @@ namespace Ejacobs\Phequel\Components;
 
 use Ejacobs\Phequel\AbstractExpression;
 use Ejacobs\Phequel\Format;
+use Ejacobs\Phequel\Query\AbstractBaseQuery;
 
 class ConditionsComponent extends AbstractExpression
 {
@@ -68,7 +69,24 @@ class ConditionsComponent extends AbstractExpression
                 $components[] = $condition;
                 $components[] = [Format::type_block_end, null, true];
             } else {
-                $components[] = [Format::type_condition, $condition];
+                if ($condition[2] instanceof AbstractBaseQuery) {
+                    $selectQuery = array_pop($condition);
+                    $components[] = [Format::type_condition, $condition];
+                    $components[] = [Format::type_indentation, null, true];
+                    $components[] = $selectQuery;
+                    $components[] = [Format::type_block_end, null, true];
+                }
+                else if (is_array($condition[2])) {
+                    $array = array_pop($condition);
+                    $components[] = [Format::type_condition, $condition];
+                    $components[] = [Format::type_indentation, null];
+                    $components[] = [Format::type_values, $array];
+                    $components[] = [Format::type_block_end, null];
+                }
+                else {
+                    $components[] = [Format::type_condition, $condition];
+                }
+
                 if ($conditions) {
                     $components[] = [Format::type_keyword, $this->type];
                 }
@@ -84,7 +102,7 @@ class ConditionsComponent extends AbstractExpression
     {
         $ret = [];
         foreach ($this->conditions as $condition) {
-            if ($condition instanceof ConditionsComponent) {
+            if ($condition instanceof AbstractExpression) {
                 $ret = array_merge($ret, $condition->getParams());
             }
             else {

@@ -30,6 +30,7 @@ class RollbackComponent extends AbstractExpression
             $components[] = [Format::type_columns, $this->rollbackTo];
         }
         $components[] = [Format::type_block_end];
+        $components[] = [Format::type_query_ending];
         return $this->compose(true, $components);
     }
 

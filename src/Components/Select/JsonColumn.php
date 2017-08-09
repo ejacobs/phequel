@@ -2,7 +2,7 @@
 
 namespace Ejacobs\Phequel\Components\Select;
 
-class JsonColumn extends ColumnComponent
+class JsonColumn
 {
 
     protected $narrows = [];
