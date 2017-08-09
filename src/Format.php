@@ -25,29 +25,29 @@ class Format
     private $placeholder = '?';
     private $indentation = "\t";
     private $interpolate = false;
-    private $newlineAtEnd = false;
     private $semicolonAtEnd = false;
 
     private $initiated = false;
 
-    const type_primary_keyword = 0;
-    const type_block_keyword = 1;
-    const type_keyword = 2;
-    const type_columns = 3;
-    const type_block_end = 4;
-    const type_statement = 5;
+    const type_block_end = 1;
+    const type_block_keyword = 2;
+    const type_block_number = 3;
+    const type_close_paren = 4;
+    const type_column = 5;
+    const type_columns = 6;
+    const type_comma_separated = 7;
     const type_condition = 8;
     const type_indentation = 9;
-    const type_table = 10;
+    const type_keyword = 10;
     const type_on_clause = 11;
-    const type_block_number = 12;
-    const type_value = 13;
-    const type_operator = 14;
-    const type_values = 15;
-    const type_comma_separated = 16;
-    const type_open_paren = 17;
-    const type_close_paren = 18;
-    const type_column = 19;
+    const type_open_paren = 12;
+    const type_operator = 13;
+    const type_primary_keyword = 14;
+    const type_query_ending = 15;
+    const type_statement = 16;
+    const type_table = 17;
+    const type_value = 18;
+    const type_values = 19;
 
     /**
      * Format constructor.
@@ -105,7 +105,12 @@ class Format
                     return "{$this->addIndent()}{$value}";
                 }
             case self::type_condition:
-                return "{$this->addIndent()}{$value[0]} {$value[1]} {$this->insert(self::type_value, $value[2])}";
+                $operator = $this->keyword($value[1]);
+                $ret =  "{$this->addIndent()}{$value[0]} {$operator}";
+                if (isset($value[2])) {
+                    $ret .= "{$this->insert(self::type_value, $value[2])}";
+                }
+                return $ret;
             case self::type_indentation:
                 $this->level++;
                 if ($paren) {
@@ -152,6 +157,11 @@ class Format
                 return '';
             case self::type_column:
                 return $value;
+            case self::type_query_ending:
+                if ($this->semicolonAtEnd) {
+                    return ';';
+                }
+                return '';
         }
         return '';
     }
@@ -228,6 +238,16 @@ class Format
     {
         $this->connector = $connector;
         $this->interpolate = $interpolate;
+        return $this;
+    }
+
+    /**
+     * @param bool $semicolonAtEnd
+     * @return $this
+     */
+    public function semicolonAtEnd($semicolonAtEnd = true)
+    {
+        $this->semicolonAtEnd = $semicolonAtEnd;
         return $this;
     }
 
