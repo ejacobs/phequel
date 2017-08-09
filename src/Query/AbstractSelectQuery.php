@@ -10,7 +10,6 @@ use Ejacobs\Phequel\Components\Select\LimitComponent;
 use Ejacobs\Phequel\Components\Select\OffsetComponent;
 use Ejacobs\Phequel\Components\Select\OrderByComponent;
 use Ejacobs\Phequel\Components\Select\SelectComponent;
-use Ejacobs\Phequel\Components\Select\UnionIntersectComponent;
 use Ejacobs\Phequel\Components\WhereComponent;
 use Ejacobs\Phequel\Query\Traits\WhereTrait;
 
@@ -47,13 +46,13 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
 
     /**
      * AbstractSelectQuery constructor.
-     * @param string|null  $tableName
-     * @param array|null   $allowedWildcards
+     * @param string|null $tableName
+     * @param null|string $alias
      */
-    public function __construct($tableName = null, $allowedWildcards = ['%' => '%', '_' => '_'])
+    public function __construct($tableName = null, $alias = null)
     {
         $this->selectComponent = new SelectComponent();
-        $this->fromComponent = new FromComponent($tableName);
+        $this->fromComponent = new FromComponent($tableName, $alias);
         $this->whereComponent = new WhereComponent();
         $this->joinComponent = new JoinComponent();
         $this->groupByComponent = new GroupByComponent();
@@ -61,20 +60,23 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         $this->limitComponent = new LimitComponent();
         $this->offsetComponent = new OffsetComponent();
         $this->havingComponent = new HavingComponent();
-        parent::__construct($tableName, $allowedWildcards);
+        parent::__construct($tableName, $alias);
     }
 
     /**
      * @param string $tableName
+     * @param null|string $alias
      * @return $this
      */
-    public function from($tableName)
+    public function from($tableName, $alias = null)
     {
-        $this->fromComponent = new FromComponent($tableName);
+        $this->fromComponent = new FromComponent($tableName, $alias);
         return $this;
     }
 
     /**
+     * TODO: Alias
+     *
      * @param string $column
      * @param bool $clear
      * @return $this

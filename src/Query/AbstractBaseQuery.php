@@ -3,12 +3,14 @@
 namespace Ejacobs\Phequel\Query;
 
 use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Components\EndingComponent;
 
 abstract class AbstractBaseQuery extends AbstractExpression
 {
 
     public $allowedWildcards = null;
     protected $tableComponent = null;
+    protected $endingComponent = null;
 
     const valid_wildcards = ['%', '_'];
     const valid_operators = ['=', '!=', '>', '>=', '<', '<=', 'like', 'ilike', 'in', 'is', 'between', 'not like',
@@ -17,11 +19,11 @@ abstract class AbstractBaseQuery extends AbstractExpression
     /**
      * AbstractBaseQuery constructor.
      * @param null|string $tableName
-     * @param array $allowedWildcards
+     * @param null|string $alias
      */
-    public function __construct($tableName = null, array $allowedWildcards = ['*' => '%', '_' => '_'])
+    public function __construct($tableName, $alias = null)
     {
-        $this->setWildcardCharacters($allowedWildcards);
+        $this->endingComponent = new EndingComponent();
     }
 
     /**

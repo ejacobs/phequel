@@ -2,6 +2,8 @@
 
 namespace Ejacobs\Phequel;
 
+use Ejacobs\Phequel\Query\AbstractTransactionQuery;
+
 abstract class AbstractExpression
 {
     /* @var Format $formatter */
@@ -50,6 +52,11 @@ abstract class AbstractExpression
         }
         $ret = '';
         $formatter = $this->format();
+
+        if ($this instanceof AbstractTransactionQuery) {
+            $formatter->semicolonAtEnd();
+        }
+
         foreach ($components as &$component) {
             if ($component instanceof AbstractExpression) {
                 $component->format($formatter);
