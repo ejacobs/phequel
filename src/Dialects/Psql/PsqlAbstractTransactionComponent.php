@@ -11,9 +11,9 @@ class PsqlAbstractTransactionComponent extends AbstractTransactionComponent
 {
     private $queries = [];
 
-    public function select($tableName)
+    public function select($tableName, $alias = null)
     {
-        return $this->queries[] = new PsqlSelectQuery($tableName);
+        return $this->queries[] = new PsqlSelectQuery($tableName, $alias);
     }
 
     public function insert($tableName)

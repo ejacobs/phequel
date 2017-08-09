@@ -21,15 +21,15 @@ class PsqlSelectQuery extends AbstractSelectQuery
 
     /**
      * PsqlSelectQuery constructor.
-     * @param null|string $tableName
-     * @param array $allowedWildcards
+     * @param string $tableName
+     * @param null|string $alias
      */
-    public function __construct($tableName = null, $allowedWildcards = ['*' => '%', '_' => '_'])
+    public function __construct($tableName = null, $alias = null)
     {
         $this->windowComponent = new WindowComponent();
         $this->fetchComponent = new FetchComponent();
         $this->forComponent = new ForComponent();
-        parent::__construct($tableName, $allowedWildcards);
+        parent::__construct($tableName, $alias);
     }
 
     /**
@@ -85,6 +85,7 @@ class PsqlSelectQuery extends AbstractSelectQuery
             $this->offsetComponent,
             $this->fetchComponent,
             $this->forComponent,
+            $this->endingComponent
         ]);
     }
 

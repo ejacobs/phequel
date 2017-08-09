@@ -9,11 +9,12 @@ class PsqlQueryFactory implements QueryFactoryInterface
 
     /**
      * @param string $tableName
+     * @param null|string $alias
      * @return PsqlSelectQuery
      */
-    public function select($tableName)
+    public function select($tableName, $alias = null)
     {
-        return new PsqlSelectQuery($tableName);
+        return new PsqlSelectQuery($tableName, $alias);
     }
 
     /**

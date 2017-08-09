@@ -45,6 +45,7 @@ class PsqlInsertQuery extends AbstractInsertQuery
             $this->insertComponent,
             $this->rowComponent,
             $this->returningComponent,
+            $this->endingComponent
         ]);
     }
 

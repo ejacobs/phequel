@@ -16,6 +16,7 @@ class PsqlUpdateQuery extends AbstractUpdateQuery
             $this->updateComponent,
             $this->setComponent,
             $this->whereComponent,
+            $this->endingComponent
         ]);
     }
 
