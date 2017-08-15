@@ -47,7 +47,7 @@ class WindowComponent extends AbstractExpression
         foreach ($this->windows as $alias => $window) {
             $components[] = [Format::type_columns, $alias];
             $components[] = [Format::type_keyword, 'as'];
-            $components[] = [Format::type_statement, $window, true];
+            $components[] = [Format::type_table, $window, true];
         }
         $components[] = [Format::type_block_end];
         return $this->compose(!!$this->windows, $components);

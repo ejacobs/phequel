@@ -19,13 +19,14 @@ class ConditionsComponent extends AbstractExpression
     }
 
     /**
+     * @param string $table
      * @param string $column
      * @param string $operator
      * @param string $value
      */
-    public function where($column, $operator, $value)
+    public function where($table, $column, $operator, $value)
     {
-        $this->conditions[] = [$column, $operator, $value];
+        $this->conditions[] = [$table, $column, $operator, $value];
     }
 
     /**
@@ -106,7 +107,7 @@ class ConditionsComponent extends AbstractExpression
                 $ret = array_merge($ret, $condition->getParams());
             }
             else {
-                $ret[] = $condition[2];
+                $ret[] = $condition[3];
             }
         }
         return $ret;

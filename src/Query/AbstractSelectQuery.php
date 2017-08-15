@@ -75,15 +75,34 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     }
 
     /**
-     * TODO: Alias
-     *
-     * @param string $column
-     * @param bool $clear
+     * @param array $columns
      * @return $this
      */
-    public function select($column, $clear = false)
+    public function columns($columns)
     {
-        $this->selectComponent->addColumns($column, $clear);
+        $this->selectComponent->addColumns($columns);
+        return $this;
+    }
+
+    /**
+     * @param $column
+     * @param null $alias
+     * @param null $table
+     * @param bool $quoted
+     * @return $this
+     */
+    public function column($column, $alias = null, $table = null, $quoted = true)
+    {
+        $this->columns([[$table, $column, $alias, $quoted]]);
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function clearColumns()
+    {
+        $this->selectComponent->clearColumns();
         return $this;
     }
 

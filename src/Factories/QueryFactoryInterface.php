@@ -22,9 +22,10 @@ interface QueryFactoryInterface
 
     /**
      * @param string $tableName
-     * @return AbstractSelectQuery
+     * @param null|string $alias
+     * @return mixed
      */
-    public function select($tableName);
+    public function select($tableName, $alias = null);
 
     /**
      * @param string $tableName

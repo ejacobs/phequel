@@ -9,6 +9,7 @@ use Ejacobs\Phequel\Components\AbstractTransactionComponent;
 
 class PsqlAbstractTransactionComponent extends AbstractTransactionComponent
 {
+    /* @var \Ejacobs\Phequel\AbstractExpression[] $queries */
     private $queries = [];
 
     public function select($tableName, $alias = null)
@@ -48,7 +49,11 @@ class PsqlAbstractTransactionComponent extends AbstractTransactionComponent
 
     public function getParams()
     {
-        // TODO: Implement getParams() method.
+        $params = [];
+        foreach ($this->queries as $query) {
+            $params = array_merge($params, $query->getParams());
+        }
+        return $params;
     }
 
     public function __toString()

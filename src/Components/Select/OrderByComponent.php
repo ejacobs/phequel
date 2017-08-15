@@ -28,7 +28,7 @@ class OrderByComponent extends AbstractExpression
     {
         $components = [];
         $components[] = [Format::type_block_keyword, 'order by'];
-        $components[] = [Format::type_columns, $this->column];
+        $components[] = [Format::type_column_unquoted, $this->column, null];
         if ($this->direction !== null) {
             $components[] = [Format::type_keyword, $this->direction];
         }

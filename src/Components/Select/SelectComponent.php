@@ -16,32 +16,54 @@ class SelectComponent extends AbstractExpression
      * Select all columns (*) by default, unless explicitly specified
      *
      * SelectComponent constructor.
-     * @param string $columns
+     * @param array $columns
      */
-    public function __construct($columns = '*')
+    public function __construct($columns = ['*'])
     {
         $this->addColumns($columns);
-        if ($columns === '*') {
+        if ($columns === ['*']) {
             $this->defaultSelectAll = true;
         }
     }
 
     /**
-     * @param array|string $columns
-     * @param bool $clear
+     * @param array $columns
      */
-    public function addColumns($columns, $clear = false)
+    public function addColumns($columns)
     {
-        if ($this->defaultSelectAll || $clear) {
+        if ($this->defaultSelectAll) {
             $this->columns = [];
             $this->defaultSelectAll = false;
         }
-        if (!is_array($columns)) {
-            $columns = [$columns];
+        if ($this->isAssociative($columns)) {
+            foreach ($columns as $column => $alias) {
+                if (is_array($column)) {
+                    $this->columns[] = $column;
+                }
+                else {
+                    $this->columns[] = [null, $column, $alias];
+                }
+            }
         }
-        foreach ($columns as $column) {
-            $this->columns[] = $column;
+        else {
+            foreach ($columns as $column) {
+                if (is_array($column)) {
+                    $this->columns[] = $column;
+                }
+                else {
+                    $this->columns[] = [null, $column];
+                }
+            }
         }
+    }
+
+    /**
+     * @return $this
+     */
+    public function clearColumns()
+    {
+        $this->columns = [];
+        return $this;
     }
 
     /**
@@ -64,6 +86,12 @@ class SelectComponent extends AbstractExpression
             [Format::type_columns, $this->columns],
             [Format::type_block_end]
         ]);
+    }
+
+    private function isAssociative(array $arr)
+    {
+        if ($arr === []) return false;
+        return array_keys($arr) !== range(0, count($arr) - 1);
     }
 
 }

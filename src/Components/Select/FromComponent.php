@@ -29,15 +29,11 @@ class FromComponent extends AbstractExpression
      */
     public function __toString()
     {
-        $components = [];
-        $components[] = [Format::type_block_keyword, 'from'];
-        $components[] = [Format::type_columns, $this->table];
-        if ($this->alias !== null) {
-            $components[] = [Format::type_keyword, 'as'];
-            $components[] = [Format::type_statement, $this->alias];
-        }
-        $components[] = [Format::type_block_end];
-        return $this->compose(true, $components);
+        return $this->compose(true, [
+            [Format::type_block_keyword, 'from'],
+            [Format::type_table, [$this->table, $this->alias]],
+            [Format::type_block_end]
+        ]);
     }
 
 }
