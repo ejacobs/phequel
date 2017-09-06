@@ -2,6 +2,8 @@
 
 namespace Ejacobs\Phequel\Dialects\Psql;
 
+use Ejacobs\Phequel\Components\Select\ColumnOverAliasComponent;
+use Ejacobs\Phequel\Components\Select\ColumnOverComponent;
 use Ejacobs\Phequel\Components\Select\FetchComponent;
 use Ejacobs\Phequel\Components\Select\ForComponent;
 use Ejacobs\Phequel\Components\Select\WindowComponent;
@@ -33,13 +35,39 @@ class PsqlSelectQuery extends AbstractSelectQuery
     }
 
     /**
-     * @param string $alias
-     * @param string $statement
+     * @param $function
+     * @param $column
+     * @param $partitionByColumns
+     * @param array $orderBy
      * @return $this
      */
-    public function window($alias, $statement)
+    public function selectOver($function, $column, $partitionByColumns, $orderBy = [])
     {
-        $this->windowComponent->addWindow($alias, $statement);
+        $this->selectComponent->addColumn(new ColumnOverComponent($function, $column, $partitionByColumns, $orderBy));
+        return $this;
+    }
+
+    /**
+     * @param $function
+     * @param $column
+     * @param $windowAlias
+     * @return $this
+     */
+    public function selectOverAlias($function, $column, $windowAlias)
+    {
+        $this->selectComponent->addColumn(new ColumnOverAliasComponent($function, $column, $windowAlias));
+        return $this;
+    }
+
+    /**
+     * @param $alias
+     * @param $columns
+     * @param $orderBy
+     * @return $this
+     */
+    public function window($alias, $columns, $orderBy)
+    {
+        $this->windowComponent->addWindow($alias, $columns, $orderBy);
         return $this;
     }
 

@@ -2,6 +2,8 @@
 
 namespace Ejacobs\Phequel\Query;
 
+use Ejacobs\Phequel\Components\Select\ColumnComponent;
+use Ejacobs\Phequel\Components\Select\ColumnFunctionComponent;
 use Ejacobs\Phequel\Components\Select\FromComponent;
 use Ejacobs\Phequel\Components\Select\GroupByComponent;
 use Ejacobs\Phequel\Components\Select\HavingComponent;
@@ -74,26 +76,28 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         return $this;
     }
 
-    /**
-     * @param array $columns
+     /**
+     * @param $column
+     * @param null $alias
+     * @param bool $quoted
      * @return $this
      */
-    public function columns($columns)
+    public function column($column, $alias = null, $quoted = true)
     {
-        $this->selectComponent->addColumns($columns);
+        $this->selectComponent->addColumn(new ColumnComponent($column, $alias, $quoted));
         return $this;
     }
 
     /**
+     * @param $function
      * @param $column
-     * @param null $alias
-     * @param null $table
-     * @param bool $quoted
+     * @param $alias
+     * @param $quoted
      * @return $this
      */
-    public function column($column, $alias = null, $table = null, $quoted = true)
+    public function columnFunction($function, $column, $alias, $quoted = true)
     {
-        $this->columns([[$table, $column, $alias, $quoted]]);
+        $this->selectComponent->addColumn(new ColumnFunctionComponent($function, $column, $alias, $quoted));
         return $this;
     }
 
@@ -177,7 +181,16 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      */
     public function orderBy($column, $direction = null)
     {
-        $this->orderByComponent = new OrderByComponent($column, $direction);
+        $this->orderByComponent->addOrderBy($column, $direction);
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function clearOrderBy()
+    {
+        $this->orderByComponent = new OrderByComponent();
         return $this;
     }
 

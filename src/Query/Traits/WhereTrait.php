@@ -14,15 +14,14 @@ trait WhereTrait
     protected $whereComponent;
 
     /**
-     * @param $table
      * @param $column
      * @param null $operator
      * @param null $param
      * @return $this
      */
-    public function where($table, $column, $operator = null, $param = null)
+    public function where($column, $operator = null, $param = null)
     {
-        $this->whereComponent->where($table, $column, $operator, $param);
+        $this->whereComponent->where($column, $operator, $param);
         return $this;
     }
 

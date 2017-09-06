@@ -10,31 +10,13 @@ class WindowComponent extends AbstractExpression
     private $windows = [];
 
     /**
-     * WindowComponent constructor.
-     * @param array $windows
+     * @param string $alias
+     * @param array $columns
+     * @param array $orderBy
      */
-    public function __construct($windows = [])
+    public function addWindow($alias, $columns = [], $orderBy = [])
     {
-        $this->windows = $windows;
-    }
-
-    /**
-     * @param $alias
-     * @param $statement
-     */
-    public function addWindow($alias, $statement)
-    {
-        $this->windows[$alias] = $statement;
-    }
-
-    /**
-     * @param string[] $columns
-     */
-    public function addWindows($columns)
-    {
-       foreach ($columns as $alias => $statement) {
-           $this->addWindow($alias, $statement);
-       }
+        $this->windows[] = [$alias, $columns, $orderBy];
     }
 
     /**
@@ -43,14 +25,29 @@ class WindowComponent extends AbstractExpression
     public function __toString()
     {
         $components = [];
-        $components[] = [Format::type_block_keyword, 'window'];
-        foreach ($this->windows as $alias => $window) {
-            $components[] = [Format::type_columns, $alias];
-            $components[] = [Format::type_keyword, 'as'];
-            $components[] = [Format::type_table, $window, true];
+        foreach ($this->windows as $window) {
+            $components[] = $this->compose(true, [
+                [Format::type_indentation],
+                [Format::type_column, $window[0]],
+                [Format::type_keyword, 'as', false, false],
+                [Format::type_open_paren, true, true],
+                [Format::type_indentation],
+                [Format::type_keyword, 'partition by'],
+                [Format::type_indentation],
+                [Format::type_columns, $window[1]],
+                [Format::type_block_end],
+                new OrderByComponent($window[2]),
+                [Format::type_block_end],
+                [Format::type_close_paren, null, true, true],
+                [Format::type_block_end],
+            ]);
         }
-        $components[] = [Format::type_block_end];
-        return $this->compose(!!$this->windows, $components);
+
+        return $this->compose(!!$components, [
+            [Format::type_block_keyword, 'window'],
+            implode(', ', $components),
+            [Format::type_block_end],
+        ]);
     }
 
 }

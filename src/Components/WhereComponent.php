@@ -33,14 +33,13 @@ class WhereComponent extends AbstractExpression
     }
 
     /**
-     * @param string $table
      * @param string $column
      * @param string $operator
      * @param string|AbstractSelectQuery $value
      */
-    public function where($table, $column, $operator, $value)
+    public function where($column, $operator, $value)
     {
-        $this->conditions->where($table, $column, $operator, $value);
+        $this->conditions->where($column, $operator, $value);
     }
 
     /**

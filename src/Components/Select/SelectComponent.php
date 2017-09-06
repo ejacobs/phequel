@@ -16,45 +16,23 @@ class SelectComponent extends AbstractExpression
      * Select all columns (*) by default, unless explicitly specified
      *
      * SelectComponent constructor.
-     * @param array $columns
      */
-    public function __construct($columns = ['*'])
+    public function __construct()
     {
-        $this->addColumns($columns);
-        if ($columns === ['*']) {
-            $this->defaultSelectAll = true;
-        }
+        $this->addColumn(new ColumnComponent('*', null, false));
+        $this->defaultSelectAll = true;
     }
 
     /**
-     * @param array $columns
+     * @param AbstractColumnComponent $column
      */
-    public function addColumns($columns)
+    public function addColumn(AbstractColumnComponent $column)
     {
         if ($this->defaultSelectAll) {
             $this->columns = [];
             $this->defaultSelectAll = false;
         }
-        if ($this->isAssociative($columns)) {
-            foreach ($columns as $column => $alias) {
-                if (is_array($column)) {
-                    $this->columns[] = $column;
-                }
-                else {
-                    $this->columns[] = [null, $column, $alias];
-                }
-            }
-        }
-        else {
-            foreach ($columns as $column) {
-                if (is_array($column)) {
-                    $this->columns[] = $column;
-                }
-                else {
-                    $this->columns[] = [null, $column];
-                }
-            }
-        }
+        $this->columns[] = $column;
     }
 
     /**
@@ -83,15 +61,9 @@ class SelectComponent extends AbstractExpression
     {
         return $this->compose(true, [
             [Format::type_block_keyword, 'select'],
-            [Format::type_columns, $this->columns],
+            [Format::type_comma_separated, $this->columns],
             [Format::type_block_end]
         ]);
-    }
-
-    private function isAssociative(array $arr)
-    {
-        if ($arr === []) return false;
-        return array_keys($arr) !== range(0, count($arr) - 1);
     }
 
 }

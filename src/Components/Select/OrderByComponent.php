@@ -7,18 +7,24 @@ use Ejacobs\Phequel\Format;
 
 class OrderByComponent extends AbstractExpression
 {
-    private $column;
-    private $direction;
+    private $orderBy = [];
 
     /**
-     * OffsetComponent constructor.
-     * @param $column
-     * @param string $direction
+     * OrderByComponent constructor.
+     * @param array $orderBy
      */
-    public function __construct($column = null, $direction = null)
+    public function __construct(array $orderBy = [])
     {
-        $this->column = $column;
-        $this->direction = $direction;
+        $this->orderBy = $orderBy;
+    }
+
+    /**
+     * @param $column
+     * @param null $direction
+     */
+    public function addOrderBy($column, $direction = null)
+    {
+        $this->orderBy[] = [$column, $direction];
     }
 
     /**
@@ -28,12 +34,17 @@ class OrderByComponent extends AbstractExpression
     {
         $components = [];
         $components[] = [Format::type_block_keyword, 'order by'];
-        $components[] = [Format::type_column_unquoted, $this->column, null];
-        if ($this->direction !== null) {
-            $components[] = [Format::type_keyword, $this->direction];
+        foreach ($this->orderBy as $orderBy) {
+            if (count($orderBy) === 1) {
+                $orderBy[] = null;
+            }
+            $components[] = [Format::type_column, $orderBy[0]];
+            if ($direction = $orderBy[1]) {
+                $components[] = [Format::type_keyword, $direction, false, false];
+            }
         }
         $components[] = [Format::type_block_end];
-        return $this->compose(!!$this->column, $components);
+        return $this->compose(!!$this->orderBy, $components);
     }
 
 }

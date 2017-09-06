@@ -62,8 +62,16 @@ abstract class AbstractExpression
                 $component->format($formatter);
                 $ret .= (string)$component;
             }
+            else if (is_string($component)) {
+                $ret .= $component;
+            }
             else if (is_array($component)) {
-                $ret .= $formatter->insert($component[0], $component[1] ?? null, $component[2] ?? null);
+                $ret .= $formatter->insert(
+                    $component[0],
+                    $component[1] ?? null,
+                    $component[2] ?? false,
+                    $component[3] ?? true
+                );
             }
         }
         return $ret;
