@@ -61,7 +61,7 @@ class SelectComponent extends AbstractExpression
     {
         return $this->compose(true, [
             [Format::type_block_keyword, 'select'],
-            [Format::type_comma_separated, $this->columns],
+            [Format::type_comma_separated, $this->columns, Format::spacing_no_indent],
             [Format::type_block_end]
         ]);
     }

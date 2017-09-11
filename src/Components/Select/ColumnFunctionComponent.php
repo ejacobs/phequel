@@ -25,13 +25,13 @@ class ColumnFunctionComponent extends AbstractColumnComponent
         $this->alias = $alias;
         $this->quoted = $quoted;
     }
-
     /**
      * @return string
      */
     public function __toString() {
         return $this->compose(true, [
-            [Format::type_function, [$this->function, $this->column, $this->quoted]],
+            [Format::type_function, [$this->function, $this->column], Format::spacing_default, $this->quoted],
+            [Format::type_function_unquoted, [$this->function, $this->column], Format::spacing_default, !$this->quoted],
             [Format::type_alias, $this->alias],
         ]);
     }

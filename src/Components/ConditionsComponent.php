@@ -65,9 +65,11 @@ class ConditionsComponent extends AbstractExpression
         $conditions = $this->conditions;
         while ($condition = array_shift($conditions)) {
             if ($condition instanceof ConditionsComponent) {
+                $components[] = [Format::type_open_paren, null, Format::spacing_no_indent];
                 $components[] = [Format::type_indentation, null, true];
                 $components[] = $condition;
                 $components[] = [Format::type_block_end, null, true];
+                $components[] = [Format::type_close_paren];
             } else {
                 if ($condition[2] instanceof AbstractBaseQuery) {
                     $selectQuery = array_pop($condition);
@@ -84,7 +86,7 @@ class ConditionsComponent extends AbstractExpression
                     $components[] = [Format::type_block_end, null];
                 }
                 else {
-                    $components[] = [Format::type_condition, $condition];
+                    $components[] = [Format::type_condition, $condition, Format::spacing_no_indent];
                 }
 
                 if ($conditions) {

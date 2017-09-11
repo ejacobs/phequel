@@ -29,6 +29,10 @@ class Format
     private $tableQuoteChar = '"';
     private $uppercase = true;
 
+    const spacing_default = 1;
+    const spacing_no_indent = 2;
+    const spacing_no_space = 3;
+
     const type_block_end = 1;
     const type_block_keyword = 2;
     const type_block_number = 3;
@@ -48,9 +52,9 @@ class Format
     const type_value = 18;
     const type_values = 19;
     const type_column_unquoted = 20;
-    const type_function = 21;
+    const type_function_unquoted = 21;
     const type_alias = 22;
-
+    const type_function = 23;
     /**
      * Format constructor.
      * @param AbstractExpression $parentQuery
@@ -61,55 +65,49 @@ class Format
     }
 
     /**
-     * @param $type
-     * @param null $value
-     * @param bool $paren
-     * @param bool $newLine
+     * @param int $type
+     * @param mixed $value
+     * @param int $spacing
+     * @param bool $continue
      * @return string
      */
-    public function insert($type, $value = null, $paren = false, $newLine = true)
+    public function insert($type, $value = null, $spacing = self::spacing_default, $continue = true)
     {
+        if (!$continue) {
+            return '';
+        }
         switch ($type) {
             case self::type_primary_keyword:
                 if (!$this->initiated) {
                     $this->initiated = true;
                     $ret = $this->keyword($value);
                 } else {
-                    $ret = "{$this->addIndent()}{$this->keyword($value)}";
+                    $ret = "{$this->addIndent($spacing)}{$this->keyword($value)}";
                 }
                 $this->level++;
                 return $ret;
             case self::type_block_keyword:
-                $ret = "{$this->addIndent()}{$this->keyword($value)}";
-                $ret .= $this->insert(self::type_indentation, null, $paren);
+                $ret = "{$this->addIndent($spacing)}{$this->keyword($value)}";
+                $ret .= $this->insert(self::type_indentation, null, self::spacing_no_space);
                 return $ret;
             case self::type_keyword:
-                if ($newLine) {
-                    return "{$this->addIndent()}{$this->keyword($value)}";
-                }
-                return " {$this->keyword($value)}";
+                return "{$this->addIndent($spacing)}{$this->keyword($value)}";
             case self::type_columns:
                 if (!is_array($value)) {
                     $value = [$value];
                 }
-                $glue = "";
                 $columns = [];
                 foreach ($value as $column) {
                     $columns[] = $this->insert(self::type_column, $column);
                 }
-                return $this->insert(self::type_open_paren, null, $paren)
-                    . $glue . implode(',' . $glue, $columns)
-                    . $this->insert(self::type_close_paren, null, $paren);
+                return implode(',', $columns);
             case self::type_block_end:
                 $ret = '';
                 $this->level--;
-                if ($paren) {
-                    $ret .= "{$this->addIndent()})";
-                }
                 return $ret;
             case self::type_condition:
-                $ret = $this->addIndent();
-                $ret .= " {$this->insert(self::type_column, $value[0], false, false)}";
+                $ret = $this->addIndent($spacing);
+                $ret .= $this->insert(self::type_column, $value[0]);
                 $ret .= " {$value[1]}";
                 if (isset($value[2])) {
                     $ret .= " {$this->insert(self::type_value, $value[2])}";
@@ -117,24 +115,22 @@ class Format
                 return $ret;
             case self::type_indentation:
                 $this->level++;
-                if ($paren) {
-                    return ' (';
-                }
-                return '';
+                return $this->addIndent($spacing);
             case self::type_table:
                 if (!is_array($value)) {
                     $value = [$value];
                 }
-                if (is_string($value[1] ?? null)) {
-                    return $this->addIndent()
-                        . $this->enquote($this->tableQuoteChar, $value[0])
-                        . ' ' . $this->keyword('as')
+                $ret = $this->addIndent($spacing)
+                    . $this->enquote($this->tableQuoteChar, $value[0]);
+                if ((count($value) > 1) && is_string($value[1])) {
+                    $ret .= ' ' . $this->keyword('as')
                         . ' ' . $this->enquote($this->tableQuoteChar, $value[1]);
                 }
+                return $ret;
             case self::type_on_clause:
-                return "{$this->addIndent()}{$value[0]} {$value[1]} {$value[2]}";
+                return "{$this->addIndent($spacing)}{$value[0]} {$value[1]} {$value[2]}";
             case self::type_block_number:
-                return "{$this->addIndent()}{$value}";
+                return "{$this->addIndent($spacing)}{$value}";
             case self::type_value:
                 if ($this->interpolate) {
                     return $this->connector->escape($value);
@@ -161,36 +157,18 @@ class Format
                         $strings[] = (string)$singleValue;
                     }
                 }
-                return $this->insert(self::type_open_paren, null, $paren)
-                    . implode(',', $strings)
-                    . $this->insert(self::type_close_paren, null, $paren);
+                return $this->addIndent($spacing) . implode(",{$this->addIndent($spacing)}", $strings);
             case self::type_open_paren:
-                if ($paren) {
-                    if ($value) {
-                        return " (";
-                    }
-                    return "{$this->addIndent()}(";
-                }
-                return '';
+                return "{$this->addIndent($spacing)}(";
             case self::type_close_paren:
-                if ($paren) {
-                    if ($newLine) {
-                        return "{$this->addIndent()})";
-                    }
-                    return ')';
-                }
-                return '';
+                return "{$this->addIndent($spacing)})";
             case self::type_column:
                 if (!is_array($value)) {
                     $value = [null, $value];
                 }
-                $ret = '';
-                if ($newLine) {
-                    $ret = $this->addIndent();
-                }
+                $ret = $this->addIndent($spacing);
                 if (is_string($value[0] ?? null)) {
-                    $ret .= $this->enquote($this->tableQuoteChar, $value[0]);
-                    $ret .= '.';
+                    $ret .= "{$this->enquote($this->tableQuoteChar, $value[0])}.";
                 }
                 $ret .= $this->enquote($this->tableQuoteChar, $value[1]);
                 return $ret;
@@ -198,10 +176,7 @@ class Format
                 if (!is_array($value)) {
                     $value = [null, $value];
                 }
-                $ret = '';
-                if ($newLine) {
-                    $ret = $this->addIndent();
-                }
+                $ret = $this->addIndent($spacing);
                 if (is_string($value[0] ?? null)) {
                     $ret .= "{$value[0]}.";
                 }
@@ -212,10 +187,14 @@ class Format
                     return ';';
                 }
                 return '';
+            case self::type_function_unquoted:
+                return "{$this->addIndent($spacing)}{$value[0]}("
+                    . $this->insert(self::type_column_unquoted, $value[1], self::spacing_no_space)
+                    . ')';
             case self::type_function:
-                return "{$this->addIndent()}{$value[0]}("
-                . $this->insert(self::type_column_unquoted, $value[1], false, false)
-                . ')';
+                return "{$this->addIndent($spacing)}{$value[0]}("
+                    . $this->insert(self::type_column, $value[1], self::spacing_no_space)
+                    . ')';
             case self::type_alias:
                 if ($value === null) {
                     return '';
@@ -334,14 +313,18 @@ class Format
     }
 
     /**
+     * @param int $spacing
      * @return string
      */
-    private function addIndent()
+    private function addIndent($spacing = self::spacing_default)
     {
-        if ($this->indent) {
+        if ($this->indent && ($spacing === self::spacing_default)) {
             return "\n" . str_repeat($this->indentation, $this->level);
-        } else {
+        } else if (in_array($spacing, [self::spacing_default, self::spacing_no_indent])) {
             return ' ';
+        }
+        else {
+            return '';
         }
     }
 

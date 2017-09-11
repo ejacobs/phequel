@@ -122,13 +122,46 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     }
 
     /**
-     * @param $tableName
-     * @param $onClause
+     * @param string $tableName
+     * @param callable $conditions
      * @return $this
      */
-    public function leftJoin($tableName, $onClause)
+    public function leftJoin($tableName, callable $conditions)
     {
         $this->joinComponent->addJoin($tableName, $onClause, 'left');
+        return $this;
+    }
+
+    /**
+     * @param string $tableName
+     * @param callable $conditions
+     * @return $this
+     */
+    public function rightJoin($tableName, callable $conditions)
+    {
+        $this->joinComponent->addJoin($tableName, $onClause, 'right');
+        return $this;
+    }
+
+    /**
+     * @param string $tableName
+     * @param callable $conditions
+     * @return $this
+     */
+    public function innerJoin($tableName, callable $conditions)
+    {
+        $this->joinComponent->addJoin($tableName, $onClause, 'inner');
+        return $this;
+    }
+
+    /**
+     * @param string $tableName
+     * @param callable $conditions
+     * @return $this
+     */
+    public function outerJoin($tableName, callable $conditions)
+    {
+        $this->joinComponent->addJoin($tableName, $conditions, 'outer');
         return $this;
     }
 

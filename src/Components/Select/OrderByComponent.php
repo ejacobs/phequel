@@ -35,12 +35,9 @@ class OrderByComponent extends AbstractExpression
         $components = [];
         $components[] = [Format::type_block_keyword, 'order by'];
         foreach ($this->orderBy as $orderBy) {
-            if (count($orderBy) === 1) {
-                $orderBy[] = null;
-            }
             $components[] = [Format::type_column, $orderBy[0]];
-            if ($direction = $orderBy[1]) {
-                $components[] = [Format::type_keyword, $direction, false, false];
+            if (isset($orderBy[1])) {
+                $components[] = [Format::type_keyword, $orderBy[1], Format::spacing_no_indent];
             }
         }
         $components[] = [Format::type_block_end];

@@ -28,17 +28,17 @@ class WindowComponent extends AbstractExpression
         foreach ($this->windows as $window) {
             $components[] = $this->compose(true, [
                 [Format::type_indentation],
-                [Format::type_column, $window[0]],
-                [Format::type_keyword, 'as', false, false],
-                [Format::type_open_paren, true, true],
-                [Format::type_indentation],
+                [Format::type_table, $window[0], Format::spacing_no_space],
+                [Format::type_keyword, 'as', Format::spacing_no_indent],
+                [Format::type_open_paren, null, Format::spacing_no_indent],
+                [Format::type_indentation, null, Format::spacing_no_indent],
                 [Format::type_keyword, 'partition by'],
                 [Format::type_indentation],
-                [Format::type_columns, $window[1]],
+                [Format::type_comma_separated, $window[1], Format::spacing_no_indent],
                 [Format::type_block_end],
                 new OrderByComponent($window[2]),
                 [Format::type_block_end],
-                [Format::type_close_paren, null, true, true],
+                [Format::type_close_paren],
                 [Format::type_block_end],
             ]);
         }

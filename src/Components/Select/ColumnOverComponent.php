@@ -33,13 +33,16 @@ class ColumnOverComponent extends AbstractColumnComponent
     {
         return $this->compose(true, [
             [Format::type_function, [$this->function, $this->column]],
-            [Format::type_keyword, 'partition by', false, false],
-            [Format::type_open_paren, null, true],
+            [Format::type_keyword, 'over', Format::spacing_no_indent],
+            [Format::type_open_paren, null, Format::spacing_no_indent],
+            [Format::type_indentation, null, Format::spacing_no_indent],
+            [Format::type_keyword, 'partition by'],
             [Format::type_indentation],
-            [Format::type_columns, $this->column],
+            [Format::type_comma_separated, $this->column, Format::spacing_no_indent],
             [Format::type_block_end],
             new OrderByComponent($this->orderBy),
-            [Format::type_close_paren, null, true]
+            [Format::type_block_end],
+            [Format::type_close_paren],
         ]);
     }
 

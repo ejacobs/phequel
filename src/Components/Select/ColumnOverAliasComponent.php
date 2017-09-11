@@ -29,9 +29,9 @@ class ColumnOverAliasComponent extends AbstractColumnComponent
     public function __toString()
     {
         return $this->compose(true, [
-            [Format::type_function, [$this->function, $this->column], false, false],
-            [Format::type_keyword, 'over', false, false],
-            [Format::type_column, $this->alias, false, false]
+            [Format::type_function, [$this->function, $this->column]],
+            [Format::type_keyword, 'over', Format::spacing_no_indent],
+            [Format::type_column, $this->alias, Format::spacing_no_indent]
         ]);
     }
 

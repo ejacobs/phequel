@@ -69,7 +69,7 @@ abstract class AbstractExpression
                 $ret .= $formatter->insert(
                     $component[0],
                     $component[1] ?? null,
-                    $component[2] ?? false,
+                    $component[2] ?? Format::spacing_default,
                     $component[3] ?? true
                 );
             }
