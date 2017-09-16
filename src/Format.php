@@ -3,10 +3,10 @@
 namespace Ejacobs\Phequel;
 
 use Ejacobs\Phequel\Connector\AbstractConnector;
+use Ejacobs\Phequel\Query\AbstractBaseQuery;
 
 class Format
 {
-
     /* @var AbstractConnector $connector */
     private $connector;
 
@@ -16,7 +16,7 @@ class Format
     /* @var int $numericPlaceholderCounter */
     private $numericPlaceholderCounter = 1;
 
-    /* @var AbstractExpression $connector */
+    /* @var AbstractBaseQuery $parentQuery */
     private $parentQuery;
 
     private $indent = false;
@@ -33,28 +33,28 @@ class Format
     const spacing_no_indent = 2;
     const spacing_no_space = 3;
 
-    const type_block_end = 1;
-    const type_block_keyword = 2;
-    const type_block_number = 3;
-    const type_close_paren = 4;
-    const type_column = 5;
-    const type_columns = 6;
-    const type_comma_separated = 7;
-    const type_condition = 8;
-    const type_indentation = 9;
-    const type_keyword = 10;
-    const type_on_clause = 11;
-    const type_open_paren = 12;
-    const type_operator = 13;
-    const type_primary_keyword = 14;
-    const type_query_ending = 15;
-    const type_table = 17;
-    const type_value = 18;
-    const type_values = 19;
-    const type_column_unquoted = 20;
-    const type_function_unquoted = 21;
-    const type_alias = 22;
-    const type_function = 23;
+    const type_alias = 1;
+    const type_block_end = 2;
+    const type_block_keyword = 3;
+    const type_block_number = 4;
+    const type_close_paren = 5;
+    const type_column = 6;
+    const type_column_json = 7;
+    const type_column_unquoted = 8;
+    const type_columns = 9;
+    const type_comma_separated = 10;
+    const type_indentation = 11;
+    const type_keyword = 12;
+    const type_on_clause = 13;
+    const type_open_paren = 14;
+    const type_operator = 15;
+    const type_primary_keyword = 16;
+    const type_query_ending = 17;
+    const type_raw = 18;
+    const type_table = 19;
+    const type_value = 20;
+    const type_values = 21;
+
     /**
      * Format constructor.
      * @param AbstractExpression $parentQuery
@@ -105,16 +105,11 @@ class Format
                 $ret = '';
                 $this->level--;
                 return $ret;
-            case self::type_condition:
-                $ret = $this->addIndent($spacing);
-                $ret .= $this->insert(self::type_column, $value[0]);
-                $ret .= " {$value[1]}";
-                if (isset($value[2])) {
-                    $ret .= " {$this->insert(self::type_value, $value[2])}";
-                }
-                return $ret;
             case self::type_indentation:
                 $this->level++;
+                if ($value === false) {
+                    return '';
+                }
                 return $this->addIndent($spacing);
             case self::type_table:
                 if (!is_array($value)) {
@@ -132,15 +127,16 @@ class Format
             case self::type_block_number:
                 return "{$this->addIndent($spacing)}{$value}";
             case self::type_value:
+                $ret = $this->addIndent($spacing);
                 if ($this->interpolate) {
-                    return $this->connector->escape($value);
+                    return $ret . $this->connector->escape($this->parentQuery->escapeWildcards($value));
                 } else {
-                    return str_replace('#', $this->numericPlaceholderCounter++, $this->placeholder);
+                    return $ret. str_replace('#', $this->numericPlaceholderCounter++, $this->placeholder);
                 }
             case self::type_values:
                 $parts = [];
                 foreach ($value as $singleValue) {
-                    $parts[] = [self::type_value, $singleValue, false];
+                    $parts[] = [self::type_value, $singleValue, $spacing];
                 }
                 return $this->insert(self::type_comma_separated, $parts, true);
             case self::type_operator:
@@ -187,19 +183,29 @@ class Format
                     return ';';
                 }
                 return '';
-            case self::type_function_unquoted:
-                return "{$this->addIndent($spacing)}{$value[0]}("
-                    . $this->insert(self::type_column_unquoted, $value[1], self::spacing_no_space)
-                    . ')';
-            case self::type_function:
-                return "{$this->addIndent($spacing)}{$value[0]}("
-                    . $this->insert(self::type_column, $value[1], self::spacing_no_space)
-                    . ')';
             case self::type_alias:
                 if ($value === null) {
                     return '';
                 }
                 return ' ' . $this->keyword('as') . ' ' . $this->enquote($this->tableQuoteChar, $value);
+            case self::type_column_json:
+                $selectors = $value[0];
+                $operator = $value[1];
+                $ret = '';
+                if ($selectors) {
+                    if (in_array($operator, ['->', '->>'])) {
+                        $last = array_pop($selectors);
+                        foreach ($selectors as $selector) {
+                            $ret .= "->{$this->enquote("'", $selector)}";
+                        }
+                        $ret .= "{$operator}{$this->enquote("'", $last)}";
+                    } else if (in_array($operator, ['#>', '#>>'])) {
+                        $ret = "{$operator}{$this->enquote("'", '{' . implode(',', $selectors) . '}')}";
+                    }
+                }
+                return $ret;
+            case self::type_raw:
+                return "{$this->addIndent($spacing)}{$value}";
         }
         return '';
     }
@@ -322,8 +328,7 @@ class Format
             return "\n" . str_repeat($this->indentation, $this->level);
         } else if (in_array($spacing, [self::spacing_default, self::spacing_no_indent])) {
             return ' ';
-        }
-        else {
+        } else {
             return '';
         }
     }
@@ -345,7 +350,7 @@ class Format
     /**
      * @return string
      */
-    function __toString()
+    public function __toString()
     {
         return (string)$this->parentQuery;
     }

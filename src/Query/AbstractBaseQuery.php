@@ -7,14 +7,10 @@ use Ejacobs\Phequel\Components\EndingComponent;
 
 abstract class AbstractBaseQuery extends AbstractExpression
 {
-
-    public $allowedWildcards = null;
+    const valid_wildcards = ['%', '_'];
+    public $allowedWildcards = [];
     protected $tableComponent = null;
     protected $endingComponent = null;
-
-    const valid_wildcards = ['%', '_'];
-    const valid_operators = ['=', '!=', '>', '>=', '<', '<=', 'like', 'ilike', 'in', 'is', 'between', 'not like',
-        'similar to', 'not similar to'];
 
     /**
      * AbstractBaseQuery constructor.
@@ -33,11 +29,27 @@ abstract class AbstractBaseQuery extends AbstractExpression
      *
      * @param array $wildcards
      * @return $this
+     * @throws \Exception
      */
     public function setWildcardCharacters(array $wildcards)
     {
-        $this->allowedWildcards = $wildcards;
+        if ($wildcards !== null) {
+            foreach ($wildcards as $replace => $with) {
+                if (!in_array($with, self::valid_wildcards)) {
+                    throw new \Exception($with . ' is not a valid SQL wildcard');
+                }
+            }
+            $this->allowedWildcards = $wildcards;
+        }
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getWildcardCharacters()
+    {
+        return $this->allowedWildcards;
     }
 
     /**
@@ -51,22 +63,32 @@ abstract class AbstractBaseQuery extends AbstractExpression
      */
     public function escapeWildcards($string)
     {
-        if (!isset($this->allowedWildcards['%'])) {
+        $allowed = $this->getWildcardCharacters();
+        if (!isset($allowed['%'])) {
             $string = str_replace('%', '\\%', $string);
         }
-
-        if (!isset($this->allowedWildcards['_'])) {
+        if (!isset($allowed['_'])) {
             $string = str_replace('_', '\\_', $string);
         }
-
-        foreach ($this->allowedWildcards as $replace => $with) {
-            if (!in_array($with, self::valid_wildcards)) {
-                throw new \Exception($replace . ' is not a valid SQL wildcard');
-            }
+        foreach ($allowed as $replace => $with) {
             $string = str_replace($replace, $with, $string);
         }
-
         return $string;
+    }
+
+    /**
+     * @param array $paramArrays
+     * @return array
+     */
+    protected function replaceWildcardsParams(array $paramArrays)
+    {
+        $ret = [];
+        foreach ($paramArrays as $paramArray) {
+            foreach ($paramArray as $param) {
+                $ret[] = $this->escapeWildcards($param);
+            }
+        }
+        return $ret;
     }
 
 }

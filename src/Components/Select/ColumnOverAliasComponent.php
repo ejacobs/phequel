@@ -29,7 +29,7 @@ class ColumnOverAliasComponent extends AbstractColumnComponent
     public function __toString()
     {
         return $this->compose(true, [
-            [Format::type_function, [$this->function, $this->column]],
+            new ColumnFunctionComponent($this->function, $this->column),
             [Format::type_keyword, 'over', Format::spacing_no_indent],
             [Format::type_column, $this->alias, Format::spacing_no_indent]
         ]);

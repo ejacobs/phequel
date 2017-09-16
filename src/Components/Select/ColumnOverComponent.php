@@ -32,7 +32,7 @@ class ColumnOverComponent extends AbstractColumnComponent
     public function __toString()
     {
         return $this->compose(true, [
-            [Format::type_function, [$this->function, $this->column]],
+            new ColumnFunctionComponent($this->function, $this->column),
             [Format::type_keyword, 'over', Format::spacing_no_indent],
             [Format::type_open_paren, null, Format::spacing_no_indent],
             [Format::type_indentation, null, Format::spacing_no_indent],

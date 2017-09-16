@@ -2,6 +2,7 @@
 
 namespace Ejacobs\Phequel\Dialects\Psql;
 
+use Ejacobs\Phequel\Components\Select\ColumnJsonComponent;
 use Ejacobs\Phequel\Components\Select\ColumnOverAliasComponent;
 use Ejacobs\Phequel\Components\Select\ColumnOverComponent;
 use Ejacobs\Phequel\Components\Select\FetchComponent;
@@ -56,6 +57,19 @@ class PsqlSelectQuery extends AbstractSelectQuery
     public function selectOverAlias($function, $column, $windowAlias)
     {
         $this->selectComponent->addColumn(new ColumnOverAliasComponent($function, $column, $windowAlias));
+        return $this;
+    }
+
+    /**
+     * @param $column
+     * @param array|string $selector
+     * @param string $jsonOperator
+     * @param null $alias
+     * @return $this
+     */
+    public function columnJson($column, $selector, $jsonOperator = '->>', $alias = null)
+    {
+        $this->selectComponent->addColumn(new ColumnJsonComponent($column, $selector, $jsonOperator, $alias));
         return $this;
     }
 

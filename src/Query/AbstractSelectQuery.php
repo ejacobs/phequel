@@ -4,6 +4,7 @@ namespace Ejacobs\Phequel\Query;
 
 use Ejacobs\Phequel\Components\Select\ColumnComponent;
 use Ejacobs\Phequel\Components\Select\ColumnFunctionComponent;
+use Ejacobs\Phequel\Components\Select\ColumnJsonComponent;
 use Ejacobs\Phequel\Components\Select\FromComponent;
 use Ejacobs\Phequel\Components\Select\GroupByComponent;
 use Ejacobs\Phequel\Components\Select\HavingComponent;
@@ -18,6 +19,8 @@ use Ejacobs\Phequel\Query\Traits\WhereTrait;
 abstract class AbstractSelectQuery extends AbstractBaseQuery
 {
     use WhereTrait;
+
+    const valid_json_operators = ['->', '->>', '#>', '#>>'];
 
     /* @var SelectComponent $selectComponent */
     protected $selectComponent;
@@ -76,15 +79,26 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         return $this;
     }
 
-     /**
+    /**
      * @param $column
      * @param null $alias
-     * @param bool $quoted
      * @return $this
      */
-    public function column($column, $alias = null, $quoted = true)
+    public function column($column, $alias = null)
     {
-        $this->selectComponent->addColumn(new ColumnComponent($column, $alias, $quoted));
+        $this->selectComponent->addColumn(new ColumnComponent($column, $alias));
+        return $this;
+    }
+
+    /**
+     * @param array $columns
+     * @return $this
+     */
+    public function columns(array $columns)
+    {
+        foreach ($columns as $column) {
+            $this->selectComponent->addColumn(new ColumnComponent($column[0], $column[1] ?? null));
+        }
         return $this;
     }
 
@@ -92,12 +106,11 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      * @param $function
      * @param $column
      * @param $alias
-     * @param $quoted
      * @return $this
      */
-    public function columnFunction($function, $column, $alias, $quoted = true)
+    public function columnFunction($function, $column, $alias)
     {
-        $this->selectComponent->addColumn(new ColumnFunctionComponent($function, $column, $alias, $quoted));
+        $this->selectComponent->addColumn(new ColumnFunctionComponent($function, $column, $alias));
         return $this;
     }
 
@@ -123,45 +136,49 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
 
     /**
      * @param string $tableName
+     * @param string $tableAlias
      * @param callable $conditions
      * @return $this
      */
-    public function leftJoin($tableName, callable $conditions)
+    public function leftJoin($tableName, $tableAlias, callable $conditions)
     {
-        $this->joinComponent->addJoin($tableName, $onClause, 'left');
+        $this->joinComponent->addJoin($tableName, $tableAlias, $conditions, 'left');
         return $this;
     }
 
     /**
      * @param string $tableName
+     * @param string $tableAlias
      * @param callable $conditions
      * @return $this
      */
-    public function rightJoin($tableName, callable $conditions)
+    public function rightJoin($tableName, $tableAlias, callable $conditions)
     {
-        $this->joinComponent->addJoin($tableName, $onClause, 'right');
+        $this->joinComponent->addJoin($tableName, $tableAlias, $conditions, 'right');
         return $this;
     }
 
     /**
      * @param string $tableName
+     * @param string $tableAlias
      * @param callable $conditions
      * @return $this
      */
-    public function innerJoin($tableName, callable $conditions)
+    public function innerJoin($tableName, $tableAlias, callable $conditions)
     {
-        $this->joinComponent->addJoin($tableName, $onClause, 'inner');
+        $this->joinComponent->addJoin($tableName, $tableAlias, $conditions, 'inner');
         return $this;
     }
 
     /**
      * @param string $tableName
+     * @param string $tableAlias
      * @param callable $conditions
      * @return $this
      */
-    public function outerJoin($tableName, callable $conditions)
+    public function outerJoin($tableName, $tableAlias, callable $conditions)
     {
-        $this->joinComponent->addJoin($tableName, $conditions, 'outer');
+        $this->joinComponent->addJoin($tableName, $tableAlias, $conditions, 'outer');
         return $this;
     }
 
@@ -232,7 +249,10 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      */
     public function getParams()
     {
-        return $this->whereComponent->getParams();
+        return $this->replaceWildcardsParams([
+            $this->joinComponent->getParams(),
+            $this->whereComponent->getParams()
+        ]);
     }
 
     /**
@@ -250,5 +270,6 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         $this->orderByComponent = clone $this->orderByComponent;
         $this->havingComponent = clone $this->havingComponent;
     }
+
 
 }

@@ -19,13 +19,13 @@ class ConditionsComponent extends AbstractExpression
     }
 
     /**
-     * @param string $column
+     * @param string|array $column
      * @param string $operator
-     * @param string $value
+     * @param string|array $value
      */
     public function where($column, $operator, $value)
     {
-        $this->conditions[] = [$column, $operator, $value];
+        $this->conditions[] = new ConditionComponent($column, $operator, $value);
     }
 
     /**
@@ -64,31 +64,17 @@ class ConditionsComponent extends AbstractExpression
         $components = [];
         $conditions = $this->conditions;
         while ($condition = array_shift($conditions)) {
+
+            // More Conditions
             if ($condition instanceof ConditionsComponent) {
                 $components[] = [Format::type_open_paren, null, Format::spacing_no_indent];
                 $components[] = [Format::type_indentation, null, true];
                 $components[] = $condition;
                 $components[] = [Format::type_block_end, null, true];
                 $components[] = [Format::type_close_paren];
-            } else {
-                if ($condition[2] instanceof AbstractBaseQuery) {
-                    $selectQuery = array_pop($condition);
-                    $components[] = [Format::type_condition, $condition];
-                    $components[] = [Format::type_indentation, null, true];
-                    $components[] = $selectQuery;
-                    $components[] = [Format::type_block_end, null, true];
-                }
-                else if (is_array($condition[2])) {
-                    $array = array_pop($condition);
-                    $components[] = [Format::type_condition, $condition];
-                    $components[] = [Format::type_indentation, null];
-                    $components[] = [Format::type_values, $array];
-                    $components[] = [Format::type_block_end, null];
-                }
-                else {
-                    $components[] = [Format::type_condition, $condition, Format::spacing_no_indent];
-                }
-
+            }
+            else if ($condition instanceof ConditionComponent) {
+                $components[] = $condition;
                 if ($conditions) {
                     $components[] = [Format::type_keyword, $this->type];
                 }
@@ -106,9 +92,6 @@ class ConditionsComponent extends AbstractExpression
         foreach ($this->conditions as $condition) {
             if ($condition instanceof AbstractExpression) {
                 $ret = array_merge($ret, $condition->getParams());
-            }
-            else {
-                $ret[] = $condition[2];
             }
         }
         return $ret;

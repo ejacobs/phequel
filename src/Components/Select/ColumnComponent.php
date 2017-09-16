@@ -8,19 +8,16 @@ class ColumnComponent extends AbstractColumnComponent
 {
     private $column;
     private $alias;
-    private $quoted;
 
     /**
      * ColumnComponentComponent constructor.
      * @param $column
      * @param $alias
-     * @param $quoted
      */
-    public function __construct($column, $alias = null, $quoted = true)
+    public function __construct($column, $alias = null)
     {
         $this->column = $column;
         $this->alias = $alias;
-        $this->quoted = $quoted;
     }
 
     /**
