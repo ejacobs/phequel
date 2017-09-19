@@ -5,6 +5,7 @@ namespace Ejacobs\Phequel\Query;
 use Ejacobs\Phequel\Components\Select\ColumnComponent;
 use Ejacobs\Phequel\Components\Select\ColumnFunctionComponent;
 use Ejacobs\Phequel\Components\Select\ColumnJsonComponent;
+use Ejacobs\Phequel\Components\Select\ColumnRawComponent;
 use Ejacobs\Phequel\Components\Select\FromComponent;
 use Ejacobs\Phequel\Components\Select\GroupByComponent;
 use Ejacobs\Phequel\Components\Select\HavingComponent;
@@ -99,6 +100,18 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         foreach ($columns as $column) {
             $this->selectComponent->addColumn(new ColumnComponent($column[0], $column[1] ?? null));
         }
+        return $this;
+    }
+
+
+    /**
+     * @param $column
+     * @param null $alias
+     * @return $this
+     */
+    public function columnRaw($column, $alias = null)
+    {
+        $this->selectComponent->addColumn(new ColumnRawComponent($column, $alias));
         return $this;
     }
 
