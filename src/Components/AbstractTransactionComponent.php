@@ -2,11 +2,11 @@
 
 namespace Ejacobs\Phequel\Components;
 
+use Ejacobs\Phequel\AbstractExpression;
 use Ejacobs\Phequel\Query\AbstractDeleteQuery;
 use Ejacobs\Phequel\Query\AbstractInsertQuery;
 use Ejacobs\Phequel\Query\AbstractSelectQuery;
 use Ejacobs\Phequel\Query\AbstractUpdateQuery;
-use Ejacobs\Phequel\AbstractExpression;
 
 /**
  * Class AbstractTransactionComponent

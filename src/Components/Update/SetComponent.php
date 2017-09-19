@@ -33,13 +33,18 @@ class SetComponent extends AbstractExpression
     {
         $components = [];
         $components[] = [Format::type_block_keyword, 'set'];
-        $setStatements = [];
+        end($this->values);
+        $lastKey = key($this->values);
         foreach ($this->values as $column => $value) {
-            $setStatements[] = [Format::type_condition, [$column, '=', $value], false];
+            $components[] = [Format::type_column, $column];
+            $components[] = [Format::type_operator, '=', Format::spacing_no_indent];
+            $components[] = [Format::type_value, $value, Format::spacing_no_indent];
+            if ($column !== $lastKey) {
+                $components[] = [Format::type_raw, ',', Format::spacing_no_space];
+            }
         }
-        $components[] = [Format::type_comma_separated, $setStatements];
         $components[] = [Format::type_block_end];
-        return $this->compose(!!$this->values, $components);
+        return $this->compose((bool)$this->values, $components);
     }
 
 }

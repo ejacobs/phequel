@@ -7,24 +7,28 @@ use Ejacobs\Phequel\Format;
 
 class RowComponent extends AbstractExpression
 {
-    private $columns = [];
-    private $rows;
+    private $values = [];
+    private $sortedValues = [];
 
     /**
-     * @param $columns
+     * RowsComponent constructor.
+     * @param array $values
      */
-    public function columns($columns)
+    public function __construct(array $values)
     {
-        $this->columns = $columns;
+        $this->values = $values;
     }
 
     /**
-     * @param array $row
+     * Sort the values for this row to match the ordering of the given columns
+     * @param array $columns
      */
-    public function addRow($row)
+    public function sortValues(array $columns)
     {
-        // TODO, validate rows and append params
-        $this->rows[] = $row;
+        $this->sortedValues = [];
+        foreach ($columns as $column) {
+            $this->sortedValues[] = $this->values[$column] ?? null;
+        }
     }
 
     /**
@@ -32,18 +36,7 @@ class RowComponent extends AbstractExpression
      */
     public function getParams()
     {
-        $params = [];
-        foreach ($this->rows as $row) {
-            foreach ($this->columns as $column) {
-                if (isset($row[$column])) {
-                    $params[] = $row[$column];
-                }
-                else {
-                    $params[] = null;
-                }
-            }
-        }
-        return $params;
+        return $this->sortedValues;
     }
 
     /**
@@ -51,22 +44,11 @@ class RowComponent extends AbstractExpression
      */
     public function __toString()
     {
-        $columns = [];
-        foreach ($this->columns as $column) {
-            $columns[] = [Format::type_column, $column, false];
-        }
-        $components = [];
-        $components[] = [Format::type_indentation];
-        $components[] = [Format::type_comma_separated, $columns, true];
-        $components[] = [Format::type_block_end];
-        $components[] = [Format::type_block_keyword, 'values'];
-        $rows = [];
-        foreach ($this->rows as $row) {
-            $rows[] = [Format::type_values, $row, true];
-        }
-        $components[] = [Format::type_comma_separated, $rows, false];
-        $components[] = [Format::type_block_end];
-        return $this->compose(true, $components);
+        return $this->compose(true, [
+            [Format::type_open_paren, null, Format::spacing_no_space],
+            [Format::type_values, $this->sortedValues, Format::spacing_no_indent],
+            [Format::type_close_paren, null, Format::spacing_no_space]
+        ]);
     }
 
 }

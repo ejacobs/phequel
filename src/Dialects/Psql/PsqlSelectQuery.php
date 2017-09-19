@@ -86,10 +86,11 @@ class PsqlSelectQuery extends AbstractSelectQuery
     }
 
     /**
-     * @param string $lockStrength
-     * @param null|string|array $table
-     * @param null|string $option
+     * @param $lockStrength
+     * @param null $table
+     * @param null $option
      * @return $this
+     * @throws \Exception
      */
     public function forLock($lockStrength, $table = null, $option = null)
     {

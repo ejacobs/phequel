@@ -7,28 +7,6 @@ use Ejacobs\Phequel\Query\AbstractBaseQuery;
 
 class Format
 {
-    /* @var AbstractConnector $connector */
-    private $connector;
-
-    /* @var int $level */
-    private $level = 0;
-
-    /* @var int $numericPlaceholderCounter */
-    private $numericPlaceholderCounter = 1;
-
-    /* @var AbstractBaseQuery $parentQuery */
-    private $parentQuery;
-
-    private $indent = false;
-    private $indentation = "\t";
-    private $indentColumns = false;
-    private $initiated = false;
-    private $interpolate = false;
-    private $placeholder = '?';
-    private $semicolonAtEnd = false;
-    private $tableQuoteChar = '"';
-    private $uppercase = true;
-
     const spacing_default = 1;
     const spacing_no_indent = 2;
     const spacing_no_space = 3;
@@ -45,7 +23,6 @@ class Format
     const type_comma_separated = 10;
     const type_indentation = 11;
     const type_keyword = 12;
-    const type_on_clause = 13;
     const type_open_paren = 14;
     const type_operator = 15;
     const type_primary_keyword = 16;
@@ -54,6 +31,20 @@ class Format
     const type_table = 19;
     const type_value = 20;
     const type_values = 21;
+
+    private $connector;                         /* @var AbstractConnector $connector */
+    private $indent = false;                    /* @var bool $indent */
+    private $indentation = "\t";                /* @var bool $indentation */
+    private $indentColumns = false;             /* @var bool $indentColumns */
+    private $initiated = false;                 /* @var bool $initiated */
+    private $interpolate = false;               /* @var bool $interpolate */
+    private $level = 0;                         /* @var int $level */
+    private $numericPlaceholderCounter = 1;     /* @var int $numericPlaceholderCounter */
+    private $parentQuery;                       /* @var AbstractBaseQuery $parentQuery */
+    private $placeholder = '?';                 /* @var string $placeholder */
+    private $semicolonAtEnd = false;            /* @var bool $semicolonAtEnd */
+    private $tableQuoteChar = '"';              /* @var string $tableQuoteChar */
+    private $uppercase = true;                  /* @var bool $uppercase */
 
     /**
      * Format constructor.
@@ -122,8 +113,6 @@ class Format
                         . ' ' . $this->enquote($this->tableQuoteChar, $value[1]);
                 }
                 return $ret;
-            case self::type_on_clause:
-                return "{$this->addIndent($spacing)}{$value[0]} {$value[1]} {$value[2]}";
             case self::type_block_number:
                 return "{$this->addIndent($spacing)}{$value}";
             case self::type_value:
@@ -136,16 +125,20 @@ class Format
             case self::type_values:
                 $parts = [];
                 foreach ($value as $singleValue) {
-                    $parts[] = [self::type_value, $singleValue, $spacing];
+                    $parts[] = [self::type_value, $singleValue, self::spacing_no_space];
                 }
-                return $this->insert(self::type_comma_separated, $parts, true);
+                return $this->insert(self::type_comma_separated, $parts, $spacing);
             case self::type_operator:
-                return ' =';
+                return "{$this->addIndent($spacing)}{$value}";
             case self::type_comma_separated:
                 $strings = [];
                 foreach ($value as $singleValue) {
                     if (is_array($singleValue)) {
-                        $strings[] = $this->insert($singleValue[0], $singleValue[1], $singleValue[2]);
+                        $strings[] = $this->insert(
+                            $singleValue[0],
+                            $singleValue[1] ?? null,
+                            $singleValue[2] ?? self::spacing_default
+                        );
                     } else {
                         if ($singleValue instanceof AbstractExpression) {
                             $singleValue->format($this);
@@ -153,7 +146,7 @@ class Format
                         $strings[] = (string)$singleValue;
                     }
                 }
-                return $this->addIndent($spacing) . implode(",{$this->addIndent($spacing)}", $strings);
+                return implode(",{$this->addIndent($spacing)}", $strings);
             case self::type_open_paren:
                 return "{$this->addIndent($spacing)}(";
             case self::type_close_paren:

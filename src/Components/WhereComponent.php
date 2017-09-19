@@ -8,28 +8,16 @@ use Ejacobs\Phequel\Query\AbstractSelectQuery;
 
 class WhereComponent extends AbstractExpression
 {
-    private $conditions;
-    private $level = 0;
-    private $type;
-
     const valid_types = ['and', 'or'];
+    private $conditions;
 
     /**
      * WhereComponent constructor.
      * @param string $type
-     * @param int $level
-     * @throws \Exception
      */
-    public function __construct($type = 'and', $level = 0)
+    public function __construct($type = 'and')
     {
-        $this->conditions = new ConditionsComponent($type);
-        $this->level = $level;
-        $type = strtolower($type);
-        if (in_array($type, self::valid_types)) {
-            $this->type = $type;
-        } else {
-            throw new \Exception("Where conditions type must be one of the following: " . implode(', ', self::valid_types));
-        }
+        $this->conditions = new ConditionsComponent(strtolower($type));
     }
 
     /**

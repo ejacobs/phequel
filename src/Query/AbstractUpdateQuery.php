@@ -18,14 +18,12 @@ abstract class AbstractUpdateQuery extends AbstractBaseQuery
     /* @var SetComponent $setComponent */
     protected $setComponent;
 
-    /* @var WhereComponent $whereComponent */
-    protected $whereComponent;
-
     /**
      * AbstractUpdateQuery constructor.
      * @param null|string $tableName
+     * @throws \Exception
      */
-    public function __construct($tableName = null)
+    public function __construct(string $tableName = null)
     {
         $this->updateComponent = new UpdateComponent($tableName);
         $this->setComponent = new SetComponent();
@@ -48,7 +46,7 @@ abstract class AbstractUpdateQuery extends AbstractBaseQuery
      * @param string $value
      * @return $this
      */
-    public function set($column, $value)
+    public function set(string $column, $value)
     {
         $this->setComponent->setValue($column, $value);
         return $this;
@@ -66,19 +64,13 @@ abstract class AbstractUpdateQuery extends AbstractBaseQuery
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getParams()
+    public function getParams(): array
     {
-        $params = [];
-        foreach ($this->setComponent->getParams() as $value) {
-            $params[] = $value;
-        }
-        foreach ($this->whereComponent->getParams() as $value) {
-            $params[] = $value;
-        }
-        return $params;
+        return array_merge(
+            $this->setComponent->getParams(),
+            $this->whereComponent->getParams()
+        );
     }
+
 
 }

@@ -24,6 +24,7 @@ class RollbackComponent extends AbstractExpression
     public function __toString()
     {
         $components = [];
+        $components[] = [Format::type_block_end];
         $components[] = [Format::type_block_keyword, 'rollback'];
         if (is_string($this->rollbackTo)) {
             $components[] = [Format::type_keyword, 'to'];
@@ -31,6 +32,7 @@ class RollbackComponent extends AbstractExpression
         }
         $components[] = [Format::type_block_end];
         $components[] = [Format::type_query_ending];
+        $components[] = [Format::type_indentation, false];
         return $this->compose(true, $components);
     }
 

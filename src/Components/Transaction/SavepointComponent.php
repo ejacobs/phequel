@@ -25,10 +25,12 @@ class SavepointComponent extends AbstractExpression
     public function __toString()
     {
         return $this->compose(!!$this->savepointName, [
-            [Format::type_block_keyword, 'savepoint'],
-            [Format::type_keyword, $this->savepointName],
             [Format::type_block_end],
-            [Format::type_query_ending]
+            [Format::type_block_keyword, 'savepoint'],
+            [Format::type_table, $this->savepointName],
+            [Format::type_block_end],
+            [Format::type_query_ending],
+            [Format::type_indentation, false]
         ]);
     }
 

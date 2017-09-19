@@ -46,18 +46,22 @@ class ConditionComponent extends AbstractExpression
 
         if ($this->operator !== null) {
             if (in_array($this->operator, self::valid_operators)) {
-                $components[] = [Format::type_operator, $this->operator];
+                $components[] = [Format::type_operator, $this->operator, Format::spacing_no_indent];
             }
             if ($this->right instanceof AbstractExpression) {
-                $components[] = [Format::type_indentation, null, true];
+                $components[] = [Format::type_open_paren, null, Format::spacing_no_indent];
+                $components[] = [Format::type_indentation, false];
                 $components[] = $this->right;
-                $components[] = [Format::type_block_end, null, true];
+                $components[] = [Format::type_block_end];
+                $components[] = [Format::type_close_paren];
             }
             else if (is_array($this->right)) {
                 if (in_array($this->operator, self::subquery_operators)) {
-                    $components[] = [Format::type_indentation, null];
+                    $components[] = [Format::type_open_paren, null, Format::spacing_no_indent];
+                    $components[] = [Format::type_indentation];
                     $components[] = [Format::type_values, $this->right, Format::spacing_no_indent];
-                    $components[] = [Format::type_block_end, null];
+                    $components[] = [Format::type_block_end];
+                    $components[] = [Format::type_close_paren];
                 }
                 else {
                     $components[] = [Format::type_column, $this->right, Format::spacing_no_indent];

@@ -4,7 +4,6 @@ namespace Ejacobs\Phequel\Components;
 
 use Ejacobs\Phequel\AbstractExpression;
 use Ejacobs\Phequel\Format;
-use Ejacobs\Phequel\Query\AbstractBaseQuery;
 
 class ConditionsComponent extends AbstractExpression
 {

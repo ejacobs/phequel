@@ -43,7 +43,7 @@ class PsqlInsertQuery extends AbstractInsertQuery
     {
         return $this->compose(true, [
             $this->insertComponent,
-            $this->rowComponent,
+            $this->rowsComponent,
             $this->returningComponent,
             $this->endingComponent
         ]);
