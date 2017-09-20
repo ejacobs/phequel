@@ -19,12 +19,14 @@ final class PsqlSelectQueryTest extends TestCase
 
     public function testEscapeWildcards()
     {
-        $query1 = new PsqlSelectQuery('mytable');
+        $query1 = new PsqlSelectQuery();
         $query1->setWildcardCharacters(['*' => '%']);
-        $query1->where('mycolumn', 'LIKE', 'foo*');
+        $query1->where('mycolumn', 'LIKE', 'foo*')->from('mytable');
         $this->assertEquals($query1->getParams(), ['foo%']);
         $query2 = new PsqlSelectQuery();
-        $query2->from('mytable')->setWildcardCharacters(['*' => '%'])->where('mycolumn', 'LIKE', 'foo%');
+        $query2->from('mytable')
+            ->setWildcardCharacters(['*' => '%'])
+            ->where('mycolumn', 'LIKE', 'foo%');
         $this->assertEquals($query2->getParams(), ['foo\%']);
     }
 
@@ -41,7 +43,7 @@ final class PsqlSelectQueryTest extends TestCase
         $query1->selectRaw('*')->from('mytable')->limit(100);
         $this->assertEquals((string)$query1, 'SELECT * FROM "mytable" LIMIT 100');
     }
-    
+
     // TODO: test where any
     // TODO: test where all
 
