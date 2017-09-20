@@ -3,7 +3,6 @@
 namespace Ejacobs\Phequel\Query;
 
 use Ejacobs\Phequel\Components\Delete\DeleteComponent;
-use Ejacobs\Phequel\Components\TableComponent;
 use Ejacobs\Phequel\Components\WhereComponent;
 use Ejacobs\Phequel\Query\Traits\WhereTrait;
 
