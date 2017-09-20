@@ -2,19 +2,25 @@
 
 namespace Ejacobs\Phequel\Components\Select;
 
-class JsonColumn
+use Ejacobs\Phequel\AbstractExpression;
+use Ejacobs\Phequel\Format;
+
+class JsonColumn extends AbstractExpression
 {
 
     protected $narrows = [];
     protected $column;
+    protected $alias;
 
     /**
-     * SelectComponent constructor.
+     * JsonColumn constructor.
      * @param string $column
+     * @param string|null $alias
      */
-    public function __construct($column)
+    public function __construct($column, $alias = null)
     {
         $this->column = $column;
+        $this->alias = $alias;
     }
 
     /**
@@ -43,16 +49,20 @@ class JsonColumn
      */
     public function __toString()
     {
-        $ret = $this->column;
+        $narrowStr = '';
         foreach ($this->narrows as $narrow) {
             if ($narrow[1]) {
-                $ret .= '->>';
+                $narrowStr .= '->>';
             } else {
-                $ret .= '->';
+                $narrowStr .= '->';
             }
-            $ret .= "'{$narrow[0]}'";
+            $narrowStr .= "'{$narrow[0]}'";
         }
-        return $ret;
+        return $this->compose(true, [
+            [Format::type_column, $this->column],
+            [Format::type_raw, $narrowStr],
+            [Format::type_alias, $this->alias]
+        ]);
     }
 
 }
