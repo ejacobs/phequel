@@ -17,12 +17,12 @@ class PsqlInsertQuery extends AbstractInsertQuery
 
     /**
      * PsqlInsertQuery constructor.
-     * @param null|string $tableName
+     * @param array $rows
      */
-    public function __construct($tableName = null)
+    public function __construct(array $rows = [])
     {
         $this->returningComponent = new ReturningComponent();
-        parent::__construct($tableName);
+        parent::__construct($rows);
     }
 
     /**

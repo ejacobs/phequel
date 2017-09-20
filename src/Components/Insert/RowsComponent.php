@@ -7,9 +7,21 @@ use Ejacobs\Phequel\Format;
 
 class RowsComponent extends AbstractExpression
 {
-    private $columns = [];      /* @var array $columns */
+
+    /* @var array $columns */
+    private $columns = [];
+
     /* @var RowComponent[] $rows */
     private $rows;
+
+    /**
+     * RowsComponent constructor.
+     * @param RowComponent[] $rows
+     */
+    public function __construct(array $rows = [])
+    {
+        $this->rows = $rows;
+    }
 
     /**
      * @param $columns
@@ -73,7 +85,6 @@ class RowsComponent extends AbstractExpression
         $components[] = [Format::type_block_end];
         return $this->compose(true, $components);
     }
-
 
 
 }

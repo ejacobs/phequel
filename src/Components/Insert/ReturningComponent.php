@@ -23,14 +23,11 @@ class ReturningComponent extends AbstractExpression
 
     public function __toString()
     {
-        $components = [];
-        $components[] = [Format::type_block_keyword, 'returning'];
-        if ($this->alias !== null) {
-            $components[] = [Format::type_keyword, 'as'];
-            $components[] = [Format::type_columns, $this->alias];
-        }
-        $components[] = [Format::type_block_end];
-        return $this->compose(!!$this->column, $components);
+        return $this->compose((bool)$this->column, [
+            [Format::type_block_keyword, 'returning'],
+            [Format::type_alias, $this->alias],
+            [Format::type_block_end]
+        ]);
     }
 
 }

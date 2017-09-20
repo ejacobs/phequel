@@ -4,13 +4,8 @@ namespace Ejacobs\Phequel\Connector;
 
 use Ejacobs\Phequel\Factories\QueryFactoryInterface;
 
-abstract class AbstractConnector
+abstract class AbstractConnector implements QueryFactoryInterface
 {
-
-    /**
-     * @return QueryFactoryInterface
-     */
-    abstract public function create();
 
     abstract public function connect();
 

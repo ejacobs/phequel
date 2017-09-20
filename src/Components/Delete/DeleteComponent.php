@@ -8,14 +8,17 @@ use Ejacobs\Phequel\Format;
 class DeleteComponent extends AbstractExpression
 {
     private $table;
+    private $alias;
 
     /**
      * DeleteComponent constructor.
-     * @param $table
+     * @param null $table
+     * @param null $alias
      */
-    public function __construct($table)
+    public function __construct($table = null, $alias = null)
     {
         $this->table = $table;
+        $this->alias = $alias;
     }
 
     /**
@@ -26,6 +29,7 @@ class DeleteComponent extends AbstractExpression
         return $this->compose(true, [
             [Format::type_block_keyword, 'delete from'],
             [Format::type_table, $this->table],
+            [Format::type_alias, $this->alias],
             [Format::type_block_end]
         ]);
     }

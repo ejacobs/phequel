@@ -52,13 +52,12 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
 
     /**
      * AbstractSelectQuery constructor.
-     * @param string|null $tableName
-     * @param null|string $alias
+     * @param array $columns
      */
-    public function __construct($tableName = null, $alias = null)
+    public function __construct(array $columns = [])
     {
         $this->selectComponent = new SelectComponent();
-        $this->fromComponent = new FromComponent($tableName, $alias);
+        $this->fromComponent = new FromComponent();
         $this->whereComponent = new WhereComponent();
         $this->joinComponent = new JoinComponent();
         $this->groupByComponent = new GroupByComponent();
@@ -66,7 +65,8 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
         $this->limitComponent = new LimitComponent();
         $this->offsetComponent = new OffsetComponent();
         $this->havingComponent = new HavingComponent();
-        parent::__construct($tableName, $alias);
+        $this->selectMany($columns);
+        parent::__construct();
     }
 
     /**
@@ -85,7 +85,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      * @param null $alias
      * @return $this
      */
-    public function column($column, $alias = null)
+    public function select($column, $alias = null)
     {
         $this->selectComponent->addColumn(new ColumnComponent($column, $alias));
         return $this;
@@ -95,7 +95,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      * @param array $columns
      * @return $this
      */
-    public function columns(array $columns)
+    public function selectMany(array $columns)
     {
         foreach ($columns as $column) {
             $this->selectComponent->addColumn(new ColumnComponent($column[0], $column[1] ?? null));
@@ -109,7 +109,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      * @param null $alias
      * @return $this
      */
-    public function columnRaw($column, $alias = null)
+    public function selectRaw($column, $alias = null)
     {
         $this->selectComponent->addColumn(new ColumnRawComponent($column, $alias));
         return $this;
@@ -121,7 +121,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
      * @param $alias
      * @return $this
      */
-    public function columnFunction($function, $column, $alias)
+    public function selectFunction($function, $column, $alias)
     {
         $this->selectComponent->addColumn(new ColumnFunctionComponent($function, $column, $alias));
         return $this;
@@ -130,7 +130,7 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     /**
      * @return $this
      */
-    public function clearColumns()
+    public function clearSelect()
     {
         $this->selectComponent->clearColumns();
         return $this;

@@ -22,27 +22,25 @@ abstract class AbstractTransactionComponent extends AbstractExpression
 {
 
     /**
+     * @param array|null $columns
+     * @return mixed
+     */
+    abstract public function select(array $columns = []);
+
+    /**
+     * @param array $rows
+     * @return mixed
+     */
+    abstract public function insert(array $rows = []);
+
+    /**
+     * @return mixed
+     */
+    abstract public function delete();
+
+    /**
      * @param string $tableName
-     * @param null|string $alias
-     * @return AbstractSelectQuery
-     */
-    abstract public function select($tableName, $alias = null);
-
-    /**
-     * @param $tableName
-     * @return AbstractInsertQuery
-     */
-    abstract public function insert($tableName);
-
-    /**
-     * @param $tableName
-     * @return AbstractDeleteQuery
-     */
-    abstract public function delete($tableName);
-
-    /**
-     * @param $tableName
-     * @return AbstractUpdateQuery
+     * @return mixed
      */
     abstract public function update($tableName);
 

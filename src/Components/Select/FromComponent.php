@@ -18,7 +18,7 @@ class FromComponent extends AbstractExpression
      * @param string $table
      * @param null|string $alias
      */
-    public function __construct($table, $alias = null)
+    public function __construct($table = null, $alias = null)
     {
         $this->table = $table;
         $this->alias = $alias;

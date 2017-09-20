@@ -21,23 +21,21 @@ interface QueryFactoryInterface
 {
 
     /**
-     * @param string $tableName
-     * @param null|string $alias
-     * @return mixed
+     * @param array|null $columns
+     * @return AbstractSelectQuery
      */
-    public function select($tableName, $alias = null);
+    public function select(array $columns = null);
 
     /**
-     * @param string $tableName
+     * @param array|null $rows
      * @return AbstractInsertQuery
      */
-    public function insert($tableName);
+    public function insert(array $rows = null);
 
     /**
-     * @param string $tableName
      * @return AbstractDeleteQuery
      */
-    public function delete($tableName);
+    public function delete();
 
     /**
      * @param string $tableName

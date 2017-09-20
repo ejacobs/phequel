@@ -24,15 +24,14 @@ class PsqlSelectQuery extends AbstractSelectQuery
 
     /**
      * PsqlSelectQuery constructor.
-     * @param string $tableName
-     * @param null|string $alias
+     * @param array|null $columns
      */
-    public function __construct($tableName = null, $alias = null)
+    public function __construct(array $columns = [])
     {
         $this->windowComponent = new WindowComponent();
         $this->fetchComponent = new FetchComponent();
         $this->forComponent = new ForComponent();
-        parent::__construct($tableName, $alias);
+        parent::__construct($columns);
     }
 
     /**
@@ -67,7 +66,7 @@ class PsqlSelectQuery extends AbstractSelectQuery
      * @param null $alias
      * @return $this
      */
-    public function columnJson($column, $selector, $jsonOperator = '->>', $alias = null)
+    public function selectJson($column, $selector, $jsonOperator = '->>', $alias = null)
     {
         $this->selectComponent->addColumn(new ColumnJsonComponent($column, $selector, $jsonOperator, $alias));
         return $this;

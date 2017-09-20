@@ -12,19 +12,19 @@ class PsqlAbstractTransactionComponent extends AbstractTransactionComponent
     /* @var \Ejacobs\Phequel\AbstractExpression[] $queries */
     private $queries = [];
 
-    public function select($tableName, $alias = null)
+    public function select(array $columns = [])
     {
-        return $this->queries[] = new PsqlSelectQuery($tableName, $alias);
+        return $this->queries[] = new PsqlSelectQuery($columns);
     }
 
-    public function insert($tableName)
+    public function insert(array $rows = [])
     {
-        return $this->queries[] = new PsqlInsertQuery($tableName);
+        return $this->queries[] = new PsqlInsertQuery($rows);
     }
 
-    public function delete($tableName)
+    public function delete()
     {
-        return $this->queries[] = new PsqlDeleteQuery($tableName);
+        return $this->queries[] = new PsqlDeleteQuery();
     }
 
     public function update($tableName)

@@ -14,10 +14,8 @@ abstract class AbstractBaseQuery extends AbstractExpression
 
     /**
      * AbstractBaseQuery constructor.
-     * @param null|string $tableName
-     * @param null|string $alias
      */
-    public function __construct($tableName, $alias = null)
+    public function __construct()
     {
         $this->endingComponent = new EndingComponent();
     }

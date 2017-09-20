@@ -3,7 +3,6 @@
 namespace Ejacobs\Phequel\Query;
 
 use Ejacobs\Phequel\Components\Insert\InsertComponent;
-use Ejacobs\Phequel\Components\Insert\RowComponent;
 use Ejacobs\Phequel\Components\Insert\RowsComponent;
 use Ejacobs\Phequel\Components\TableComponent;
 
@@ -18,13 +17,12 @@ abstract class AbstractInsertQuery extends AbstractBaseQuery
 
     /**
      * AbstractInsertQuery constructor.
-     * @param $tableName
+     * @param array|null $rows
      */
-    public function __construct($tableName = null)
+    public function __construct(array $rows = null)
     {
-        $this->insertComponent = new InsertComponent($tableName);
-        $this->rowsComponent = new RowsComponent();
-        parent::__construct($tableName);
+        $this->rowsComponent = new RowsComponent($rows);
+        parent::__construct();
     }
 
     /**
@@ -51,7 +49,7 @@ abstract class AbstractInsertQuery extends AbstractBaseQuery
      * @param array $row
      * @return $this
      */
-    public function addRow(array $row)
+    public function row(array $row)
     {
         $this->rowsComponent->addRow($row);
         return $this;
@@ -61,7 +59,7 @@ abstract class AbstractInsertQuery extends AbstractBaseQuery
      * @param array $rows
      * @return $this
      */
-    public function addRows(array $rows)
+    public function rows(array $rows)
     {
         foreach ($rows as $row) {
             $this->rowsComponent->addRow($row);
