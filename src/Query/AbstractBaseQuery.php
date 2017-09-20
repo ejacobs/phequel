@@ -9,7 +9,6 @@ abstract class AbstractBaseQuery extends AbstractExpression
 {
     const valid_wildcards = ['%', '_'];
     public $allowedWildcards = [];
-    protected $tableComponent = null;
     protected $endingComponent = null;
 
     /**
