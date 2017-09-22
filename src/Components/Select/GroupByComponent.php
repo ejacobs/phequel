@@ -7,6 +7,7 @@ use Ejacobs\Phequel\Format;
 
 class GroupByComponent extends AbstractExpression
 {
+
     private $columns = [];
 
     /**

@@ -6,6 +6,7 @@ use Ejacobs\Phequel\Format;
 
 class ColumnRawComponent extends AbstractColumnComponent
 {
+
     private $value;
     private $alias;
 

@@ -8,6 +8,7 @@ use Ejacobs\Phequel\Format;
 
 class HavingComponent extends AbstractExpression
 {
+
     private $conditions;
 
     /**

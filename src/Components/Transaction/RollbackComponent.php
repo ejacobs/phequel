@@ -7,6 +7,7 @@ use Ejacobs\Phequel\Format;
 
 class RollbackComponent extends AbstractExpression
 {
+
     private $rollbackTo;
 
     /**

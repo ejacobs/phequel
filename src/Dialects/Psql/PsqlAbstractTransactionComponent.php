@@ -2,13 +2,14 @@
 
 namespace Ejacobs\Phequel\Dialects\Psql;
 
+use Ejacobs\Phequel\Components\AbstractTransactionComponent;
 use Ejacobs\Phequel\Components\Transaction\ReleaseComponent;
 use Ejacobs\Phequel\Components\Transaction\RollbackComponent;
 use Ejacobs\Phequel\Components\Transaction\SavepointComponent;
-use Ejacobs\Phequel\Components\AbstractTransactionComponent;
 
 class PsqlAbstractTransactionComponent extends AbstractTransactionComponent
 {
+
     /* @var \Ejacobs\Phequel\AbstractExpression[] $queries */
     private $queries = [];
 

@@ -8,8 +8,10 @@ use Ejacobs\Phequel\Components\ConditionsComponent;
 
 class JoinComponent extends AbstractExpression
 {
+
+    const valid_join_types = ['left', 'right', 'inner', 'outer'];
+
     private $joins = [];
-    private $validJoinTypes = ['left', 'right', 'inner', 'outer'];
 
     /**
      * JoinComponent constructor.
@@ -35,7 +37,7 @@ class JoinComponent extends AbstractExpression
     public function addJoin($tableName, $tableAlias, callable $nested, $type = 'left')
     {
         $type = strtolower($type);
-        if (!in_array($type, $this->validJoinTypes)) {
+        if (!in_array($type, self::valid_join_types)) {
             throw new \Exception("Invalid join type: {$type}");
         }
         $conditions = new ConditionsComponent();

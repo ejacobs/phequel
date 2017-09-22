@@ -7,6 +7,7 @@ use Ejacobs\Phequel\Format;
 
 class UpdateComponent extends AbstractExpression
 {
+
     private $alias;
     private $table;
 

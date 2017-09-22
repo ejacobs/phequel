@@ -8,6 +8,7 @@ use Ejacobs\Phequel\Query\AbstractBaseQuery;
 
 class ConditionComponent extends AbstractExpression
 {
+
     const valid_operators = ['=', '!=', '>', '>=', '<', '<=', 'like', 'ilike', 'in', 'is', 'between', 'not like',
         'similar to', 'not similar to'];
     const subquery_operators = ['in', 'not in', 'any', 'some', 'all'];

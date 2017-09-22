@@ -7,10 +7,16 @@ use Ejacobs\Phequel\Format;
 
 class ConditionsComponent extends AbstractExpression
 {
-    private $conditions = [];
-    private $type;
-    private $level;
 
+    private $conditions = [];
+    private $level;
+    private $type;
+
+    /**
+     * ConditionsComponent constructor.
+     * @param string $type
+     * @param int $level
+     */
     public function __construct($type = 'and', $level = 0)
     {
         $this->type = $type;

@@ -12,12 +12,13 @@ use Ejacobs\Phequel\Query\AbstractBaseQuery;
 abstract class AbstractPdoConnector extends AbstractConnector
 {
 
+    const driver = null;
+
     /* @var \PDO $pdo */
     protected $pdo;
     protected $params = [];
-    private $errorInfo = null;
 
-    const driver = null;
+    private $errorInfo = null;
 
     /**
      * AbstractConnector constructor.

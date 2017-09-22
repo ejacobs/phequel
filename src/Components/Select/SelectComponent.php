@@ -7,6 +7,7 @@ use Ejacobs\Phequel\Format;
 
 class SelectComponent extends AbstractExpression
 {
+
     private $columns = [];
     private $defaultSelectAll = false;
     private $distinct = false;

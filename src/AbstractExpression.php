@@ -2,14 +2,11 @@
 
 namespace Ejacobs\Phequel;
 
-use Ejacobs\Phequel\Query\AbstractTransactionQuery;
-
 abstract class AbstractExpression
 {
+
     /* @var Format $formatter */
     private $formatter;
-
-    private $semicolon = true;
 
     /**
      * @return string

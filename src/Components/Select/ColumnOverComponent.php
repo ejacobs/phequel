@@ -6,6 +6,7 @@ use Ejacobs\Phequel\Format;
 
 class ColumnOverComponent extends AbstractColumnComponent
 {
+
     private $function;
     private $column;
     private $partitionByColumns;

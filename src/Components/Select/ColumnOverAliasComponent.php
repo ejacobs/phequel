@@ -6,6 +6,7 @@ use Ejacobs\Phequel\Format;
 
 class ColumnOverAliasComponent extends AbstractColumnComponent
 {
+
     private $function;
     private $column;
     private $alias;

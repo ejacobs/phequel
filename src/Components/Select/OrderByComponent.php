@@ -7,6 +7,7 @@ use Ejacobs\Phequel\Format;
 
 class OrderByComponent extends AbstractExpression
 {
+
     private $orderBy = [];
 
     /**

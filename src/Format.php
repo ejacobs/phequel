@@ -7,6 +7,7 @@ use Ejacobs\Phequel\Query\AbstractBaseQuery;
 
 class Format
 {
+
     const spacing_default = 1;
     const spacing_no_indent = 2;
     const spacing_no_space = 3;

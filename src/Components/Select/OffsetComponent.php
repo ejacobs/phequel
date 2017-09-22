@@ -7,6 +7,7 @@ use Ejacobs\Phequel\Format;
 
 class OffsetComponent extends AbstractExpression
 {
+
     private $offset;
 
     /**

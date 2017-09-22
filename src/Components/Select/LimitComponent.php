@@ -7,6 +7,7 @@ use Ejacobs\Phequel\Format;
 
 class LimitComponent extends AbstractExpression
 {
+
     private $limit;
 
     /**

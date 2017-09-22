@@ -10,7 +10,17 @@ abstract class AbstractUnionIntersectQuery extends AbstractBaseQuery
     /* @var AbstractExpression[] $expressions */
     protected $expressions = [];
 
+    /**
+     * @param $tableName
+     * @return mixed
+     */
     abstract public function intersect($tableName);
+
+    /**
+     * @param $tableName
+     * @param bool $all
+     * @return mixed
+     */
     abstract public function union($tableName, $all = false);
 
     /**

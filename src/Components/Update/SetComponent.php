@@ -7,6 +7,7 @@ use Ejacobs\Phequel\Format;
 
 class SetComponent extends AbstractExpression
 {
+
     private $values = [];
 
     /**

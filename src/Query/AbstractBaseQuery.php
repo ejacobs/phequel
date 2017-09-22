@@ -7,8 +7,11 @@ use Ejacobs\Phequel\Components\EndingComponent;
 
 abstract class AbstractBaseQuery extends AbstractExpression
 {
+
     const valid_wildcards = ['%', '_'];
+
     public $allowedWildcards = [];
+
     protected $endingComponent = null;
 
     /**

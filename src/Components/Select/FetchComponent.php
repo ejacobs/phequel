@@ -7,11 +7,17 @@ use Ejacobs\Phequel\Format;
 
 class FetchComponent extends AbstractExpression
 {
-    private $firstNext = null;
-    private $count = null;
 
     const valid_first_next = ['first', 'next'];
 
+    private $firstNext = null;
+    private $count = null;
+
+    /**
+     * @param string $firstNext
+     * @param int $count
+     * @throws \Exception
+     */
     public function setFetch($firstNext, $count)
     {
         if (($firstNext !== null) && !in_array(strtolower($firstNext), self::valid_first_next)) {

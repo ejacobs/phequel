@@ -19,6 +19,7 @@ use Ejacobs\Phequel\Query\Traits\WhereTrait;
 
 abstract class AbstractSelectQuery extends AbstractBaseQuery
 {
+
     use WhereTrait;
 
     const valid_json_operators = ['->', '->>', '#>', '#>>'];

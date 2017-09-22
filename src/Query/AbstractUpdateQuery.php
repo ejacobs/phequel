@@ -9,6 +9,7 @@ use Ejacobs\Phequel\Query\Traits\WhereTrait;
 
 abstract class AbstractUpdateQuery extends AbstractBaseQuery
 {
+
     use WhereTrait;
 
     /* @var UpdateComponent $updateComponent */
@@ -74,6 +75,5 @@ abstract class AbstractUpdateQuery extends AbstractBaseQuery
             $this->whereComponent->getParams()
         );
     }
-
 
 }

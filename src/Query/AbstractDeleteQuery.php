@@ -8,6 +8,7 @@ use Ejacobs\Phequel\Query\Traits\WhereTrait;
 
 abstract class AbstractDeleteQuery extends AbstractBaseQuery
 {
+
     use WhereTrait;
 
     /* @var DeleteComponent $whereComponent */

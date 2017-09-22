@@ -7,6 +7,7 @@ use Ejacobs\Phequel\Format;
 
 class IntersectComponent extends AbstractExpression
 {
+
     /**
      * @return string
      */

@@ -8,6 +8,7 @@ use Ejacobs\Phequel\Query\AbstractSelectQuery;
 
 class WhereComponent extends AbstractExpression
 {
+
     const valid_types = ['and', 'or'];
     private $conditions;
 

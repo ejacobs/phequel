@@ -7,6 +7,7 @@ use Ejacobs\Phequel\Format;
 
 class UnionComponent extends AbstractExpression
 {
+
     private $all;
 
     /**

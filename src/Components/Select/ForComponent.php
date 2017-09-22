@@ -7,12 +7,13 @@ use Ejacobs\Phequel\Format;
 
 class ForComponent extends AbstractExpression
 {
+
+    const valid_lock_strengths = ['update', 'no key update', 'share', 'key share'];
+    const valid_options = ['nowait', 'skip locked'];
+
     private $tableNames = [];
     private $lockStrength = null;
     private $option = null;
-
-    private $validLockStrengths = ['update', 'no key update', 'share', 'key share'];
-    private $validOptions = ['nowait', 'skip locked'];
 
     /**
      * @param $lockStrength
@@ -22,11 +23,11 @@ class ForComponent extends AbstractExpression
      */
     public function setFor($lockStrength, $tableNames = null, $option = null)
     {
-        if (!in_array(strtolower($lockStrength), $this->validLockStrengths)) {
-            throw new \Exception("lockStrength must be one of the following: " . implode(', ', $this->validLockStrengths));
+        if (!in_array(strtolower($lockStrength), self::valid_lock_strengths)) {
+            throw new \Exception("lockStrength must be one of the following: " . implode(', ', self::valid_lock_strengths));
         }
-        if (($option !== null) && !in_array(strtolower($option), $this->validOptions)) {
-            throw new \Exception("validOptions must be one of the following: " . implode(', ', $this->validOptions));
+        if (($option !== null) && !in_array(strtolower($option), self::valid_options)) {
+            throw new \Exception("validOptions must be one of the following: " . implode(', ', self::valid_options));
         }
         if (($tableNames !== null) && !is_array($tableNames)) {
             $tableNames = [$tableNames];

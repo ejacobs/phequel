@@ -6,6 +6,7 @@ use Ejacobs\Phequel\Query\AbstractTransactionQuery;
 
 class PsqlTransactionQuery extends AbstractTransactionQuery
 {
+
     /* @var PsqlAbstractTransactionComponent $subQueries */
     protected $subQueries;
 
