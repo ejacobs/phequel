@@ -4,6 +4,7 @@ namespace Ejacobs\Phequel\Components;
 
 use Ejacobs\Phequel\AbstractExpression;
 use Ejacobs\Phequel\Format;
+use Ejacobs\Phequel\Query\AbstractBaseQuery;
 
 class ConditionComponent extends AbstractExpression
 {
@@ -49,6 +50,9 @@ class ConditionComponent extends AbstractExpression
                 $components[] = [Format::type_operator, $this->operator, Format::spacing_no_indent];
             }
             if ($this->right instanceof AbstractExpression) {
+                if ($this->right instanceof AbstractBaseQuery) {
+                    $this->right->semicolon(false);
+                }
                 $components[] = [Format::type_open_paren, null, Format::spacing_no_indent];
                 $components[] = [Format::type_indentation, false];
                 $components[] = $this->right;

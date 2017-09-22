@@ -30,7 +30,7 @@ class SavepointComponent extends AbstractExpression
             [Format::type_table, $this->savepointName],
             [Format::type_block_end],
             [Format::type_query_ending],
-            [Format::type_indentation, false]
+            [Format::type_indentation, false],
         ]);
     }
 

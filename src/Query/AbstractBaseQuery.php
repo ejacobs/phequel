@@ -74,6 +74,16 @@ abstract class AbstractBaseQuery extends AbstractExpression
     }
 
     /**
+     * @param bool $semicolon
+     * @return $this
+     */
+    public function semicolon($semicolon = true)
+    {
+        $this->endingComponent->semicolon($semicolon);
+        return $this;
+    }
+
+    /**
      * @param array $paramArrays
      * @return array
      */

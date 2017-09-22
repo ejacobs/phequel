@@ -23,14 +23,14 @@ class Format
     const type_comma_separated = 10;
     const type_indentation = 11;
     const type_keyword = 12;
-    const type_open_paren = 14;
-    const type_operator = 15;
-    const type_primary_keyword = 16;
-    const type_query_ending = 17;
-    const type_raw = 18;
-    const type_table = 19;
-    const type_value = 20;
-    const type_values = 21;
+    const type_open_paren = 13;
+    const type_operator = 14;
+    const type_primary_keyword = 15;
+    const type_query_ending = 16;
+    const type_raw = 17;
+    const type_table = 18;
+    const type_value = 19;
+    const type_values = 20;
 
     private $connector;                         /* @var AbstractConnector $connector */
     private $indent = false;                    /* @var bool $indent */
@@ -45,6 +45,7 @@ class Format
     private $semicolonAtEnd = false;            /* @var bool $semicolonAtEnd */
     private $tableQuoteChar = '"';              /* @var string $tableQuoteChar */
     private $uppercase = true;                  /* @var bool $uppercase */
+
 
     /**
      * Format constructor.
@@ -67,6 +68,7 @@ class Format
         if (!$continue) {
             return '';
         }
+
         switch ($type) {
             case self::type_primary_keyword:
                 if (!$this->initiated) {
@@ -172,7 +174,7 @@ class Format
                 $ret .= $value[1];
                 return $ret;
             case self::type_query_ending:
-                if ($this->semicolonAtEnd) {
+                if ($value === null) {
                     return ';';
                 }
                 return '';
