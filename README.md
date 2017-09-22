@@ -24,13 +24,13 @@ print_r($select->getParams());
 $select = new PsqlSelectQuery();
 $select->from('mytable')
     ->whereAny(function(ConditionsComponent $conditions) {
-    $conditions->where('foo', '=', 'bar');
-    $conditions->where('bar', '=', 'baz');
-    $conditions->whereAll(function(ConditionsComponent $conditions) {
-        $conditions->where('age', '>', 30);
-        $conditions->where('rank', '<', 10);
+        $conditions->where('foo', '=', 'bar');
+        $conditions->where('bar', '=', 'baz');
+        $conditions->whereAll(function(ConditionsComponent $conditions) {
+            $conditions->where('age', '>', 30);
+            $conditions->where('rank', '<', 10);
+        });
     });
-});
 
 echo $select;
 print_r($select->getParams());

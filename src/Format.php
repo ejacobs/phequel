@@ -49,7 +49,6 @@ class Format
     private $tableQuoteChar = '"';              /* @var string $tableQuoteChar */
     private $uppercase = true;                  /* @var bool $uppercase */
 
-
     /**
      * Format constructor.
      * @param AbstractExpression $parentQuery
