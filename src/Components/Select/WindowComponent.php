@@ -7,6 +7,7 @@ use Ejacobs\Phequel\Format;
 
 class WindowComponent extends AbstractExpression
 {
+
     private $windows = [];
 
     /**

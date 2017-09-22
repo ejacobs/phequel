@@ -33,6 +33,8 @@ class Format
     const type_value = 19;
     const type_values = 20;
 
+    public $first = true;
+
     private $connector;                         /* @var AbstractConnector $connector */
     private $indent = false;                    /* @var bool $indent */
     private $indentation = "\t";                /* @var bool $indentation */
@@ -68,6 +70,10 @@ class Format
     {
         if (!$continue) {
             return '';
+        }
+        if ($this->first) {
+            $spacing = self::spacing_no_space;
+            $this->first = false;
         }
 
         switch ($type) {
