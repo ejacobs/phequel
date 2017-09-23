@@ -21,16 +21,16 @@ interface QueryFactoryInterface
 {
 
     /**
-     * @param array|null $columns
+     * @param array $columns
      * @return AbstractSelectQuery
      */
-    public function select(array $columns = null);
+    public function select(array $columns = []);
 
     /**
-     * @param array|null $rows
+     * @param array $rows
      * @return AbstractInsertQuery
      */
-    public function insert(array $rows = null);
+    public function insert(array $rows = []);
 
     /**
      * @return AbstractDeleteQuery

@@ -64,7 +64,7 @@ class ConditionComponent extends AbstractExpression
                 if (in_array($this->operator, self::subquery_operators)) {
                     $components[] = [Format::type_open_paren, null, Format::spacing_no_indent];
                     $components[] = [Format::type_indentation];
-                    $components[] = [Format::type_values, $this->right, Format::spacing_no_indent];
+                    $components[] = [Format::type_values, $this->right, Format::spacing_no_space];
                     $components[] = [Format::type_block_end];
                     $components[] = [Format::type_close_paren];
                 }

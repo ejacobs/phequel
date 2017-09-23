@@ -26,7 +26,7 @@ class PsqlConnector extends AbstractPdoConnector
      * @param array|null $rows
      * @return PsqlInsertQuery
      */
-    public function insert(array $rows = [])
+    public function insert(array $rows = null)
     {
         return new PsqlInsertQuery($rows);
     }

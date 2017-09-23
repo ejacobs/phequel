@@ -46,7 +46,7 @@ class RowComponent extends AbstractExpression
     {
         return $this->compose(true, [
             [Format::type_open_paren, null, Format::spacing_no_space],
-            [Format::type_values, $this->sortedValues, Format::spacing_no_indent],
+            [Format::type_values, $this->sortedValues, Format::spacing_no_space],
             [Format::type_close_paren, null, Format::spacing_no_indent]
         ]);
     }
