@@ -133,7 +133,7 @@ class Format
             case self::type_values:
                 $parts = [];
                 foreach ($value as $singleValue) {
-                    $parts[] = [self::type_value, $singleValue, self::spacing_no_space];
+                    $parts[] = [self::type_value, $singleValue, self::spacing_no_indent];
                 }
                 return $this->insert(self::type_comma_separated, $parts, $spacing);
             case self::type_operator:

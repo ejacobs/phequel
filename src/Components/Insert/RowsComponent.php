@@ -71,11 +71,7 @@ class RowsComponent extends AbstractExpression
         $components[] = [Format::type_indentation, false];
         $components[] = [Format::type_open_paren, null, Format::spacing_no_indent];
         $components[] = [Format::type_indentation, false];
-        $columns = [];
-        foreach ($this->columns as $column) {
-            $columns[] = [Format::type_column, $column];
-        }
-        $components[] = [Format::type_comma_separated, $columns, Format::spacing_no_indent];
+        $components[] = [Format::type_columns, $this->columns];
         $components[] = [Format::type_block_end];
         $components[] = [Format::type_close_paren];
         $components[] = [Format::type_keyword, 'values'];
