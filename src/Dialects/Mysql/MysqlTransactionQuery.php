@@ -1,23 +1,23 @@
 <?php
 
-namespace Ejacobs\Phequel\Dialects\Psql;
+namespace Ejacobs\Phequel\Dialects\Mysql;
 
 use Ejacobs\Phequel\Query\AbstractTransactionQuery;
 
-class PsqlTransactionQuery extends AbstractTransactionQuery
+class MysqlTransactionQuery extends AbstractTransactionQuery
 {
 
-    /* @var PsqlAbstractTransactionComponent $subQueries */
+    /* @var MysqlAbstractTransactionComponent $subQueries */
     protected $subQueries;
 
     /**
-     * PsqlTransactionQuery constructor.
+     * MysqlTransactionQuery constructor.
      * @param callable $nested
      */
     public function __construct(callable $nested)
     {
         parent::__construct($nested);
-        $this->subQueries = new PsqlAbstractTransactionComponent();
+        $this->subQueries = new MysqlAbstractTransactionComponent();
         $nested($this->subQueries);
     }
 

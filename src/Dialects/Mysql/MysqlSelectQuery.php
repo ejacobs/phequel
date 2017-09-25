@@ -1,6 +1,6 @@
 <?php
 
-namespace Ejacobs\Phequel\Dialects\Psql;
+namespace Ejacobs\Phequel\Dialects\Mysql;
 
 use Ejacobs\Phequel\Components\Select\ColumnJsonComponent;
 use Ejacobs\Phequel\Components\Select\ColumnOverAliasComponent;
@@ -10,7 +10,7 @@ use Ejacobs\Phequel\Components\Select\ForComponent;
 use Ejacobs\Phequel\Components\Select\WindowComponent;
 use Ejacobs\Phequel\Query\AbstractSelectQuery;
 
-class PsqlSelectQuery extends AbstractSelectQuery
+class MysqlSelectQuery extends AbstractSelectQuery
 {
 
     /* @var WindowComponent $windowComponent */
@@ -23,7 +23,7 @@ class PsqlSelectQuery extends AbstractSelectQuery
     protected $forComponent;
 
     /**
-     * PsqlSelectQuery constructor.
+     * MysqlSelectQuery constructor.
      * @param array|null $columns
      */
     public function __construct(array $columns = [])

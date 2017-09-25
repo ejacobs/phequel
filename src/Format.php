@@ -106,7 +106,7 @@ class Format
                 return $ret;
             case self::type_indentation:
                 $this->level++;
-                if ($value === false) {
+                if (($value === false) || (!$this->indent)) {
                     return '';
                 }
                 return $this->addIndent($spacing);

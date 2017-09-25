@@ -1,12 +1,12 @@
 <?php
 
-namespace Ejacobs\Phequel\Dialects\Psql;
+namespace Ejacobs\Phequel\Dialects\Mysql;
 
 use Ejacobs\Phequel\Components\IntersectComponent;
 use Ejacobs\Phequel\Components\UnionComponent;
 use Ejacobs\Phequel\Query\AbstractUnionIntersectQuery;
 
-class PsqlUnionIntersectQuery extends AbstractUnionIntersectQuery
+class MysqlUnionIntersectQuery extends AbstractUnionIntersectQuery
 {
 
     /**
@@ -16,7 +16,7 @@ class PsqlUnionIntersectQuery extends AbstractUnionIntersectQuery
      */
     public function union($tableName, $all = false)
     {
-        return $this->add(new UnionComponent($all), new PsqlSelectQuery($tableName));
+        return $this->add(new UnionComponent($all), new MysqlSelectQuery($tableName));
     }
 
     /**
@@ -25,7 +25,7 @@ class PsqlUnionIntersectQuery extends AbstractUnionIntersectQuery
      */
     public function intersect($tableName)
     {
-        return $this->add(new IntersectComponent(), new PsqlSelectQuery($tableName));
+        return $this->add(new IntersectComponent(), new MysqlSelectQuery($tableName));
     }
 
 }

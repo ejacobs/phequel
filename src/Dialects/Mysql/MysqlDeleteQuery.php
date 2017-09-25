@@ -1,10 +1,10 @@
 <?php
 
-namespace Ejacobs\Phequel\Dialects\Psql;
+namespace Ejacobs\Phequel\Dialects\Mysql;
 
 use Ejacobs\Phequel\Query\AbstractDeleteQuery;
 
-class PsqlDeleteQuery extends AbstractDeleteQuery
+class MysqlDeleteQuery extends AbstractDeleteQuery
 {
 
     /**

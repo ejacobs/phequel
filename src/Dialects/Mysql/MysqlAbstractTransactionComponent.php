@@ -1,13 +1,13 @@
 <?php
 
-namespace Ejacobs\Phequel\Dialects\Psql;
+namespace Ejacobs\Phequel\Dialects\Mysql;
 
 use Ejacobs\Phequel\Components\AbstractTransactionComponent;
 use Ejacobs\Phequel\Components\Transaction\ReleaseComponent;
 use Ejacobs\Phequel\Components\Transaction\RollbackComponent;
 use Ejacobs\Phequel\Components\Transaction\SavepointComponent;
 
-class PsqlAbstractTransactionComponent extends AbstractTransactionComponent
+class MysqlAbstractTransactionComponent extends AbstractTransactionComponent
 {
 
     /* @var \Ejacobs\Phequel\AbstractExpression[] $queries */
@@ -15,22 +15,22 @@ class PsqlAbstractTransactionComponent extends AbstractTransactionComponent
 
     public function select(array $columns = [])
     {
-        return $this->queries[] = new PsqlSelectQuery($columns);
+        return $this->queries[] = new MysqlSelectQuery($columns);
     }
 
     public function insert(array $rows = [])
     {
-        return $this->queries[] = new PsqlInsertQuery($rows);
+        return $this->queries[] = new MysqlInsertQuery($rows);
     }
 
     public function delete()
     {
-        return $this->queries[] = new PsqlDeleteQuery();
+        return $this->queries[] = new MysqlDeleteQuery();
     }
 
     public function update($tableName)
     {
-        return $this->queries[] = new PsqlUpdateQuery($tableName);
+        return $this->queries[] = new MysqlUpdateQuery($tableName);
     }
 
     public function savepoint($name)

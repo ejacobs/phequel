@@ -1,22 +1,22 @@
 <?php
 
-namespace Ejacobs\Phequel\Dialects\Psql;
+namespace Ejacobs\Phequel\Dialects\Mysql;
 
 use Ejacobs\Phequel\Components\Insert\ReturningComponent;
 use Ejacobs\Phequel\Query\AbstractInsertQuery;
 
 /**
- * Class PsqlInsertQuery
- * @package Ejacobs\Phequel\Dialects\Psql
+ * Class MysqlInsertQuery
+ * @package Ejacobs\Phequel\Dialects\Mysql
  */
-class PsqlInsertQuery extends AbstractInsertQuery
+class MysqlInsertQuery extends AbstractInsertQuery
 {
 
     /* @var ReturningComponent $returningComponent */
     protected $returningComponent;
 
     /**
-     * PsqlInsertQuery constructor.
+     * MysqlInsertQuery constructor.
      * @param array $rows
      */
     public function __construct(array $rows = [])
