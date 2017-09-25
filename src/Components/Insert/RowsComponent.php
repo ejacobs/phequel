@@ -44,6 +44,7 @@ class RowsComponent extends AbstractExpression
      */
     public function getParams()
     {
+        $this->sortRowValues();
         $params = [];
         foreach ($this->rows as $row) {
             $params = array_merge($params, $row->getParams());
