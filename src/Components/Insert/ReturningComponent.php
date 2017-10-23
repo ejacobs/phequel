@@ -25,6 +25,7 @@ class ReturningComponent extends AbstractExpression
     {
         return $this->compose((bool)$this->column, [
             [Format::type_block_keyword, 'returning'],
+            [Format::type_column, $this->column],
             [Format::type_alias, $this->alias],
             [Format::type_block_end]
         ]);
