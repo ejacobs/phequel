@@ -39,9 +39,10 @@ interface QueryFactoryInterface
 
     /**
      * @param string $tableName
+     * @param string|null $alias
      * @return AbstractUpdateQuery
      */
-    public function update($tableName);
+    public function update($tableName, $alias = null);
 
     /**
      * @param callable $nested

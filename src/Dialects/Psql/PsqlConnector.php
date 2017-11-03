@@ -41,11 +41,12 @@ class PsqlConnector extends AbstractPdoConnector
 
     /**
      * @param string $tableName
+     * @param string|null $alias
      * @return PsqlUpdateQuery
      */
-    public function update($tableName)
+    public function update($tableName, $alias = null)
     {
-        return new PsqlUpdateQuery($tableName);
+        return new PsqlUpdateQuery($tableName, $alias);
     }
 
     /**
