@@ -126,6 +126,9 @@ class Format
             case self::type_value:
                 $ret = $this->addIndent($spacing);
                 if ($this->interpolate) {
+                    if ($value === null) {
+                        return $ret . 'null';
+                    }
                     return $ret . $this->connector->escape($this->parentQuery->escapeWildcards($value));
                 } else {
                     return $ret. str_replace('#', $this->numericPlaceholderCounter++, $this->placeholder);
