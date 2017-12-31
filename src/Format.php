@@ -171,6 +171,9 @@ class Format
                     $ret .= "{$this->enquote($this->tableQuoteChar, $value[0])}.";
                 }
                 $ret .= $this->enquote($this->tableQuoteChar, $value[1]);
+                if (isset($value[2])) {
+                    $ret .= '::' . $value[2];
+                }
                 return $ret;
             case self::type_column_unquoted:
                 if (!is_array($value)) {

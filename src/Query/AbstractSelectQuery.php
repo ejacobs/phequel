@@ -7,6 +7,7 @@ use Ejacobs\Phequel\Components\Select\ColumnFunctionComponent;
 use Ejacobs\Phequel\Components\Select\ColumnJsonComponent;
 use Ejacobs\Phequel\Components\Select\ColumnRawComponent;
 use Ejacobs\Phequel\Components\Select\FromComponent;
+use Ejacobs\Phequel\Components\Select\FromRawComponent;
 use Ejacobs\Phequel\Components\Select\GroupByComponent;
 use Ejacobs\Phequel\Components\Select\HavingComponent;
 use Ejacobs\Phequel\Components\Select\JoinComponent;
@@ -78,6 +79,18 @@ abstract class AbstractSelectQuery extends AbstractBaseQuery
     public function from($tableName, $alias = null)
     {
         $this->fromComponent = new FromComponent($tableName, $alias);
+        return $this;
+    }
+
+
+    /**
+     * @param string $tableName
+     * @param null|string $alias
+     * @return $this
+     */
+    public function fromRaw($raw, $alias = null)
+    {
+        $this->fromComponent = new FromRawComponent($raw, $alias);
         return $this;
     }
 
