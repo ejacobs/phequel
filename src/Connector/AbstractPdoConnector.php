@@ -85,6 +85,7 @@ abstract class AbstractPdoConnector extends AbstractConnector
     {
         if ($query instanceof AbstractBaseQuery) {
             $params = $query->getParams();
+            $query = $query->toString();
         }
         $statement = $this->pdo->prepare($query);
         $statement->execute($params);
