@@ -11,7 +11,7 @@ class MysqlDeleteQuery extends AbstractDeleteQuery
      * @return string
      * @throws \Exception
      */
-    public function __toString()
+    public function toString()
     {
         return $this->compose(true, [
             $this->deleteComponent,

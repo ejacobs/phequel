@@ -112,7 +112,7 @@ class MysqlSelectQuery extends AbstractSelectQuery
      * @return string
      * @throws \Exception
      */
-    public function __toString()
+    public function toString()
     {
         return $this->compose(true, [
             $this->selectComponent,

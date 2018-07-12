@@ -57,7 +57,7 @@ class PsqlAbstractTransactionComponent extends AbstractTransactionComponent
         return $params;
     }
 
-    public function __toString()
+    public function toString()
     {
         return $this->compose(true, $this->queries);
     }

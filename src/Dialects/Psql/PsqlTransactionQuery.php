@@ -24,7 +24,7 @@ class PsqlTransactionQuery extends AbstractTransactionQuery
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         return $this->compose(true, [
             $this->beginComponent,

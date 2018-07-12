@@ -40,7 +40,7 @@ abstract class AbstractPdoConnector extends AbstractConnector
      */
     public function connect()
     {
-        return new \PDO($this->getConnectionString());
+        return new \PDO($this->getConnectionString(), null, null);
     }
 
     /**
@@ -52,6 +52,7 @@ abstract class AbstractPdoConnector extends AbstractConnector
     {
         if ($query instanceof AbstractBaseQuery) {
             $params = $query->getParams();
+            $query = $query->toString();
         }
         $statement = $this->pdo->prepare($query);
         $ret = $statement->execute($params);
@@ -68,6 +69,7 @@ abstract class AbstractPdoConnector extends AbstractConnector
     {
         if ($query instanceof AbstractBaseQuery) {
             $params = $query->getParams();
+            $query = $query->toString();
         }
         $statement = $this->pdo->prepare($query);
         $statement->execute($params);

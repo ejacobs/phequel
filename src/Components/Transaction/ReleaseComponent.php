@@ -22,7 +22,7 @@ class ReleaseComponent extends AbstractExpression
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         return $this->compose(!!$this->savepointName, [
             [Format::type_block_keyword, 'release savepoint'],

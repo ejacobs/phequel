@@ -23,7 +23,7 @@ class WindowComponent extends AbstractExpression
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         $components = [];
         foreach ($this->windows as $window) {

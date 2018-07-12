@@ -40,7 +40,7 @@ class ForComponent extends AbstractExpression
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         $components = [];
         $components[] = [Format::type_block_keyword, 'for'];

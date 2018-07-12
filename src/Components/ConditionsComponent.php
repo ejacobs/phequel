@@ -64,7 +64,7 @@ class ConditionsComponent extends AbstractExpression
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         $components = [];
         $conditions = $this->conditions;

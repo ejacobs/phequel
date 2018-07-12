@@ -24,7 +24,7 @@ class DeleteComponent extends AbstractExpression
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         return $this->compose(true, [
             [Format::type_block_keyword, 'delete from'],

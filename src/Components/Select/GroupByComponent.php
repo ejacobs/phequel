@@ -33,7 +33,7 @@ class GroupByComponent extends AbstractExpression
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         return $this->compose(!!$this->columns, [
             [Format::type_block_keyword, 'group by '],

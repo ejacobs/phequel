@@ -39,7 +39,7 @@ class MysqlInsertQuery extends AbstractInsertQuery
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         return $this->compose(true, [
             $this->insertComponent,

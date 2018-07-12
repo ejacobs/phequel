@@ -53,7 +53,7 @@ class JoinComponent extends AbstractExpression
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         $components = [];
         foreach ($this->joins as $join) {

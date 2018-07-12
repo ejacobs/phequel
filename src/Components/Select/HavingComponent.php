@@ -60,7 +60,7 @@ class HavingComponent extends AbstractExpression
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         return $this->compose($this->conditions->hasConditions(), [
             [Format::type_primary_keyword, 'having'],

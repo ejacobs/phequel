@@ -30,7 +30,7 @@ class FetchComponent extends AbstractExpression
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         return $this->compose(!!$this->count, [
             [Format::type_block_keyword, 'fetch'],

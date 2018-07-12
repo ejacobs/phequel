@@ -22,7 +22,7 @@ class UnionComponent extends AbstractExpression
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         $keyword = 'union';
         if ($this->all) {

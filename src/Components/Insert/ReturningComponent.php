@@ -21,7 +21,7 @@ class ReturningComponent extends AbstractExpression
         $this->alias = $alias;
     }
 
-    public function __toString()
+    public function toString()
     {
         return $this->compose((bool)$this->column, [
             [Format::type_block_keyword, 'returning'],

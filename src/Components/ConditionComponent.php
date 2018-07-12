@@ -33,7 +33,7 @@ class ConditionComponent extends AbstractExpression
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         $components = [];
         if ($this->left instanceof AbstractExpression) {

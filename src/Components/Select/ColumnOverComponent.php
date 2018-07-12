@@ -30,7 +30,7 @@ class ColumnOverComponent extends AbstractColumnComponent
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         return $this->compose(true, [
             new ColumnFunctionComponent($this->function, $this->column),

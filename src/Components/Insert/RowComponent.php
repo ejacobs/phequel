@@ -42,7 +42,7 @@ class RowComponent extends AbstractExpression
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         return $this->compose(true, [
             [Format::type_open_paren, null, Format::spacing_no_space],

@@ -11,7 +11,7 @@ abstract class AbstractExpression
     /**
      * @return string
      */
-    abstract public function __toString();
+    abstract public function toString();
 
     /**
      * @return array
@@ -55,7 +55,7 @@ abstract class AbstractExpression
         foreach ($components as &$component) {
             if ($component instanceof AbstractExpression) {
                 $component->format($formatter);
-                $ret .= (string)$component;
+                $ret .= $component->toString();
             }
             else if (is_string($component)) {
                 $ret .= $component;

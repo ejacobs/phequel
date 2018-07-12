@@ -10,7 +10,7 @@ class PsqlUpdateQuery extends AbstractUpdateQuery
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         return $this->compose(true, [
             $this->updateComponent,

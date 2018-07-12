@@ -65,7 +65,7 @@ class RowsComponent extends AbstractExpression
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         $this->sortRowValues();
         $components = [];

@@ -11,7 +11,7 @@ class IntersectComponent extends AbstractExpression
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         return $this->compose(true, [
             [Format::type_primary_keyword, 'intersect'],

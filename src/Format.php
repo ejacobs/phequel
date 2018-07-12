@@ -154,7 +154,7 @@ class Format
                         if ($singleValue instanceof AbstractExpression) {
                             $singleValue->format($this);
                         }
-                        $strings[] = (string)$singleValue;
+                        $strings[] = $singleValue->toString();
                     }
                 }
                 return implode(",{$this->addIndent($spacing)}", $strings);
@@ -357,9 +357,9 @@ class Format
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
-        return (string)$this->parentQuery;
+        return $this->parentQuery->toString();
     }
 
 }

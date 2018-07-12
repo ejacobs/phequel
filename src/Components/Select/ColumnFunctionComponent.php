@@ -29,7 +29,7 @@ class ColumnFunctionComponent extends AbstractColumnComponent
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         $components = [];
         $components[] = [Format::type_raw, $this->function];

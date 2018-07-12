@@ -22,7 +22,7 @@ class LimitComponent extends AbstractExpression
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         return $this->compose(!!$this->limit, [
             [Format::type_block_keyword, 'limit'],

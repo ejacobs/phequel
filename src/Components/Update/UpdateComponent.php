@@ -25,7 +25,7 @@ class UpdateComponent extends AbstractExpression
     /**
      * @return string
      */
-    public function __toString()
+    public function toString()
     {
         return $this->compose(!!$this->table, [
             [Format::type_primary_keyword, 'update'],
