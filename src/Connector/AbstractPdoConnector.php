@@ -20,27 +20,27 @@ abstract class AbstractPdoConnector extends AbstractConnector
 
     private $errorInfo = null;
 
+    private $usePooling;
+    private $poolSize;
+
     /**
      * AbstractConnector constructor.
-     * @param array|null $params
-     * @param bool $connect
-     * @param bool $usePooling
-     * @param int $poolSize
      */
-    public function __construct(array $params, $connect = true, $usePooling = false, $poolSize = 10)
+    public function __construct(bool $usePooling = false, int $poolSize = 10)
     {
-        $this->params = $params;
-        if ($connect) {
-            $this->pdo = $this->connect();
-        }
+        $this->usePooling = $usePooling;
+        $this->poolSize = $poolSize;
     }
 
     /**
      * @return \PDO
      */
-    public function connect()
+    public function connect(array $params)
     {
-        return new \PDO($this->getConnectionString(), null, null);
+        if ($this->params) {
+            $this->params = $params;
+        }
+        return new \PDO($this->getConnectionString(), null, null, [\PDO::ATTR_PERSISTENT => true]);
     }
 
     /**
