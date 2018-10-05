@@ -7,7 +7,7 @@ use Ejacobs\Phequel\Factories\QueryFactoryInterface;
 abstract class AbstractConnector implements QueryFactoryInterface
 {
 
-    abstract public function connect();
+    abstract public function connect(array $credentials);
 
     abstract public function execute($query, $params = []);
 
