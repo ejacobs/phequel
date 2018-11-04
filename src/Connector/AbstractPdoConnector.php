@@ -35,12 +35,12 @@ abstract class AbstractPdoConnector extends AbstractConnector
     /**
      * @return \PDO
      */
-    public function connect(array $params)
+    public function connect(array $params, bool $persistent = true)
     {
         if ($params) {
             $this->params = $params;
         }
-        $this->pdo = new \PDO($this->getConnectionString(), null, null, [\PDO::ATTR_PERSISTENT => true]);
+        $this->pdo = new \PDO($this->getConnectionString(), null, null, [\PDO::ATTR_PERSISTENT => $persistent]);
     }
 
     /**
