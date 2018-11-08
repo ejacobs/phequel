@@ -1,13 +1,13 @@
 <?php
 
-namespace Ejacobs\Phequel\Dialects\Mysql;
+namespace Phion\Phequel\Dialects\Mysql;
 
-use Ejacobs\Phequel\Components\Insert\ReturningComponent;
-use Ejacobs\Phequel\Query\AbstractInsertQuery;
+use Phion\Phequel\Components\Insert\ReturningComponent;
+use Phion\Phequel\Query\AbstractInsertQuery;
 
 /**
  * Class MysqlInsertQuery
- * @package Ejacobs\Phequel\Dialects\Mysql
+ * @package Phion\Phequel\Dialects\Mysql
  */
 class MysqlInsertQuery extends AbstractInsertQuery
 {

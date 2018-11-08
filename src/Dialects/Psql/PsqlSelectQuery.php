@@ -1,14 +1,14 @@
 <?php
 
-namespace Ejacobs\Phequel\Dialects\Psql;
+namespace Phion\Phequel\Dialects\Psql;
 
-use Ejacobs\Phequel\Components\Select\ColumnJsonComponent;
-use Ejacobs\Phequel\Components\Select\ColumnOverAliasComponent;
-use Ejacobs\Phequel\Components\Select\ColumnOverComponent;
-use Ejacobs\Phequel\Components\Select\FetchComponent;
-use Ejacobs\Phequel\Components\Select\ForComponent;
-use Ejacobs\Phequel\Components\Select\WindowComponent;
-use Ejacobs\Phequel\Query\AbstractSelectQuery;
+use Phion\Phequel\Components\Select\ColumnJsonComponent;
+use Phion\Phequel\Components\Select\ColumnOverAliasComponent;
+use Phion\Phequel\Components\Select\ColumnOverComponent;
+use Phion\Phequel\Components\Select\FetchComponent;
+use Phion\Phequel\Components\Select\ForComponent;
+use Phion\Phequel\Components\Select\WindowComponent;
+use Phion\Phequel\Query\AbstractSelectQuery;
 
 class PsqlSelectQuery extends AbstractSelectQuery
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Dialects\Mysql;
+namespace Phion\Phequel\Dialects\Mysql;
 
-use Ejacobs\Phequel\Query\AbstractUpdateQuery;
+use Phion\Phequel\Query\AbstractUpdateQuery;
 
 class MysqlUpdateQuery extends AbstractUpdateQuery
 {

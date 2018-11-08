@@ -1,6 +1,6 @@
 <?php
 
-namespace Ejacobs\Phequel;
+namespace Phion\Phequel;
 
 abstract class AbstractExpression
 {

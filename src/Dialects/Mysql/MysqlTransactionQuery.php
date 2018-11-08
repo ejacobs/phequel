@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Dialects\Mysql;
+namespace Phion\Phequel\Dialects\Mysql;
 
-use Ejacobs\Phequel\Query\AbstractTransactionQuery;
+use Phion\Phequel\Query\AbstractTransactionQuery;
 
 class MysqlTransactionQuery extends AbstractTransactionQuery
 {

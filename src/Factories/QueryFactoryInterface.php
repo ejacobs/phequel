@@ -1,12 +1,12 @@
 <?php
 
-namespace Ejacobs\Phequel\Factories;
+namespace Phion\Phequel\Factories;
 
-use Ejacobs\Phequel\Query\AbstractDeleteQuery;
-use Ejacobs\Phequel\Query\AbstractInsertQuery;
-use Ejacobs\Phequel\Query\AbstractSelectQuery;
-use Ejacobs\Phequel\Query\AbstractTransactionQuery;
-use Ejacobs\Phequel\Query\AbstractUpdateQuery;
+use Phion\Phequel\Query\AbstractDeleteQuery;
+use Phion\Phequel\Query\AbstractInsertQuery;
+use Phion\Phequel\Query\AbstractSelectQuery;
+use Phion\Phequel\Query\AbstractTransactionQuery;
+use Phion\Phequel\Query\AbstractUpdateQuery;
 
 /**
  * Interface QueryFactoryInterface
@@ -15,7 +15,7 @@ use Ejacobs\Phequel\Query\AbstractUpdateQuery;
  * This is to differentiate from nested queries which are already nested within a transaction and thus cannot begin a
  * new one.
  *
- * @package Ejacobs\Phequel\Queries
+ * @package Phion\Phequel\Queries
  */
 interface QueryFactoryInterface
 {

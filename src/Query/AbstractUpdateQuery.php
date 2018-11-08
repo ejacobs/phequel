@@ -1,11 +1,11 @@
 <?php
 
-namespace Ejacobs\Phequel\Query;
+namespace Phion\Phequel\Query;
 
-use Ejacobs\Phequel\Components\Update\SetComponent;
-use Ejacobs\Phequel\Components\Update\UpdateComponent;
-use Ejacobs\Phequel\Components\WhereComponent;
-use Ejacobs\Phequel\Query\Traits\WhereTrait;
+use Phion\Phequel\Components\Update\SetComponent;
+use Phion\Phequel\Components\Update\UpdateComponent;
+use Phion\Phequel\Components\WhereComponent;
+use Phion\Phequel\Query\Traits\WhereTrait;
 
 abstract class AbstractUpdateQuery extends AbstractBaseQuery
 {

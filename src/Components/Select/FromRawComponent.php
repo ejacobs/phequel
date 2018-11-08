@@ -1,13 +1,13 @@
 <?php
 
-namespace Ejacobs\Phequel\Components\Select;
+namespace Phion\Phequel\Components\Select;
 
-use Ejacobs\Phequel\AbstractExpression;
-use Ejacobs\Phequel\Format;
+use Phion\Phequel\AbstractExpression;
+use Phion\Phequel\Format;
 
 /**
  * Class FromRawComponent
- * @package Ejacobs\Phequel\Components\Select
+ * @package Phion\Phequel\Components\Select
  */
 class FromRawComponent extends AbstractExpression
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Ejacobs\Phequel\Components;
+namespace Phion\Phequel\Components;
 
-use Ejacobs\Phequel\AbstractExpression;
-use Ejacobs\Phequel\Format;
+use Phion\Phequel\AbstractExpression;
+use Phion\Phequel\Format;
 
 class EndingComponent extends AbstractExpression
 {

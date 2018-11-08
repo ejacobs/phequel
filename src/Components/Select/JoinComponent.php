@@ -1,10 +1,10 @@
 <?php
 
-namespace Ejacobs\Phequel\Components\Select;
+namespace Phion\Phequel\Components\Select;
 
-use Ejacobs\Phequel\AbstractExpression;
-use Ejacobs\Phequel\Format;
-use Ejacobs\Phequel\Components\ConditionsComponent;
+use Phion\Phequel\AbstractExpression;
+use Phion\Phequel\Format;
+use Phion\Phequel\Components\ConditionsComponent;
 
 class JoinComponent extends AbstractExpression
 {

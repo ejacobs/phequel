@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Dialects\Psql;
+namespace Phion\Phequel\Dialects\Psql;
 
-use Ejacobs\Phequel\Query\AbstractUpdateQuery;
+use Phion\Phequel\Query\AbstractUpdateQuery;
 
 class PsqlUpdateQuery extends AbstractUpdateQuery
 {

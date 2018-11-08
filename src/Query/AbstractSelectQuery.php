@@ -1,22 +1,22 @@
 <?php
 
-namespace Ejacobs\Phequel\Query;
+namespace Phion\Phequel\Query;
 
-use Ejacobs\Phequel\Components\Select\ColumnComponent;
-use Ejacobs\Phequel\Components\Select\ColumnFunctionComponent;
-use Ejacobs\Phequel\Components\Select\ColumnJsonComponent;
-use Ejacobs\Phequel\Components\Select\ColumnRawComponent;
-use Ejacobs\Phequel\Components\Select\FromComponent;
-use Ejacobs\Phequel\Components\Select\FromRawComponent;
-use Ejacobs\Phequel\Components\Select\GroupByComponent;
-use Ejacobs\Phequel\Components\Select\HavingComponent;
-use Ejacobs\Phequel\Components\Select\JoinComponent;
-use Ejacobs\Phequel\Components\Select\LimitComponent;
-use Ejacobs\Phequel\Components\Select\OffsetComponent;
-use Ejacobs\Phequel\Components\Select\OrderByComponent;
-use Ejacobs\Phequel\Components\Select\SelectComponent;
-use Ejacobs\Phequel\Components\WhereComponent;
-use Ejacobs\Phequel\Query\Traits\WhereTrait;
+use Phion\Phequel\Components\Select\ColumnComponent;
+use Phion\Phequel\Components\Select\ColumnFunctionComponent;
+use Phion\Phequel\Components\Select\ColumnJsonComponent;
+use Phion\Phequel\Components\Select\ColumnRawComponent;
+use Phion\Phequel\Components\Select\FromComponent;
+use Phion\Phequel\Components\Select\FromRawComponent;
+use Phion\Phequel\Components\Select\GroupByComponent;
+use Phion\Phequel\Components\Select\HavingComponent;
+use Phion\Phequel\Components\Select\JoinComponent;
+use Phion\Phequel\Components\Select\LimitComponent;
+use Phion\Phequel\Components\Select\OffsetComponent;
+use Phion\Phequel\Components\Select\OrderByComponent;
+use Phion\Phequel\Components\Select\SelectComponent;
+use Phion\Phequel\Components\WhereComponent;
+use Phion\Phequel\Query\Traits\WhereTrait;
 
 abstract class AbstractSelectQuery extends AbstractBaseQuery
 {

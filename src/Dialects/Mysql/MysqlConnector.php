@@ -1,12 +1,12 @@
 <?php
 
-namespace Ejacobs\Phequel\Dialects\Mysql;
+namespace Phion\Phequel\Dialects\Mysql;
 
-use Ejacobs\Phequel\Connector\AbstractPdoConnector;
+use Phion\Phequel\Connector\AbstractPdoConnector;
 
 /**
  * Class MysqlConnector
- * @package Ejacobs\Phequel\Dialects\Mysql
+ * @package Phion\Phequel\Dialects\Mysql
  */
 class MysqlConnector extends AbstractPdoConnector
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Ejacobs\Phequel\Query\Traits;
+namespace Phion\Phequel\Query\Traits;
 
-use Ejacobs\Phequel\Components\WhereComponent;
+use Phion\Phequel\Components\WhereComponent;
 
 /**
  * Class WhereTrait
- * @package Ejacobs\Phequel\Query\Traits
+ * @package Phion\Phequel\Query\Traits
  */
 trait WhereTrait
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Ejacobs\Phequel\Components\Delete;
+namespace Phion\Phequel\Components\Delete;
 
-use Ejacobs\Phequel\AbstractExpression;
-use Ejacobs\Phequel\Format;
+use Phion\Phequel\AbstractExpression;
+use Phion\Phequel\Format;
 
 class DeleteComponent extends AbstractExpression
 {

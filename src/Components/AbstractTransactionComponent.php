@@ -1,12 +1,12 @@
 <?php
 
-namespace Ejacobs\Phequel\Components;
+namespace Phion\Phequel\Components;
 
-use Ejacobs\Phequel\AbstractExpression;
-use Ejacobs\Phequel\Query\AbstractDeleteQuery;
-use Ejacobs\Phequel\Query\AbstractInsertQuery;
-use Ejacobs\Phequel\Query\AbstractSelectQuery;
-use Ejacobs\Phequel\Query\AbstractUpdateQuery;
+use Phion\Phequel\AbstractExpression;
+use Phion\Phequel\Query\AbstractDeleteQuery;
+use Phion\Phequel\Query\AbstractInsertQuery;
+use Phion\Phequel\Query\AbstractSelectQuery;
+use Phion\Phequel\Query\AbstractUpdateQuery;
 
 /**
  * Class AbstractTransactionComponent
@@ -16,7 +16,7 @@ use Ejacobs\Phequel\Query\AbstractUpdateQuery;
  * rollbacks. Unlike QueryFactoryInterface, nested queries retain all created queries so that the nested block can be
  * serialized as a single string.
  *
- * @package Ejacobs\Phequel\Components
+ * @package Phion\Phequel\Components
  */
 abstract class AbstractTransactionComponent extends AbstractExpression
 {

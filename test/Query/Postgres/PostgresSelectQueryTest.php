@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Ejacobs\Phequel\Dialects\Psql\PsqlSelectQuery;
+use Phion\Phequel\Dialects\Psql\PsqlSelectQuery;
 
 /**
  * @covers Email

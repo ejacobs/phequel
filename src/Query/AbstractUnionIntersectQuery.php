@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Query;
+namespace Phion\Phequel\Query;
 
-use Ejacobs\Phequel\AbstractExpression;
+use Phion\Phequel\AbstractExpression;
 
 abstract class AbstractUnionIntersectQuery extends AbstractBaseQuery
 {

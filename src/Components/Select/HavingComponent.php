@@ -1,10 +1,10 @@
 <?php
 
-namespace Ejacobs\Phequel\Components\Select;
+namespace Phion\Phequel\Components\Select;
 
-use Ejacobs\Phequel\AbstractExpression;
-use Ejacobs\Phequel\Components\ConditionsComponent;
-use Ejacobs\Phequel\Format;
+use Phion\Phequel\AbstractExpression;
+use Phion\Phequel\Components\ConditionsComponent;
+use Phion\Phequel\Format;
 
 class HavingComponent extends AbstractExpression
 {

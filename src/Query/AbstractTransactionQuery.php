@@ -1,11 +1,11 @@
 <?php
 
-namespace Ejacobs\Phequel\Query;
+namespace Phion\Phequel\Query;
 
-use Ejacobs\Phequel\AbstractExpression;
-use Ejacobs\Phequel\Components\Transaction\BeginComponent;
-use Ejacobs\Phequel\Components\Transaction\CommitComponent;
-use Ejacobs\Phequel\Factories\QueryFactoryInterface;
+use Phion\Phequel\AbstractExpression;
+use Phion\Phequel\Components\Transaction\BeginComponent;
+use Phion\Phequel\Components\Transaction\CommitComponent;
+use Phion\Phequel\Factories\QueryFactoryInterface;
 
 abstract class AbstractTransactionQuery extends AbstractExpression
 {

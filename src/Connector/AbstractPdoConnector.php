@@ -1,12 +1,12 @@
 <?php
 
-namespace Ejacobs\Phequel\Connector;
+namespace Phion\Phequel\Connector;
 
-use Ejacobs\Phequel\Query\AbstractBaseQuery;
+use Phion\Phequel\Query\AbstractBaseQuery;
 
 /**
  * Class PdoConnector
- * @package Ejacobs\Phequel\Connector\
+ * @package Phion\Phequel\Connector\
  * @method \PDO[] pool()
  */
 abstract class AbstractPdoConnector extends AbstractConnector

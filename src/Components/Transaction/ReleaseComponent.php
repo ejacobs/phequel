@@ -1,9 +1,9 @@
 <?php
 
-namespace Ejacobs\Phequel\Components\Transaction;
+namespace Phion\Phequel\Components\Transaction;
 
-use Ejacobs\Phequel\AbstractExpression;
-use Ejacobs\Phequel\Format;
+use Phion\Phequel\AbstractExpression;
+use Phion\Phequel\Format;
 
 class ReleaseComponent extends AbstractExpression
 {

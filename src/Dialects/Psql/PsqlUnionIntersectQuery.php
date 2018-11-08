@@ -1,10 +1,10 @@
 <?php
 
-namespace Ejacobs\Phequel\Dialects\Psql;
+namespace Phion\Phequel\Dialects\Psql;
 
-use Ejacobs\Phequel\Components\IntersectComponent;
-use Ejacobs\Phequel\Components\UnionComponent;
-use Ejacobs\Phequel\Query\AbstractUnionIntersectQuery;
+use Phion\Phequel\Components\IntersectComponent;
+use Phion\Phequel\Components\UnionComponent;
+use Phion\Phequel\Query\AbstractUnionIntersectQuery;
 
 class PsqlUnionIntersectQuery extends AbstractUnionIntersectQuery
 {
@@ -12,7 +12,7 @@ class PsqlUnionIntersectQuery extends AbstractUnionIntersectQuery
     /**
      * @param $tableName
      * @param bool $all
-     * @return \Ejacobs\Phequel\Query\AbstractSelectQuery
+     * @return \Phion\Phequel\Query\AbstractSelectQuery
      */
     public function union($tableName, $all = false)
     {
@@ -21,7 +21,7 @@ class PsqlUnionIntersectQuery extends AbstractUnionIntersectQuery
 
     /**
      * @param callable $tableName
-     * @return \Ejacobs\Phequel\Query\AbstractSelectQuery
+     * @return \Phion\Phequel\Query\AbstractSelectQuery
      */
     public function intersect($tableName)
     {

@@ -1,16 +1,16 @@
 <?php
 
-namespace Ejacobs\Phequel\Dialects\Psql;
+namespace Phion\Phequel\Dialects\Psql;
 
-use Ejacobs\Phequel\Components\AbstractTransactionComponent;
-use Ejacobs\Phequel\Components\Transaction\ReleaseComponent;
-use Ejacobs\Phequel\Components\Transaction\RollbackComponent;
-use Ejacobs\Phequel\Components\Transaction\SavepointComponent;
+use Phion\Phequel\Components\AbstractTransactionComponent;
+use Phion\Phequel\Components\Transaction\ReleaseComponent;
+use Phion\Phequel\Components\Transaction\RollbackComponent;
+use Phion\Phequel\Components\Transaction\SavepointComponent;
 
 class PsqlAbstractTransactionComponent extends AbstractTransactionComponent
 {
 
-    /* @var \Ejacobs\Phequel\AbstractExpression[] $queries */
+    /* @var \Phion\Phequel\AbstractExpression[] $queries */
     private $queries = [];
 
     public function select(array $columns = [])

@@ -1,9 +1,9 @@
 <?php
 
-namespace Ejacobs\Phequel;
+namespace Phion\Phequel;
 
-use Ejacobs\Phequel\Connector\AbstractConnector;
-use Ejacobs\Phequel\Query\AbstractBaseQuery;
+use Phion\Phequel\Connector\AbstractConnector;
+use Phion\Phequel\Query\AbstractBaseQuery;
 
 class Format
 {

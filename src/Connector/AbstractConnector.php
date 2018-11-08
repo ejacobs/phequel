@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Connector;
+namespace Phion\Phequel\Connector;
 
-use Ejacobs\Phequel\Factories\QueryFactoryInterface;
+use Phion\Phequel\Factories\QueryFactoryInterface;
 
 abstract class AbstractConnector implements QueryFactoryInterface
 {

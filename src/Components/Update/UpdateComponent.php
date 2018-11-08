@@ -1,9 +1,9 @@
 <?php
 
-namespace Ejacobs\Phequel\Components\Update;
+namespace Phion\Phequel\Components\Update;
 
-use Ejacobs\Phequel\AbstractExpression;
-use Ejacobs\Phequel\Format;
+use Phion\Phequel\AbstractExpression;
+use Phion\Phequel\Format;
 
 class UpdateComponent extends AbstractExpression
 {

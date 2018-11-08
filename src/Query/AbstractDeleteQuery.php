@@ -1,10 +1,10 @@
 <?php
 
-namespace Ejacobs\Phequel\Query;
+namespace Phion\Phequel\Query;
 
-use Ejacobs\Phequel\Components\Delete\DeleteComponent;
-use Ejacobs\Phequel\Components\WhereComponent;
-use Ejacobs\Phequel\Query\Traits\WhereTrait;
+use Phion\Phequel\Components\Delete\DeleteComponent;
+use Phion\Phequel\Components\WhereComponent;
+use Phion\Phequel\Query\Traits\WhereTrait;
 
 abstract class AbstractDeleteQuery extends AbstractBaseQuery
 {

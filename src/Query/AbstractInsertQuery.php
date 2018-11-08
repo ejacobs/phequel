@@ -1,9 +1,9 @@
 <?php
 
-namespace Ejacobs\Phequel\Query;
+namespace Phion\Phequel\Query;
 
-use Ejacobs\Phequel\Components\Insert\InsertComponent;
-use Ejacobs\Phequel\Components\Insert\RowsComponent;
+use Phion\Phequel\Components\Insert\InsertComponent;
+use Phion\Phequel\Components\Insert\RowsComponent;
 
 abstract class AbstractInsertQuery extends AbstractBaseQuery
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Dialects\Psql;
+namespace Phion\Phequel\Dialects\Psql;
 
-use Ejacobs\Phequel\Query\AbstractDeleteQuery;
+use Phion\Phequel\Query\AbstractDeleteQuery;
 
 class PsqlDeleteQuery extends AbstractDeleteQuery
 {

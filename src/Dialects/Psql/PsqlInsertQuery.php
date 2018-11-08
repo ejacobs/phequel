@@ -1,13 +1,13 @@
 <?php
 
-namespace Ejacobs\Phequel\Dialects\Psql;
+namespace Phion\Phequel\Dialects\Psql;
 
-use Ejacobs\Phequel\Components\Insert\ReturningComponent;
-use Ejacobs\Phequel\Query\AbstractInsertQuery;
+use Phion\Phequel\Components\Insert\ReturningComponent;
+use Phion\Phequel\Query\AbstractInsertQuery;
 
 /**
  * Class PsqlInsertQuery
- * @package Ejacobs\Phequel\Dialects\Psql
+ * @package Phion\Phequel\Dialects\Psql
  */
 class PsqlInsertQuery extends AbstractInsertQuery
 {

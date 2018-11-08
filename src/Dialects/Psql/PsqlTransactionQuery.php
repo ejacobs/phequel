@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejacobs\Phequel\Dialects\Psql;
+namespace Phion\Phequel\Dialects\Psql;
 
-use Ejacobs\Phequel\Query\AbstractTransactionQuery;
+use Phion\Phequel\Query\AbstractTransactionQuery;
 
 class PsqlTransactionQuery extends AbstractTransactionQuery
 {

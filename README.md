@@ -11,7 +11,7 @@ Phequel is a framework agnostic query builder for PHP.
 
 ### SELECT
 ```php
-use Ejacobs\Phequel\Dialects\Psql\PsqlSelectQuery;
+use Phion\Phequel\Dialects\Psql\PsqlSelectQuery;
 
 $select = new PsqlSelectQuery();
 $select->select('foo')
@@ -39,7 +39,7 @@ print_r($select->getParams());
 
 ### UPDATE
 ```php
-use Ejacobs\Phequel\Dialects\Psql\PsqlUpdateQuery;
+use Phion\Phequel\Dialects\Psql\PsqlUpdateQuery;
 
 $update = new PsqlUpdateQuery();
 $update->update('table1')
@@ -52,7 +52,7 @@ print_r($update->getParams());
 
 ### INSERT
 ```php
-use Ejacobs\Phequel\Dialects\Psql\PsqlInsertQuery;
+use Phion\Phequel\Dialects\Psql\PsqlInsertQuery;
 
 $insert = new PsqlInsertQuery();
 $insert->into('table1')
@@ -68,7 +68,7 @@ print_r($insert->getParams());
 
 ### DELETE
 ```php
-use Ejacobs\Phequel\Dialects\Psql\PsqlDeleteQuery;
+use Phion\Phequel\Dialects\Psql\PsqlDeleteQuery;
 
 $delete = new PsqlDeleteQuery();
 $delete->from('mytable')
@@ -81,8 +81,8 @@ print_r($delete->getParams());
 ### Running queries
 Phequel comes with its own connector to run the generated queries and return the result.
 ```php
-use Ejacobs\Phequel\Dialects\Psql\PsqlConnector;
-use Ejacobs\Phequel\Dialects\Psql\PsqlSelectQuery;
+use Phion\Phequel\Dialects\Psql\PsqlConnector;
+use Phion\Phequel\Dialects\Psql\PsqlSelectQuery;
 
 $select = new PsqlSelectQuery();
 $select->from('mytable')->where('id', '=', 94);

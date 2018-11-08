@@ -1,9 +1,9 @@
 <?php
 
-namespace Ejacobs\Phequel\Query;
+namespace Phion\Phequel\Query;
 
-use Ejacobs\Phequel\AbstractExpression;
-use Ejacobs\Phequel\Components\EndingComponent;
+use Phion\Phequel\AbstractExpression;
+use Phion\Phequel\Components\EndingComponent;
 
 abstract class AbstractBaseQuery extends AbstractExpression
 {

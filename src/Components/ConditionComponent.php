@@ -1,10 +1,10 @@
 <?php
 
-namespace Ejacobs\Phequel\Components;
+namespace Phion\Phequel\Components;
 
-use Ejacobs\Phequel\AbstractExpression;
-use Ejacobs\Phequel\Format;
-use Ejacobs\Phequel\Query\AbstractBaseQuery;
+use Phion\Phequel\AbstractExpression;
+use Phion\Phequel\Format;
+use Phion\Phequel\Query\AbstractBaseQuery;
 
 class ConditionComponent extends AbstractExpression
 {

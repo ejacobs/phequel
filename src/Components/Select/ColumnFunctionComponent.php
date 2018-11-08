@@ -1,9 +1,9 @@
 <?php
 
-namespace Ejacobs\Phequel\Components\Select;
+namespace Phion\Phequel\Components\Select;
 
-use Ejacobs\Phequel\AbstractExpression;
-use Ejacobs\Phequel\Format;
+use Phion\Phequel\AbstractExpression;
+use Phion\Phequel\Format;
 
 class ColumnFunctionComponent extends AbstractColumnComponent
 {

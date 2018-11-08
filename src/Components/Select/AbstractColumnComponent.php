@@ -1,12 +1,12 @@
 <?php
 
-namespace Ejacobs\Phequel\Components\Select;
+namespace Phion\Phequel\Components\Select;
 
-use Ejacobs\Phequel\AbstractExpression;
+use Phion\Phequel\AbstractExpression;
 
 /**
  * Class AbstractColumnComponent
- * @package Ejacobs\Phequel\Components
+ * @package Phion\Phequel\Components
  */
 abstract class AbstractColumnComponent extends AbstractExpression
 {

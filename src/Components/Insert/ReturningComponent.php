@@ -1,9 +1,9 @@
 <?php
 
-namespace Ejacobs\Phequel\Components\Insert;
+namespace Phion\Phequel\Components\Insert;
 
-use Ejacobs\Phequel\AbstractExpression;
-use Ejacobs\Phequel\Format;
+use Phion\Phequel\AbstractExpression;
+use Phion\Phequel\Format;
 
 class ReturningComponent extends AbstractExpression
 {
